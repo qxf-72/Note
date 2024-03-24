@@ -2,8 +2,12 @@
   "github": {
     "user": "",
     "repo": "",
-    "branch": "main",
+    "branch": "master",
     "automaticallyMergePR": true,
+    "dryRun": {
+      "enable": false,
+      "folderName": "github-publisher"
+    },
     "tokenPath": "%configDir%/plugins/%pluginID%/env",
     "api": {
       "tiersForApi": "Github Free/Pro/Team (default)",
@@ -76,10 +80,16 @@
       "enable": false,
       "links": "",
       "removePart": [],
-      "addCmd": false
+      "addCmd": false,
+      "transform": {
+        "toUri": true,
+        "slugify": "lower",
+        "applyRegex": []
+      }
     },
     "noticeError": false,
     "displayModalRepoEditing": false,
+    "setFrontmatterKey": "Set",
     "migrated": true
   },
   "tabsID": "github-configuration"
