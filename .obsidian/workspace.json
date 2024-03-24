@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "3dbb9dcf9b483afc",
+        "id": "17ee5f946a1542fc",
         "type": "tabs",
         "children": [
           {
-            "id": "9492cc60ad0ad5b7",
+            "id": "e16e37a366278b38",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "程序设计语言/C++/C++ Primer.md",
+                "file": "计算机基础/操作系统原理/操作系统导论.md",
                 "mode": "preview",
                 "source": true
               }
@@ -86,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "程序设计语言/C++/C++ Primer.md",
+                "file": "计算机基础/操作系统原理/操作系统导论.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "程序设计语言/C++/C++ Primer.md",
+                "file": "计算机基础/操作系统原理/操作系统导论.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": false
               }
@@ -126,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "程序设计语言/C++/C++ Primer.md"
+                "file": "计算机基础/操作系统原理/操作系统导论.md"
               }
             }
           },
@@ -186,8 +186,9 @@
       "vscode-editor:新建代码文件": false
     }
   },
-  "active": "9492cc60ad0ad5b7",
+  "active": "e16e37a366278b38",
   "lastOpenFiles": [
+    "程序设计语言/C++/C++ Primer.md",
     "计算机基础/操作系统原理/操作系统导论.md",
     "开发技能/Git/Git入门.md",
     "EA269C57FCE480748A8D543CD6F7B7CA.png",
@@ -195,7 +196,6 @@
     "程序设计语言/C++/Effective C++.md",
     "算法/Algorithm_PrincetonUniversity.md",
     "算法/挑战程序设计竞赛.md",
-    "程序设计语言/C++/C++ Primer.md",
     "计算机基础/计算机组成原理/计算机组成原理.md",
     "算法分析与设计/算法书籍/挑战程序设计竞赛.md",
     "算法分析与设计/OJ笔记/Codeforces.md",
