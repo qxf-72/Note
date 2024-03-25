@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "计算机基础/操作系统原理/操作系统导论.md",
+                "file": "算法/挑战程序设计竞赛.md",
                 "mode": "preview",
                 "source": true
               }
@@ -86,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "计算机基础/操作系统原理/操作系统导论.md",
+                "file": "算法/挑战程序设计竞赛.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "计算机基础/操作系统原理/操作系统导论.md",
+                "file": "算法/挑战程序设计竞赛.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": false
               }
@@ -126,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "计算机基础/操作系统原理/操作系统导论.md"
+                "file": "算法/挑战程序设计竞赛.md"
               }
             }
           },
@@ -188,8 +188,8 @@
   },
   "active": "e16e37a366278b38",
   "lastOpenFiles": [
-    "程序设计语言/C++/C++ Primer.md",
     "计算机基础/操作系统原理/操作系统导论.md",
+    "程序设计语言/C++/C++ Primer.md",
     "开发技能/Git/Git入门.md",
     "EA269C57FCE480748A8D543CD6F7B7CA.png",
     "README.md",
