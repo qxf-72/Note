@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "17ee5f946a1542fc",
+        "id": "4fd5b49e5db52069",
         "type": "tabs",
         "children": [
           {
-            "id": "e16e37a366278b38",
+            "id": "023f82885f87f45a",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "算法/挑战程序设计竞赛.md",
-                "mode": "preview",
-                "source": true
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -69,8 +65,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 361.5,
-    "collapsed": true
+    "width": 361.5
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -86,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "算法/挑战程序设计竞赛.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +108,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "算法/挑战程序设计竞赛.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": false
               }
@@ -125,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "算法/挑战程序设计竞赛.md"
-              }
+              "state": {}
             }
           },
           {
@@ -186,16 +177,16 @@
       "vscode-editor:新建代码文件": false
     }
   },
-  "active": "e16e37a366278b38",
+  "active": "023f82885f87f45a",
   "lastOpenFiles": [
+    "算法/Algorithm_PrincetonUniversity.md",
+    "算法/挑战程序设计竞赛.md",
     "计算机基础/操作系统原理/操作系统导论.md",
     "程序设计语言/C++/C++ Primer.md",
     "开发技能/Git/Git入门.md",
     "EA269C57FCE480748A8D543CD6F7B7CA.png",
     "README.md",
     "程序设计语言/C++/Effective C++.md",
-    "算法/Algorithm_PrincetonUniversity.md",
-    "算法/挑战程序设计竞赛.md",
     "计算机基础/计算机组成原理/计算机组成原理.md",
     "算法分析与设计/算法书籍/挑战程序设计竞赛.md",
     "算法分析与设计/OJ笔记/Codeforces.md",
