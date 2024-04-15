@@ -1,8 +1,8 @@
 {
   "accentColor": "",
-  "theme": "obsidian",
+  "theme": "system",
   "baseFontSize": 15,
-  "cssTheme": "Obsidian gruvbox",
+  "cssTheme": "Blue Topaz",
   "translucency": false,
   "monospaceFontFamily": "Hack,Consolas,Fira Code",
   "textFontFamily": "微软雅黑",

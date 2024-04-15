@@ -1,15 +1,3 @@
-<div align="center"> <img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/f4d69a7c410b30b76af56995779b323.jpg" width = 500 /> </div>
-
-
-<br/>
-
-
-<div align="center"> <img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-11-29_223452.png" width = 700 /> </div>
-
-
-<br/>
-
-
 # 1.   了解 SQL
 
 ## 1.1  数据库基础
