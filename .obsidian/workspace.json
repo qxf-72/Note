@@ -4,15 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "4fd5b49e5db52069",
+        "id": "c42a379db70e380f",
         "type": "tabs",
         "children": [
           {
-            "id": "023f82885f87f45a",
+            "id": "34de717e18fb418a",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "开发技能/数据库/SQL必知必会.md",
+                "mode": "source",
+                "source": true
+              }
             }
           }
         ]
@@ -81,6 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "开发技能/数据库/SQL必知必会.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -108,6 +113,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "开发技能/数据库/SQL必知必会.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": false
               }
@@ -118,7 +124,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "开发技能/数据库/SQL必知必会.md"
+              }
             }
           },
           {
@@ -177,13 +185,14 @@
       "vscode-editor:新建代码文件": false
     }
   },
-  "active": "023f82885f87f45a",
+  "active": "34de717e18fb418a",
   "lastOpenFiles": [
-    "算法/Algorithm_PrincetonUniversity.md",
-    "算法/挑战程序设计竞赛.md",
     "计算机基础/操作系统原理/操作系统导论.md",
+    "开发技能/Linux命令/鸟哥的Linux私房菜.md",
+    "算法/挑战程序设计竞赛.md",
     "程序设计语言/C++/C++ Primer.md",
     "开发技能/Git/Git入门.md",
+    "算法/Algorithm_PrincetonUniversity.md",
     "EA269C57FCE480748A8D543CD6F7B7CA.png",
     "README.md",
     "程序设计语言/C++/Effective C++.md",
@@ -206,7 +215,6 @@
     "杂项/课堂笔记/大三上/机器学习复习.md",
     "杂项/课堂笔记/大三上/机器学习.md",
     "杂项/课堂笔记/大三上/数字图像处理复习.md",
-    "杂项/课堂笔记/大三上/数字图像处理.md",
     "9A06F5FA339DC751B8032B8840B77BD7.png",
     "杂项/思维导图/汇编语言.mm",
     "开发工具/Make工具",
