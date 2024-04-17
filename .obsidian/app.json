@@ -1,7 +1,7 @@
 {
   "livePreview": false,
   "defaultViewMode": "preview",
-  "strictLineBreaks": false,
+  "strictLineBreaks": true,
   "showLineNumber": false,
   "promptDelete": false,
   "vimMode": false
