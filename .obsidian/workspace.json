@@ -6,7 +6,6 @@
       {
         "id": "c42a379db70e380f",
         "type": "tabs",
-        "dimension": 53.65682137834037,
         "children": [
           {
             "id": "34de717e18fb418a",
@@ -14,32 +13,11 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "计算机基础/数据结构/王道数据结构.md",
+                "file": "开发技能/Git/Git入门.md",
                 "mode": "preview",
                 "source": true
               }
-            },
-            "group": "ec0ed627ba10860e"
-          }
-        ]
-      },
-      {
-        "id": "30343722345a4abd",
-        "type": "tabs",
-        "dimension": 46.34317862165963,
-        "children": [
-          {
-            "id": "b080373b093a1702",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "计算机基础/数据结构/王道数据结构.md",
-                "mode": "source",
-                "source": true
-              }
-            },
-            "group": "ec0ed627ba10860e"
+            }
           }
         ]
       }
@@ -108,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "计算机基础/数据结构/王道数据结构.md",
+                "file": "开发技能/Git/Git入门.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -136,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "计算机基础/数据结构/王道数据结构.md",
+                "file": "开发技能/Git/Git入门.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": false
               }
@@ -148,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "计算机基础/数据结构/王道数据结构.md"
+                "file": "开发技能/Git/Git入门.md"
               }
             }
           },
@@ -208,10 +186,10 @@
       "vscode-editor:新建代码文件": false
     }
   },
-  "active": "b080373b093a1702",
+  "active": "34de717e18fb418a",
   "lastOpenFiles": [
-    "未命名.md",
     "计算机基础/数据结构/王道数据结构.md",
+    "未命名.md",
     "开发技能/数据库/SQL必知必会.md",
     "计算机基础/操作系统原理/操作系统导论.md",
     "开发技能/Linux命令/鸟哥的Linux私房菜.md",
