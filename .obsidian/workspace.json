@@ -13,11 +13,31 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发技能/Git/Git入门.md",
+                "file": "杂项/草稿.md",
                 "mode": "preview",
                 "source": true
               }
-            }
+            },
+            "group": "5a500667f9434635"
+          }
+        ]
+      },
+      {
+        "id": "18579dd6d7029530",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5a710828aaaaa50d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "杂项/草稿.md",
+                "mode": "source",
+                "source": true
+              }
+            },
+            "group": "5a500667f9434635"
           }
         ]
       }
@@ -86,7 +106,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "开发技能/Git/Git入门.md",
+                "file": "杂项/草稿.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +134,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "开发技能/Git/Git入门.md",
+                "file": "杂项/草稿.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": false
               }
@@ -126,7 +146,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "开发技能/Git/Git入门.md"
+                "file": "杂项/草稿.md"
               }
             }
           },
@@ -186,8 +206,9 @@
       "vscode-editor:新建代码文件": false
     }
   },
-  "active": "34de717e18fb418a",
+  "active": "5a710828aaaaa50d",
   "lastOpenFiles": [
+    "开发技能/Git/Git入门.md",
     "计算机基础/数据结构/王道数据结构.md",
     "未命名.md",
     "开发技能/数据库/SQL必知必会.md",
@@ -195,7 +216,6 @@
     "开发技能/Linux命令/鸟哥的Linux私房菜.md",
     "算法/挑战程序设计竞赛.md",
     "程序设计语言/C++/C++ Primer.md",
-    "开发技能/Git/Git入门.md",
     "算法/Algorithm_PrincetonUniversity.md",
     "EA269C57FCE480748A8D543CD6F7B7CA.png",
     "README.md",
