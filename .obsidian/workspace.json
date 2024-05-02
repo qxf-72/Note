@@ -4,40 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "c42a379db70e380f",
+        "id": "15527824c4b210cb",
         "type": "tabs",
         "children": [
           {
-            "id": "34de717e18fb418a",
+            "id": "f9929acbbbc57b19",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "杂项/草稿.md",
-                "mode": "preview",
-                "source": true
-              }
-            },
-            "group": "5a500667f9434635"
-          }
-        ]
-      },
-      {
-        "id": "18579dd6d7029530",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "5a710828aaaaa50d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "杂项/草稿.md",
-                "mode": "source",
-                "source": true
-              }
-            },
-            "group": "5a500667f9434635"
+              "type": "empty",
+              "state": {}
+            }
           }
         ]
       }
@@ -89,8 +65,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 361.5,
-    "collapsed": true
+    "width": 361.5
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -106,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "杂项/草稿.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -134,7 +108,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "杂项/草稿.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": false
               }
@@ -145,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "杂项/草稿.md"
-              }
+              "state": {}
             }
           },
           {
@@ -206,8 +177,11 @@
       "vscode-editor:新建代码文件": false
     }
   },
-  "active": "5a710828aaaaa50d",
+  "active": "f9929acbbbc57b19",
   "lastOpenFiles": [
+    "开发技能/编译工具/跟我一起写Makefile.md",
+    "计算机基础/计算机组成原理/汇编语言.md",
+    "杂项/草稿.md",
     "开发技能/Git/Git入门.md",
     "计算机基础/数据结构/王道数据结构.md",
     "未命名.md",
@@ -227,15 +201,12 @@
     "开发工具/数据库/MySQL是怎样运行的.md",
     "开发工具/数据库/SQL必知必会.md",
     "算法分析与设计/算法书籍/算法竞赛进阶指南.md",
-    "计算机基础/计算机组成原理/汇编语言.md",
     "开发工具/Make工具/跟我一起写Makefile.md",
     "计算机基础/计算机网络/计算机网络.md",
     "开发工具/Git/Git入门.md",
     "开发工具/Linux/Vim实用技巧.md",
     "程序设计语言/Python/Python编程：从入门到实践.md",
-    "算法分析与设计/算法书籍/Algorithm_PrincetonUniversity.md",
     "杂项/思维导图/SQL必知必会.mm",
-    "杂项/README.md",
     "9A06F5FA339DC751B8032B8840B77BD7.png",
     "杂项/思维导图/汇编语言.mm",
     "开发工具/Make工具",
