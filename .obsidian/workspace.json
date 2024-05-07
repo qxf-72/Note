@@ -11,8 +11,12 @@
             "id": "f9929acbbbc57b19",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "杂项/草稿.md",
+                "mode": "preview",
+                "source": true
+              }
             }
           }
         ]
@@ -81,6 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "杂项/草稿.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -108,6 +113,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "杂项/草稿.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": false
               }
@@ -118,7 +124,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "杂项/草稿.md"
+              }
             }
           },
           {
@@ -179,6 +187,8 @@
   },
   "active": "f9929acbbbc57b19",
   "lastOpenFiles": [
+    "README.md",
+    "算法/Algorithm_PrincetonUniversity.md",
     "开发技能/编译工具/跟我一起写Makefile.md",
     "计算机基础/计算机组成原理/汇编语言.md",
     "杂项/草稿.md",
@@ -190,9 +200,7 @@
     "开发技能/Linux命令/鸟哥的Linux私房菜.md",
     "算法/挑战程序设计竞赛.md",
     "程序设计语言/C++/C++ Primer.md",
-    "算法/Algorithm_PrincetonUniversity.md",
     "EA269C57FCE480748A8D543CD6F7B7CA.png",
-    "README.md",
     "程序设计语言/C++/Effective C++.md",
     "计算机基础/计算机组成原理/计算机组成原理.md",
     "算法分析与设计/算法书籍/挑战程序设计竞赛.md",
