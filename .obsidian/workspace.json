@@ -6,6 +6,7 @@
       {
         "id": "15527824c4b210cb",
         "type": "tabs",
+        "dimension": 55.9774964838256,
         "children": [
           {
             "id": "f9929acbbbc57b19",
@@ -17,7 +18,28 @@
                 "mode": "preview",
                 "source": true
               }
-            }
+            },
+            "group": "11987899eb471381"
+          }
+        ]
+      },
+      {
+        "id": "6e8e2abdf696dea4",
+        "type": "tabs",
+        "dimension": 44.0225035161744,
+        "children": [
+          {
+            "id": "6be2cabe7ec6ab24",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "杂项/草稿.md",
+                "mode": "source",
+                "source": true
+              }
+            },
+            "group": "11987899eb471381"
           }
         ]
       }
@@ -69,7 +91,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 361.5
+    "width": 361.5,
+    "collapsed": true
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -185,7 +208,7 @@
       "vscode-editor:新建代码文件": false
     }
   },
-  "active": "f9929acbbbc57b19",
+  "active": "6be2cabe7ec6ab24",
   "lastOpenFiles": [
     "README.md",
     "算法/Algorithm_PrincetonUniversity.md",
