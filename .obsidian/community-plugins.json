@@ -1,5 +1,4 @@
 [
-  "mousewheel-image-zoom",
   "obsidian-quiet-outline",
   "obsidian-excalidraw-plugin",
   "obsidian-emoji-toolbar",
@@ -9,6 +8,6 @@
   "obsidian-git",
   "obsidian-mkdocs-publisher",
   "calendar",
-  "obsidian-tasks-plugin",
-  "vscode-editor"
+  "vscode-editor",
+  "obsidian-style-settings"
 ]

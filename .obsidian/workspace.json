@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发技能/Linux/Git入门.md",
+                "file": "计算机基础/计算机网络/计算机网络.md",
                 "mode": "preview",
                 "source": true
               }
@@ -34,7 +34,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发技能/Linux/Git入门.md",
+                "file": "计算机基础/计算机网络/计算机网络.md",
                 "mode": "source",
                 "source": true
               }
@@ -108,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "开发技能/Linux/Git入门.md",
+                "file": "计算机基础/计算机网络/计算机网络.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -136,7 +136,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "开发技能/Linux/Git入门.md",
+                "file": "计算机基础/计算机网络/计算机网络.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": false
               }
@@ -148,7 +148,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "开发技能/Linux/Git入门.md"
+                "file": "计算机基础/计算机网络/计算机网络.md"
               }
             }
           },
@@ -208,19 +208,19 @@
       "vscode-editor:新建代码文件": false
     }
   },
-  "active": "fb8dc3bc7f6bb644",
+  "active": "6be2cabe7ec6ab24",
   "lastOpenFiles": [
-    "杂项/草稿.md",
+    "计算机基础/操作系统原理/操作系统导论.md",
     "程序设计语言/C++/C++ Primer.md",
+    "开发技能/Linux/Git入门.md",
+    "杂项/草稿.md",
     "README.md",
     "算法/Algorithm_PrincetonUniversity.md",
     "开发技能/编译工具/跟我一起写Makefile.md",
     "计算机基础/计算机组成原理/汇编语言.md",
-    "开发技能/Linux/Git入门.md",
     "计算机基础/数据结构/王道数据结构.md",
     "未命名.md",
     "开发技能/数据库/SQL必知必会.md",
-    "计算机基础/操作系统原理/操作系统导论.md",
     "开发技能/Linux/鸟哥的Linux私房菜.md",
     "算法/挑战程序设计竞赛.md",
     "EA269C57FCE480748A8D543CD6F7B7CA.png",
