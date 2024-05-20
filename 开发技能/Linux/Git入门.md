@@ -109,7 +109,7 @@ git commit
 
 工作区中有一个隐藏的目录`.git`，称为版本库。其中有`stage`暂存区和`master`，以及指向`master`的指针`HEAD`。
 使用`add`把文件从工作区添加到暂存区，使用`commit`把文件从暂存区提交到`master`对应分支上面。
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/jpeg/29674612/1684805720462-920a249b-9f47-4775-a18b-319ebd0272de.jpeg#averageHue=%23ebebeb&clientId=u5f56db7d-86a8-4&from=ui&height=254&id=u77f58556&originHeight=418&originWidth=823&originalType=binary&ratio=1.5&rotation=0&showTitle=false&size=44132&status=done&style=none&taskId=u0b7d36d0-3313-4875-b6be-2c9429ffa2c&title=&width=500" width="500" /> </div>
+<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/jpeg/29674612/1684805720462-920a249b-9f47-4775-a18b-319ebd0272de.jpeg" width="500" /> </div>
 
 
 ## 管理修改
@@ -126,7 +126,7 @@ Git跟踪并管理的是修改，而非文件本身。
 如果文件修改之后`add`了，但是还没有`commit`，使用`git reset HEAD filename`进行撤销，将文件重现放回工作区，所以`reset`即可以是版本回退，也可以是暂存区放回工作区。
 ## 删除文件
 当在工作区删除一个文件是`rm test.txt`，`git status`会进行提示：
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/jpeg/29674612/1684810134399-32de527c-9f12-485f-862d-40f73f5a7896.jpeg#averageHue=%23320c26&clientId=udf680d48-0111-4&from=ui&height=121&id=u831b4d32&originHeight=304&originWidth=1508&originalType=binary&ratio=1.5&rotation=0&showTitle=false&size=127274&status=done&style=none&taskId=u4c5eb60c-df09-4390-b295-98a6f1e5fd7&title=&width=600" width="600" /> </div>
+<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/jpeg/29674612/1684810134399-32de527c-9f12-485f-862d-40f73f5a7896.jpeg" width="600" /> </div>
 
 
 此时有两个选择：
@@ -216,7 +216,7 @@ git remote add origin git@github.com:用户名/仓库名.git
 在多人协作的工作中，可以创建一个独立分支，个人在独立分支上面创作，最后再合并分支。
 ## 创建与合并分支
 一开始只有`master`分支，即主分支，`HEAD`并不是一定是指向主分支，而不是指向当前分支。下图展示了，创建分支并在新分支上面更改文件：
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/jpeg/29674612/1684821326786-f9d36958-bb54-4c1b-bc59-f608a029c06c.jpeg#averageHue=%23fcfcfc&clientId=uf08becf9-a3ca-4&from=ui&height=249&id=ua2250f9c&originHeight=381&originWidth=918&originalType=binary&ratio=1.5&rotation=0&showTitle=false&size=19423&status=done&style=none&taskId=ub48a6e5a-29c5-49a3-8682-2eb4fe74854&title=&width=600" width="600" /> </div>
+<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/jpeg/29674612/1684821326786-f9d36958-bb54-4c1b-bc59-f608a029c06c.jpeg" width="600" /> </div>
 
 
 如果新分支`dev`上面的工作完成了，直接将`master`指向`dev`当前提交就完成了合并。
@@ -226,28 +226,28 @@ git remote add origin git@github.com:用户名/仓库名.git
 - `git checkout dev`
 
 使用`git branch`查看当前分支，当前分支之前会有一个`*`，如下图：
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/jpeg/29674612/1684821648042-7e203841-0334-4554-8153-ddaf38d74c54.jpeg#averageHue=%23300a25&clientId=uf08becf9-a3ca-4&from=ui&height=96&id=u05207a00&originHeight=234&originWidth=1468&originalType=binary&ratio=1.5&rotation=0&showTitle=false&size=80590&status=done&style=none&taskId=ubbf5bb9c-eccd-44b5-87b1-3f36ecffaed&title=&width=600" width="600" /> </div>
+<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/jpeg/29674612/1684821648042-7e203841-0334-4554-8153-ddaf38d74c54.jpeg" width="600" /> </div>
 
 
 
 当需要合并分支时，先切换回到主分支上面，然后使用`git merge dev`将分支`dev`合并到当前分支上面。合并分支之后，就可以删除原来的分支了`git branch -d dev`。
 ## 解决冲突
 当创建分支之后，不同分支对于同一个文件都做出来修改，此时进行合并分支操作，Git无法执行“快速合并”，只能试图把各自的修改合并起来，但这种合并就可能会有冲突。如下图：
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/jpeg/29674612/1684841276657-5255df96-cbdb-4fc8-b46c-c99630ec4aab.jpeg#averageHue=%23310b26&clientId=u1a9a66ab-ef86-4&from=ui&height=58&id=u11a8fc26&originHeight=107&originWidth=1107&originalType=binary&ratio=1.5&rotation=0&showTitle=false&size=44114&status=done&style=none&taskId=u1a49f905-2115-45da-a8f6-9c1acc0749f&title=&width=600" width="600" /> </div>
+<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/jpeg/29674612/1684841276657-5255df96-cbdb-4fc8-b46c-c99630ec4aab.jpeg" width="600" /> </div>
 
 
 此时打开冲突的文件，可以发现，`====`和`<<<<<`分隔开了不同分支提交的内容。
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/jpeg/29674612/1684841331107-6773fe71-6fb2-4cd6-a428-9c8e0d3f2b00.jpeg#averageHue=%23300924&clientId=u1a9a66ab-ef86-4&from=ui&height=167&id=u1aebe06e&originHeight=196&originWidth=706&originalType=binary&ratio=1.5&rotation=0&showTitle=false&size=22029&status=done&style=none&taskId=ud71daa4b-5d16-4f8d-8d1a-f65703f6420&title=&width=600" width="600" /> </div>
+<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/jpeg/29674612/1684841331107-6773fe71-6fb2-4cd6-a428-9c8e0d3f2b00.jpeg" width="600" /> </div>
 
 
 
 此时需要处理冲突，在主分支上面修改文件然后`add`和`commit`。此时并没有完全合并成功（分支指针并没有指向相同地方），但是在主分支上面已经有合并了`dev`分支的内容，所以可以将`dev`分支删除。
 
 可以使用`git log --graph`查看分支合并图：
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/jpeg/29674612/1684841818626-29c731d9-8027-4321-a541-8e9a37e1a0a9.jpeg#averageHue=%23300924&clientId=u1a9a66ab-ef86-4&from=ui&height=191&id=u4b3da150&originHeight=340&originWidth=1066&originalType=binary&ratio=1.5&rotation=0&showTitle=false&size=87432&status=done&style=none&taskId=u49c9ede3-570c-4a1d-8210-d81193c2e6a&title=&width=600" width="600" /> </div>
+<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/jpeg/29674612/1684841818626-29c731d9-8027-4321-a541-8e9a37e1a0a9.jpeg" width="600" /> </div>
 
 
-
+---
 
 
 
