@@ -243,7 +243,8 @@ git remote add origin git@github.com:用户名/仓库名.git
 
 此时需要处理冲突，在主分支上面修改文件然后`add`和`commit`。此时并没有完全合并成功（分支指针并没有指向相同地方），但是在主分支上面已经有合并了`dev`分支的内容，所以可以将`dev`分支删除。
 
-可以使用`git log --graph`查看分支合并图：
+可以使用 `git log --graph` 查看分支合并图：
+
 <div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/jpeg/29674612/1684841818626-29c731d9-8027-4321-a541-8e9a37e1a0a9.jpeg" width="600" /> </div>
 
 
