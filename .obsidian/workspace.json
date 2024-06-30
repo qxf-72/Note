@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "杂项/课堂笔记/机器学习.md",
+                "file": "开发技能/编译工具/跟我一起写Makefile.md",
                 "mode": "preview",
                 "source": true
               }
@@ -34,7 +34,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "杂项/课堂笔记/机器学习.md",
+                "file": "开发技能/编译工具/跟我一起写Makefile.md",
                 "mode": "source",
                 "source": true
               }
@@ -91,8 +91,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 281.5,
-    "collapsed": true
+    "width": 281.5
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -108,7 +107,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "杂项/课堂笔记/机器学习.md",
+                "file": "开发技能/编译工具/跟我一起写Makefile.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -136,7 +135,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "杂项/课堂笔记/机器学习.md",
+                "file": "开发技能/编译工具/跟我一起写Makefile.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": false
               }
@@ -148,7 +147,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "杂项/课堂笔记/机器学习.md"
+                "file": "开发技能/编译工具/跟我一起写Makefile.md"
               }
             }
           },
@@ -208,9 +207,13 @@
       "vscode-editor:新建代码文件": false
     }
   },
-  "active": "f9929acbbbc57b19",
+  "active": "6be2cabe7ec6ab24",
   "lastOpenFiles": [
+    "算法/Algorithm_PrincetonUniversity.md",
+    "算法/挑战程序设计竞赛.md",
+    "杂项/课堂笔记/数字图像处理.md",
     "杂项/课堂笔记/深度学习.md",
+    "杂项/课堂笔记/机器人操作系统.md",
     "杂项/课堂笔记/机器学习.md",
     "杂项/课堂笔记/大三下学期",
     "开发技能/Linux/Ubuntu 使用记录.md",
@@ -225,19 +228,15 @@
     "程序设计语言/C++/C++ Primer.md",
     "杂项/草稿.md",
     "README.md",
-    "算法/Algorithm_PrincetonUniversity.md",
     "计算机基础/计算机组成原理/汇编语言.md",
     "计算机基础/数据结构/王道数据结构.md",
     "未命名.md",
     "开发技能/数据库/SQL必知必会.md",
-    "算法/挑战程序设计竞赛.md",
     "EA269C57FCE480748A8D543CD6F7B7CA.png",
     "程序设计语言/C++/Effective C++.md",
     "算法分析与设计/算法书籍/挑战程序设计竞赛.md",
     "算法分析与设计/OJ笔记/Codeforces.md",
     "算法分析与设计/OJ笔记/Leetcode.md",
-    "开发工具/数据库/MySQL是怎样运行的.md",
-    "开发工具/数据库/SQL必知必会.md",
     "杂项/思维导图/SQL必知必会.mm",
     "9A06F5FA339DC751B8032B8840B77BD7.png",
     "杂项/思维导图/汇编语言.mm",
