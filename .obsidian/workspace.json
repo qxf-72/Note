@@ -193,7 +193,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 240.5
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -210,13 +210,13 @@
   },
   "active": "6be2cabe7ec6ab24",
   "lastOpenFiles": [
-    "杂项/机器学习.md",
+    "杂项/深度学习.md",
+    "杂项/数字图像处理.md",
     "杂项/计算机视觉.md",
+    "杂项/机器学习.md",
     "开发技能/编译工具/跟我一起写Makefile.md",
     "算法/Algorithm_PrincetonUniversity.md",
     "算法/挑战程序设计竞赛.md",
-    "杂项/数字图像处理.md",
-    "杂项/深度学习.md",
     "杂项/机器人操作系统.md",
     "杂项/课堂笔记/大三下学期",
     "开发技能/Linux/Ubuntu 使用记录.md",
