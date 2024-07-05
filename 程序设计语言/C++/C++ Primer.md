@@ -1,8 +1,10 @@
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/jpeg/29674612/1682560371240-b93425bf-be82-44ba-afbc-a047a4812bda.jpeg" width="500" /> </div>
-
+<center>
+<img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230427095222.jpg" width="500" />
+</center>
 
 
 # 第1章  绪论
+
 **GUN编译器**
 
 - 编译指令： `g++`
@@ -46,21 +48,26 @@ C++未定义IO语句，iostream库中包含了两个基础类型`istream`（输�
 
 
 # 第2章  变量和基本类型
+
 ## 2.1 基本内置类型
+
 ### 2.1.1 基本内置类型
-基本内置类型包括算术类型和空类型。
 
-- 算术类型：包括整型（包括字符和布尔类型）和浮点型。
+基本内置类型包括**算术类型**和**空类型**。
 
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/png/29674612/1673602332582-e7eba184-105b-4d21-9da4-84f8d3f38752.png" width="700" /> </div>
+- 算术类型：包括**整型（包括字符和布尔类型）** 和**浮点型**。
 
+
+<center>
+<img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-01-13_173031.png" width="600" />
+</center>
 
 
    - C++仅限定其最小尺寸
-   - ==一般而言，类型 float 和 double 类型分别有7和16 个有效位。==
+   - 一般而言，类型 float 和 double 类型分别有7和16 个有效位。
 - 带符号类型和无符号类型：
    - 整型（字符除外）都是带符号类型
-   - ==字符型被分为三种：char、signed char、unsigned char==，其中表现形式只有两种：带符号和无符号，==类型char会表现为两种标准形式其中一种，具体由编译器决定==。
+   - <span style="background:#fff88f">字符型被分为三种：char、signed char、unsigned char</span>，其中表现形式只有两种：带符号和无符号，类型char会表现为两种标准形式其中一种，具体由编译器决定。
 - 类型选择建议：
    -  当数值不可能为负数的时候，选用无符号类型。
    - 实际应用中，long和int尺寸一般相同，一般使用int执行整数运算，当超出int时，使用long long。
@@ -78,9 +85,9 @@ C++未定义IO语句，iostream库中包含了两个基础类型`istream`（输�
 
 - 布尔类型和算术类型：布尔类型转化为算术类型，false转化为0，true转化为1
 - 带符号和无符号 赋超出范围的值：
-   - ==无符号数结果为初始值对范围长度取余的结果（高位被截断）==
-   - ==带符号的结果未定义==
-- 含无符号类型的表达式：==算术表达式含有无符号类型时，其中整型会自动转化为无符号类型（相当于给无符号数赋值整数初始值）==
+   - 无符号数结果为初始值对范围长度取余的结果（高位被截断）
+   - 带符号的结果未定义
+- 含无符号类型的表达式：算术表达式含有无符号类型时，其中**整型会自动转化为无符号类型**（相当于给无符号数赋值整数初始值）
 
 ---
 
@@ -93,13 +100,16 @@ C++未定义IO语句，iostream库中包含了两个基础类型`istream`（输�
 ### 2.1.3 字面值常量
 
 - **整数字面值**：由数值和符号决定
-   - 十进制：带符号数，类型为int、long、long long中能够容纳数值的尺寸最小的那个，十进制字面值不会是负数，负数的字面量不包括负号，负号标志对字面值取负。
-   - 八进制和十六进制：是 int、long、long long 和 他们的无符号形式中能够容纳数值的尺寸最小的那个。
+   - 十进制：带符号数，类型为int、long、long long中能够容纳数值的尺寸最小的那个，十进制字面值不会是负数，负数的字面量不包括负号，负号标志对字面值取负
+   - 八进制和十六进制：是 int、long、long long 和 他们的无符号形式中能够容纳数值的尺寸最小的那个
 - **浮点数字面值**：默认为double。
-- **字符和字符串字面值**：如果两个字符串字面值位置紧邻且仅仅由空格、缩进和换行符分隔，则实际上是一个整体。
-- **转义序列**：\之后可以加多个十六进制数字，但只能跟3个及以内个八进制数。
+- **字符和字符串字面值**：如果两个字符串字面值位置紧邻且仅仅由空格、缩进和换行符分隔，则实际上是一个整体
+- **转义序列**：\之后可以加多个十六进制数字，但最多只能接三个八进制数
 
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/png/29674612/1673746157333-fd8ee2fb-d43d-4556-adf9-8b03985838c1.png" width="600" /> </div>
+<center>
+<img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-01-15_092910.png" width="600" />
+</center>
+
 
 
 > 注意以上的前缀部分，中文字符串是以字符数组方式存储的，所以在给字符数组赋值时需要在字符串常量前面加上修饰的前缀
@@ -116,14 +126,18 @@ C++未定义IO语句，iostream库中包含了两个基础类型`istream`（输�
 
 
 ## 2.2 变量
+
 ### 2.2.1  变量定义
 
-- 定义：提供一个具有名字的、可供程序操作的存储空间 ==（涉及内存操作 ）==。
-- 初始值：在C++中，初始化和赋值是不同的操作，初始化时创建变量时赋予一个初始值，赋值含义为把对象当前的值擦除，用一个新的值来替代。
-- ==列表初始化==：一种用花括号来初始化的方式，如下图。使用列表初始化时，==如果初始值存在丢失信息的风险，编译器会报错==（如，给整型赋一个浮点初始值）。
+- 定义：提供一个具有名字的、可供程序操作的存储空间 （涉及内存操作 ）。
+- 初始化：在 C++中，初始化和赋值是不同的操作，初始化时创建变量时赋予一个初始值，赋值含义为把对象当前的值擦除，用一个新的值来替代。
+- 列表初始化：一种用花括号来初始化的方式，如下图。**使用列表初始化时，如果初始值存在丢失信息的风险，编译器会报错**（如，给整型赋一个浮点初始值）。
 
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/png/29674612/1673746888237-82189b7e-db42-42b8-88a0-bf6bf069721b.png#averageHue=%23fcfcfc&clientId=ucc85cb48-5064-4&from=ui&height=115&id=u02f4b55f&originHeight=162&originWidth=845&originalType=binary&ratio=1&rotation=0&showTitle=false&size=25184&status=done&style=none&taskId=u7d18743b-2bee-4fde-b2aa-3f067cbcfd6&title=&width=598" width="598" /> </div>
 
+
+<center>
+<img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-01-15_094047.png" width="500" />
+</center>
 
 
 - 默认初始化：当内置类型的变量定义在函数体之外，作为全局变量，且未被显式初始化时，会被默认初始化为 0。
@@ -138,7 +152,8 @@ C++未定义IO语句，iostream库中包含了两个基础类型`istream`（输�
 
 
 ### 2.2.2  声明和定义
-C++支持==分离式编译==，允许将程序分隔为若干个文件，每个文件可被独立编译，需要有在文件间共享代码的方式。
+
+C++支持分离式编译，允许将程序分隔为若干个文件，每个文件可被独立编译，需要有在文件间共享代码的方式。
 
 - 声明：使得名字被程序所知，如果要声明一个变量而不定义，在变量名前加上关键字 extern ，另外任何有显式初始化的声明就成了定义。
 - 定义：创建与名字关联的实体，即申请内存。
@@ -158,11 +173,13 @@ C++支持==分离式编译==，允许将程序分隔为若干个文件，每个�
 
 
 ## 2.3 复合类型
-复合类型是指==基于其他类型定义的类型==，主要包括引用和指针。
+
+复合类型是指**基于其他类型定义的类型**，主要包括引用和指针。
+
 ### 2.3.1  引用
 引用就是为对象起了另一个名字，内部其实通过指针实现，但是简化了指针的操作，且与指针有所不同，引用不是一个对象，只是一个对象的别名。
 - 定义引用时必须把引用和初始值绑定，一旦绑定，引用无法换绑到其他对象。
-- ==引用只能定义在对象上==，不能与字面值或表达式计算结果绑定。
+- **引用只能定义在对象上**，不能与字面值或表达式计算结果绑定。
 
 ---
 
@@ -174,9 +191,9 @@ C++支持==分离式编译==，允许将程序分隔为若干个文件，每个�
 
 ### 2.3.2  指针
 
-- ==指针是一个对象==，允许赋值和拷贝，可以在声明周期内先后指向不同对象，无需在定义时就赋初值。
+- 指针是一个对象，允许赋值和拷贝，可以在声明周期内先后指向不同对象，无需在定义时就赋初值。
 - 空指针：C++11引入一个新的字面值nullptr表示空指针，新标准下避免使用NULL（预处理变量，值为0）。
-- `void*` 指针：一种特殊指针类型，==可以存放任意对象地址==，不能直接操作 void 所指对象，因为并不清楚对象是何类型，可以进行何种操作。
+- `void*` 指针：一种特殊指针类型，可以存放任意对象地址，不能直接操作 void 所指对象，因为并不清楚对象是何类型，可以进行何种操作。
 
 ---
 
@@ -190,13 +207,26 @@ C++支持==分离式编译==，允许将程序分隔为若干个文件，每个�
 
 
 
-## 2.4 `const`
-const限定符本质上是对变量所能做的操作做出限制。
+## 2.4 const 修饰符
+
+const 限定符本质上是对变量所能做的操作做出限制。
+
 ### 2.4.1  const 对象文件内有效
-当用初始化方法定义一个const对象时，编译器在编译过程中把用到该变量的地方替换为对应的值。
-默认状态下，const对象仅仅在文件内有效，多个文件出现同名的const值时，相当于在不问文件定义了独立变量（不同于普通变量，对于普通全局变量，在另一个文件用关键字extern声明后即可使用）。
-若要不同文件使用同一个const对象，必须将该对象设置为全局变量，且在加关键字extern，以表明非本文件独有，如下：
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/png/29674612/1673764377043-dcfd2d50-cea7-4823-afe8-1a86db696ce5.png#averageHue=%23f9f9f9&clientId=uf91d60cf-14bd-4&from=ui&height=76&id=ud128337d&originHeight=197&originWidth=1454&originalType=binary&ratio=1&rotation=0&showTitle=false&size=78732&status=done&style=none&taskId=u7482c472-9df8-4d26-afbd-7190199b3c1&title=&width=562" width="562" /> </div>
+
+当用初始化方法定义一个 const 对象时，编译器在编译过程中把用到该变量的地方替换为对应的值。
+
+默认状态下，const 对象仅仅在文件内有效，多个文件出现同名的 const 值时，相当于在不问文件定义了独立变量（不同于普通变量，对于普通全局变量，在另一个文件用关键字 extern 声明后即可使用）。
+
+若要不同文件使用同一个 const 对象，必须将该对象设置为全局变量，且在加关键字 extern，以表明非本文件独有，如下：
+
+```cpp
+// file_1.cc中定义并初始化了一个常量，该常量能被其他文件访问
+extern const int bufSize = fcn();
+
+// file_1.h中引入了之前定义的常量，是同一个变量
+extern const int bufSzie;
+```
+
 
 ---
 
@@ -208,16 +238,18 @@ const限定符本质上是对变量所能做的操作做出限制。
 
 
 ### 2.4.2  const 的引用
-可以把引用绑定到const对象上，称为对常量的引用；==一般而言，引用类型必须与其所引用的对象类型一致==，但也有例外的情况：
+可以把引用绑定到const对象上，称为对常量的引用；一般而言，引用类型必须与其所引用的对象类型一致，但也有例外的情况：
 
 - 初始化常量引用允许用任意表达式作为初始值，只要表达式结果能够转化为引用的类型：
 
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/png/29674612/1673768971070-67227cef-ce1b-4b80-a8a5-53b383bb590f.png#averageHue=%23fdfdfd&clientId=uf91d60cf-14bd-4&from=ui&height=46&id=u6603e73d&originHeight=69&originWidth=380&originalType=binary&ratio=1&rotation=0&showTitle=false&size=2995&status=done&style=none&taskId=uf195e0f6-c71d-4db0-812c-01c44b3c869&title=&width=252" width="252" /> </div>
+```cpp
+double i=1.1;
+const int& ri=i;
+```
 
+以上情况不会报错，具体实现过程**相当于申请了一个临时量 const int，然后把 i 的值类型转换后存储到临时量里面，ri 绑定的对象为临时量**，这是因为有 const 限定，引用 ri，无法对临时量进行操作，所以操作合法。
 
-以上情况不会报错，具体实现过程==相当于申请了一个临时量const int，然后把 i 的值类型转换后存储到临时量里面，ri 绑定的对象为临时量==，这是因为有const限定，引用ri，无法对临时量进行操作，所以操作合法。
-当引用不是常量时，相当于通过引用对临时量进行操作，而不是 i ，C++把这种行为归为非法，如下图：
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/png/29674612/1673769190649-e19a7412-7d0f-49ef-a36d-63094705e41a.png#averageHue=%23fdfdfd&clientId=uf91d60cf-14bd-4&from=ui&height=48&id=ua654ceb1&originHeight=84&originWidth=378&originalType=binary&ratio=1&rotation=0&showTitle=false&size=2722&status=done&style=none&taskId=ud8f76963-c656-44f8-a98d-d210050ebad&title=&width=216" width="216" /> </div>
+但是当引用不是常量时，相当于**通过引用对临时量进行操作**，而不是 i ，C++把这种行为归为非法。
 
 
 
@@ -235,13 +267,16 @@ const限定符本质上是对变量所能做的操作做出限制。
 
 - **指向常量的指针**：一般而言，指针类型必须和所指内容对应，也是指向const对象的指针必须为const，但是const指针却可以指向非const对象，此时只是能够通过指针对 对象的操作有了限制。
 
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/png/29674612/1673770224459-5ff1bfac-723a-4e17-a08c-4b0ea5eb9a0e.png#averageHue=%23f3f3f3&clientId=uf91d60cf-14bd-4&from=ui&height=72&id=udfec648f&originHeight=183&originWidth=1367&originalType=binary&ratio=1&rotation=0&showTitle=false&size=94157&status=done&style=none&taskId=u7f227832-0f7f-4eab-be02-be9ee5afc68&title=&width=538" width="538" /> </div>
-
-
+<center>
+<img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-01-15_160925.png" width="600" />
+</center>
 
 - **常量指针**：const 指针，指针本身为常量，即不能换绑所指对象，但所指对象内容可以更改
 
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/png/29674612/1673770446996-125c1179-63cf-4184-a5d9-e27e61bcf9ff.png#averageHue=%23fefdfc&clientId=uf91d60cf-14bd-4&from=ui&height=63&id=udf9d8bf6&originHeight=107&originWidth=637&originalType=binary&ratio=1&rotation=0&showTitle=false&size=9608&status=done&style=none&taskId=u25f56944-d4a2-46d4-b173-cc0128392ab&title=&width=378" width="378" /> </div>
+<center>
+<img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-01-15_161357.png" width="400" />
+</center>
+
 
 ---
 
@@ -253,9 +288,10 @@ const限定符本质上是对变量所能做的操作做出限制。
 
 ### 2.4.4  顶层 const 和底层 const
 
-- **顶层const**：指针本身是一个常量，更一般的顶层const能推广到任意对象，表示==对象本身为常量==；特别指出，指针可以同时是顶层const和底层const。
-- **底层const**：指针==所指对象是一个常量==，同样，底层const也能推广到引用。
-- 顶层 const 和底层 const 对操作影响：当进行对象拷贝复制时，顶层 const 不受影响，拷入和拷出的对象必须用相同的低层 const，或者能够进行类型转换（非 const 可以转化为 const，反之则不行）。
+- **顶层 const**：指针本身是一个常量，更一般的顶层 const 能推广到任意对象，表示**对象本身为常量**；特别指出，指针可以同时是顶层 const 和底层 const。
+- **底层const**：**指针所指对象是一个常量**，同样，底层const也能推广到引用。
+- 顶层 const 和底层 const 对操作影响：
+	- 当进行对象拷贝复制时，顶层 const 不受影响，拷入和拷出的对象必须用相同的低层 const，或者能够进行类型转换（非 const 可以转化为 const，反之则不行）。
 
 ---
 
@@ -269,10 +305,12 @@ const限定符本质上是对变量所能做的操作做出限制。
 ### 2.4.5  常量表达式和 constexpr
 
 - **常量表达式**：值不会改变，并且在编译过程（还没运行）就能得到计算结果的表达式
-- **constexpr 变量**：即**变量本身为常量**，且使用常量表达式初始化，由于常量表达式结果必须在编译时就能扣获取，所以一般使用字面值进行初始化；==当使用 constexpr 修饰指针时，仅表示指针本身为常量，（**即 constexper 修饰的是顶层 const**）==。
+- **constexpr 变量**：即**变量本身为常量**，且使用常量表达式初始化，由于常量表达式结果必须在编译时就能扣获取，所以一般使用字面值进行初始化；当使用 constexpr 修饰指针时，仅表示指针本身为常量，（**即 constexper 修饰的是顶层 const**）。
 
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/png/29674612/1676856948814-d5209e6d-444b-401c-badf-6c267397c791.png" width="463" /> </div>
 
+<center>
+<img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-02-20_093440.png" width="400" />
+</center>
 
 ---
 
@@ -287,11 +325,18 @@ const限定符本质上是对变量所能做的操作做出限制。
 
 
 ## 2.5 处理类型
+
 ### 2.5.1  类型别名
+
 类型别名（type alias）是某种类型的同义词，定义类型别名有以下两种方法：
 
 - typedef：
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/png/29674612/1673834677336-1c54c43a-8090-42b6-a569-b65178f08841.png#averageHue=%23f2f2f2&clientId=u06356861-4d70-4&from=ui&height=45&id=u4648dd9b&originHeight=93&originWidth=1436&originalType=binary&ratio=1&rotation=0&showTitle=false&size=50830&status=done&style=none&taskId=u0407abae-9614-41c2-8ce9-878849bb04b&title=&width=689" width="689" /> </div>
+
+
+<center>
+<img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-01-16_100429.png" width="700" />
+</center>
+
 
 - 别名声明：C++11规定的新方法 
 <div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/png/29674612/1673834825421-0cef22ec-892a-4cab-84d2-2ef8213da7b4.png#averageHue=%23f6f6f6&clientId=u06356861-4d70-4&from=ui&height=34&id=ub218379e&originHeight=67&originWidth=1097&originalType=binary&ratio=1&rotation=0&showTitle=false&size=20639&status=done&style=none&taskId=u697c580e-38bd-4da4-af78-1e4b16c805d&title=&width=550" width="550" /> </div>
