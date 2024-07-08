@@ -6,7 +6,7 @@
       {
         "id": "fe3b7da790869a15",
         "type": "tabs",
-        "dimension": 58.46994535519126,
+        "dimension": 59.97267759562842,
         "children": [
           {
             "id": "a5a7a1d2e9f93ebb",
@@ -26,7 +26,7 @@
       {
         "id": "14fcfe592746c3b6",
         "type": "tabs",
-        "dimension": 41.53005464480874,
+        "dimension": 40.02732240437158,
         "children": [
           {
             "id": "7dc9c2a5e29c44b6",
@@ -35,7 +35,7 @@
               "type": "markdown",
               "state": {
                 "file": "计算机基础/数据结构/数据结构.md",
-                "mode": "source",
+                "mode": "preview",
                 "source": true
               }
             },
@@ -91,7 +91,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 264.5,
+    "width": 200,
     "collapsed": true
   },
   "right": {
@@ -208,8 +208,10 @@
       "vscode-editor:新建代码文件": false
     }
   },
-  "active": "7dc9c2a5e29c44b6",
+  "active": "fb8dc3bc7f6bb644",
   "lastOpenFiles": [
+    "计算机基础/数据结构/王道数据结构.md",
+    "计算机基础/数据结构/数据结构.md",
     "程序设计语言/C++/C++ Primer.md",
     "杂项/计算机视觉.md",
     "杂项/深度学习.md",
@@ -231,13 +233,11 @@
     "杂项/草稿.md",
     "README.md",
     "计算机基础/计算机组成原理/汇编语言.md",
-    "计算机基础/数据结构/王道数据结构.md",
     "未命名.md",
     "开发技能/数据库/SQL必知必会.md",
     "EA269C57FCE480748A8D543CD6F7B7CA.png",
     "程序设计语言/C++/Effective C++.md",
     "算法分析与设计/算法书籍/挑战程序设计竞赛.md",
-    "算法分析与设计/OJ笔记/Codeforces.md",
     "杂项/思维导图/SQL必知必会.mm",
     "9A06F5FA339DC751B8032B8840B77BD7.png",
     "杂项/思维导图/汇编语言.mm",
