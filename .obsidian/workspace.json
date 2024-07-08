@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "程序设计语言/C++/C++ Primer.md",
+                "file": "计算机基础/数据结构/数据结构.md",
                 "mode": "preview",
                 "source": true
               }
@@ -34,7 +34,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "程序设计语言/C++/C++ Primer.md",
+                "file": "计算机基础/数据结构/数据结构.md",
                 "mode": "source",
                 "source": true
               }
@@ -108,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "程序设计语言/C++/C++ Primer.md",
+                "file": "计算机基础/数据结构/数据结构.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -136,7 +136,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "程序设计语言/C++/C++ Primer.md",
+                "file": "计算机基础/数据结构/数据结构.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": false
               }
@@ -148,7 +148,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "程序设计语言/C++/C++ Primer.md"
+                "file": "计算机基础/数据结构/数据结构.md"
               }
             }
           },
@@ -210,6 +210,7 @@
   },
   "active": "7dc9c2a5e29c44b6",
   "lastOpenFiles": [
+    "程序设计语言/C++/C++ Primer.md",
     "杂项/计算机视觉.md",
     "杂项/深度学习.md",
     "杂项/数字图像处理.md",
@@ -227,7 +228,6 @@
     "开发技能/Linux/Vim实用技巧.md",
     "计算机基础/计算机网络/计算机网络.md",
     "计算机基础/操作系统原理/操作系统导论.md",
-    "程序设计语言/C++/C++ Primer.md",
     "杂项/草稿.md",
     "README.md",
     "计算机基础/计算机组成原理/汇编语言.md",
