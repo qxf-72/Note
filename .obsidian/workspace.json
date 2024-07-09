@@ -35,7 +35,7 @@
               "type": "markdown",
               "state": {
                 "file": "计算机基础/数据结构/数据结构.md",
-                "mode": "preview",
+                "mode": "source",
                 "source": true
               }
             },
@@ -193,7 +193,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -208,7 +209,7 @@
       "vscode-editor:新建代码文件": false
     }
   },
-  "active": "fb8dc3bc7f6bb644",
+  "active": "7dc9c2a5e29c44b6",
   "lastOpenFiles": [
     "计算机基础/数据结构/王道数据结构.md",
     "计算机基础/数据结构/数据结构.md",
