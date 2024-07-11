@@ -6,7 +6,7 @@
       {
         "id": "fe3b7da790869a15",
         "type": "tabs",
-        "dimension": 52.88461538461539,
+        "dimension": 53.86192754613808,
         "children": [
           {
             "id": "a5a7a1d2e9f93ebb",
@@ -26,7 +26,7 @@
       {
         "id": "14fcfe592746c3b6",
         "type": "tabs",
-        "dimension": 47.11538461538461,
+        "dimension": 46.13807245386193,
         "children": [
           {
             "id": "7dc9c2a5e29c44b6",
@@ -91,7 +91,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
+    "width": 275.5,
     "collapsed": true
   },
   "right": {
@@ -193,8 +193,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -209,36 +208,35 @@
       "vscode-editor:新建代码文件": false
     }
   },
-  "active": "7dc9c2a5e29c44b6",
+  "active": "a5a7a1d2e9f93ebb",
   "lastOpenFiles": [
-    "计算机基础/数据结构/王道数据结构.md",
+    "README.md",
+    "计算机基础/操作系统原理/王道操作系统.md",
+    "EA269C57FCE480748A8D543CD6F7B7CA.png",
+    "计算机基础/计算机组成原理/计算机组成原理.md",
+    "计算机基础/操作系统原理/操作系统导论.md",
     "计算机基础/数据结构/数据结构.md",
-    "程序设计语言/C++/C++ Primer.md",
+    "计算机基础/数据结构/王道数据结构.md",
+    "编程语言/C++/C++ Primer.md",
     "杂项/计算机视觉.md",
     "杂项/深度学习.md",
     "杂项/数字图像处理.md",
     "杂项/机器学习.md",
-    "开发技能/编译工具/跟我一起写Makefile.md",
+    "开发工具/编译工具/跟我一起写Makefile.md",
     "算法/Algorithm_PrincetonUniversity.md",
     "算法/挑战程序设计竞赛.md",
     "杂项/机器人操作系统.md",
     "杂项/课堂笔记/大三下学期",
-    "开发技能/Linux/Ubuntu 使用记录.md",
-    "计算机基础/计算机组成原理/计算机组成原理.md",
-    "开发技能/数据库/MySQL是怎样运行的.md",
-    "开发技能/Linux/Git入门.md",
-    "开发技能/Linux/鸟哥的Linux私房菜.md",
-    "开发技能/Linux/Vim实用技巧.md",
+    "开发工具/Linux/Ubuntu 使用记录.md",
+    "开发工具/数据库/MySQL是怎样运行的.md",
+    "开发工具/Linux/Git入门.md",
+    "开发工具/Linux/鸟哥的Linux私房菜.md",
+    "开发工具/Linux/Vim实用技巧.md",
     "计算机基础/计算机网络/计算机网络.md",
-    "计算机基础/操作系统原理/操作系统导论.md",
     "杂项/草稿.md",
-    "README.md",
     "计算机基础/计算机组成原理/汇编语言.md",
     "未命名.md",
-    "开发技能/数据库/SQL必知必会.md",
-    "EA269C57FCE480748A8D543CD6F7B7CA.png",
-    "程序设计语言/C++/Effective C++.md",
-    "算法分析与设计/算法书籍/挑战程序设计竞赛.md",
+    "开发工具/数据库/SQL必知必会.md",
     "杂项/思维导图/SQL必知必会.mm",
     "9A06F5FA339DC751B8032B8840B77BD7.png",
     "杂项/思维导图/汇编语言.mm",
