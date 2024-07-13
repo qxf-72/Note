@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "计算机基础/操作系统原理/王道操作系统.md",
+                "file": "开发工具/数据库/MySQL是怎样运行的.md",
                 "mode": "preview",
                 "source": true
               }
@@ -34,7 +34,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "计算机基础/操作系统原理/王道操作系统.md",
+                "file": "开发工具/数据库/MySQL是怎样运行的.md",
                 "mode": "source",
                 "source": true
               }
@@ -91,8 +91,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 275.5,
-    "collapsed": true
+    "width": 275.5
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -108,7 +107,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "计算机基础/操作系统原理/王道操作系统.md",
+                "file": "开发工具/数据库/MySQL是怎样运行的.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -136,7 +135,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "计算机基础/操作系统原理/王道操作系统.md",
+                "file": "开发工具/数据库/MySQL是怎样运行的.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": false
               }
@@ -148,7 +147,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "计算机基础/操作系统原理/王道操作系统.md"
+                "file": "开发工具/数据库/MySQL是怎样运行的.md"
               }
             }
           },
@@ -210,11 +209,12 @@
   },
   "active": "7dc9c2a5e29c44b6",
   "lastOpenFiles": [
+    "开发工具/编译工具/跟我一起写Makefile.md",
+    "计算机基础/计算机组成原理/计算机组成原理.md",
+    "计算机基础/操作系统原理/王道操作系统.md",
     "计算机基础/数据结构/数据结构.md",
     "README.md",
-    "计算机基础/操作系统原理/王道操作系统.md",
     "EA269C57FCE480748A8D543CD6F7B7CA.png",
-    "计算机基础/计算机组成原理/计算机组成原理.md",
     "计算机基础/操作系统原理/操作系统导论.md",
     "计算机基础/数据结构/王道数据结构.md",
     "编程语言/C++/C++ Primer.md",
@@ -222,7 +222,6 @@
     "杂项/深度学习.md",
     "杂项/数字图像处理.md",
     "杂项/机器学习.md",
-    "开发工具/编译工具/跟我一起写Makefile.md",
     "算法/Algorithm_PrincetonUniversity.md",
     "算法/挑战程序设计竞赛.md",
     "杂项/机器人操作系统.md",
