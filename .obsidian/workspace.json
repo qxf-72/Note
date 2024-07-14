@@ -6,7 +6,7 @@
       {
         "id": "fe3b7da790869a15",
         "type": "tabs",
-        "dimension": 62.22677595628415,
+        "dimension": 54.72038484666266,
         "children": [
           {
             "id": "a5a7a1d2e9f93ebb",
@@ -26,7 +26,7 @@
       {
         "id": "aefab602ccc232cf",
         "type": "tabs",
-        "dimension": 37.77322404371585,
+        "dimension": 45.279615153337346,
         "children": [
           {
             "id": "0940568d6931d7a1",
@@ -193,7 +193,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -210,12 +211,12 @@
   },
   "active": "0940568d6931d7a1",
   "lastOpenFiles": [
+    "计算机基础/计算机组成原理/汇编语言.md",
+    "计算机基础/计算机组成原理/计算机组成原理.md",
     "计算机基础/操作系统原理/操作系统导论.md",
     "计算机基础/操作系统原理/王道操作系统.md",
     "计算机基础/计算机网络/计算机网络.md",
-    "计算机基础/计算机组成原理/计算机组成原理.md",
     "计算机基础/数据结构/数据结构.md",
-    "计算机基础/计算机组成原理/汇编语言.md",
     "开发工具/数据库/MySQL是怎样运行的.md",
     "开发工具/编译工具/跟我一起写Makefile.md",
     "README.md",
