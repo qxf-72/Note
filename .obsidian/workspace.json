@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发工具/数据库/MySQL是怎样运行的.md",
+                "file": "计算机基础/计算机组成原理/汇编语言.md",
                 "mode": "preview",
                 "source": true
               }
@@ -34,7 +34,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发工具/数据库/MySQL是怎样运行的.md",
+                "file": "计算机基础/计算机组成原理/汇编语言.md",
                 "mode": "source",
                 "source": true
               }
@@ -91,7 +91,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 275.5
+    "width": 275.5,
+    "collapsed": true
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -107,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "开发工具/数据库/MySQL是怎样运行的.md",
+                "file": "计算机基础/计算机组成原理/汇编语言.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -135,7 +136,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "开发工具/数据库/MySQL是怎样运行的.md",
+                "file": "计算机基础/计算机组成原理/汇编语言.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": false
               }
@@ -147,7 +148,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "开发工具/数据库/MySQL是怎样运行的.md"
+                "file": "计算机基础/计算机组成原理/汇编语言.md"
               }
             }
           },
@@ -209,8 +210,9 @@
   },
   "active": "7dc9c2a5e29c44b6",
   "lastOpenFiles": [
-    "开发工具/编译工具/跟我一起写Makefile.md",
     "计算机基础/计算机组成原理/计算机组成原理.md",
+    "开发工具/数据库/MySQL是怎样运行的.md",
+    "开发工具/编译工具/跟我一起写Makefile.md",
     "计算机基础/操作系统原理/王道操作系统.md",
     "计算机基础/数据结构/数据结构.md",
     "README.md",
@@ -227,7 +229,6 @@
     "杂项/机器人操作系统.md",
     "杂项/课堂笔记/大三下学期",
     "开发工具/Linux/Ubuntu 使用记录.md",
-    "开发工具/数据库/MySQL是怎样运行的.md",
     "开发工具/Linux/Git入门.md",
     "开发工具/Linux/鸟哥的Linux私房菜.md",
     "开发工具/Linux/Vim实用技巧.md",
