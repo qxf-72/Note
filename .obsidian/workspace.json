@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "计算机基础/操作系统原理/操作系统导论.md",
+                "file": "计算机基础/计算机组成原理/计算机组成原理.md",
                 "mode": "preview",
                 "source": true
               }
@@ -34,7 +34,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "计算机基础/操作系统原理/操作系统导论.md",
+                "file": "计算机基础/计算机组成原理/计算机组成原理.md",
                 "mode": "source",
                 "source": true
               }
@@ -108,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "计算机基础/操作系统原理/操作系统导论.md",
+                "file": "计算机基础/计算机组成原理/计算机组成原理.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -136,7 +136,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "计算机基础/操作系统原理/操作系统导论.md",
+                "file": "计算机基础/计算机组成原理/计算机组成原理.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": false
               }
@@ -148,7 +148,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "计算机基础/操作系统原理/操作系统导论.md"
+                "file": "计算机基础/计算机组成原理/计算机组成原理.md"
               }
             }
           },
@@ -208,14 +208,14 @@
       "vscode-editor:新建代码文件": false
     }
   },
-  "active": "0940568d6931d7a1",
+  "active": "15e649c09f54288e",
   "lastOpenFiles": [
+    "计算机基础/计算机组成原理/汇编语言.md",
+    "计算机基础/计算机网络/计算机网络.md",
+    "计算机基础/操作系统原理/操作系统导论.md",
     "计算机基础/操作系统原理/王道操作系统.md",
     "计算机基础/计算机组成原理/计算机组成原理.md",
-    "计算机基础/操作系统原理/操作系统导论.md",
-    "计算机基础/计算机网络/计算机网络.md",
     "计算机基础/数据结构/数据结构.md",
-    "计算机基础/计算机组成原理/汇编语言.md",
     "开发工具/数据库/MySQL是怎样运行的.md",
     "开发工具/编译工具/跟我一起写Makefile.md",
     "README.md",
