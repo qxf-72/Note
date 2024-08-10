@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "算法/Algorithm_PrincetonUniversity.md",
+                "file": "计算机基础/计算机组成原理/汇编语言.md",
                 "mode": "preview",
                 "source": true
               }
@@ -34,7 +34,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "算法/Algorithm_PrincetonUniversity.md",
+                "file": "计算机基础/计算机组成原理/汇编语言.md",
                 "mode": "source",
                 "source": true
               }
@@ -91,7 +91,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 275.5
+    "width": 275.5,
+    "collapsed": true
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -107,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "算法/Algorithm_PrincetonUniversity.md",
+                "file": "计算机基础/计算机组成原理/汇编语言.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -135,7 +136,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "算法/Algorithm_PrincetonUniversity.md",
+                "file": "计算机基础/计算机组成原理/汇编语言.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": false
               }
@@ -147,7 +148,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "算法/Algorithm_PrincetonUniversity.md"
+                "file": "计算机基础/计算机组成原理/汇编语言.md"
               }
             }
           },
@@ -209,6 +210,7 @@
   },
   "active": "0940568d6931d7a1",
   "lastOpenFiles": [
+    "算法/Algorithm_PrincetonUniversity.md",
     "算法/挑战程序设计竞赛.md",
     "计算机基础/数据结构/数据结构.md",
     "计算机基础/计算机组成原理/汇编语言.md",
@@ -226,7 +228,6 @@
     "杂项/深度学习.md",
     "杂项/数字图像处理.md",
     "杂项/机器学习.md",
-    "算法/Algorithm_PrincetonUniversity.md",
     "杂项/机器人操作系统.md",
     "杂项/课堂笔记/大三下学期",
     "开发工具/Linux/Ubuntu 使用记录.md",
