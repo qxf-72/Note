@@ -4,9 +4,9 @@
     "type": "split",
     "children": [
       {
-        "id": "fe3b7da790869a15",
+        "id": "31dbca06c4590a03",
         "type": "tabs",
-        "dimension": 56.830601092896174,
+        "dimension": 50.95628415300546,
         "children": [
           {
             "id": "a5a7a1d2e9f93ebb",
@@ -24,9 +24,9 @@
         ]
       },
       {
-        "id": "aefab602ccc232cf",
+        "id": "c69b2d24b14cd4bd",
         "type": "tabs",
-        "dimension": 43.169398907103826,
+        "dimension": 49.04371584699454,
         "children": [
           {
             "id": "0940568d6931d7a1",
@@ -208,7 +208,7 @@
       "vscode-editor:新建代码文件": false
     }
   },
-  "active": "15e649c09f54288e",
+  "active": "0940568d6931d7a1",
   "lastOpenFiles": [
     "计算机基础/计算机组成原理/汇编语言.md",
     "算法/Algorithm_PrincetonUniversity.md",
