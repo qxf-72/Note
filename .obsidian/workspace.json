@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "计算机基础/计算机组成原理/计算机组成原理.md",
+                "file": "计算机基础/操作系统原理/操作系统导论.md",
                 "mode": "preview",
                 "source": true
               }
@@ -34,7 +34,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "计算机基础/计算机组成原理/计算机组成原理.md",
+                "file": "计算机基础/操作系统原理/操作系统导论.md",
                 "mode": "source",
                 "source": true
               }
@@ -108,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "计算机基础/计算机组成原理/计算机组成原理.md",
+                "file": "计算机基础/操作系统原理/操作系统导论.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -136,7 +136,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "计算机基础/计算机组成原理/计算机组成原理.md",
+                "file": "计算机基础/操作系统原理/操作系统导论.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": false
               }
@@ -148,7 +148,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "计算机基础/计算机组成原理/计算机组成原理.md"
+                "file": "计算机基础/操作系统原理/操作系统导论.md"
               }
             }
           },
@@ -210,11 +210,11 @@
   },
   "active": "a5a7a1d2e9f93ebb",
   "lastOpenFiles": [
+    "计算机基础/计算机组成原理/计算机组成原理.md",
     "计算机基础/计算机组成原理/汇编语言.md",
     "算法/Algorithm_PrincetonUniversity.md",
     "算法/挑战程序设计竞赛.md",
     "计算机基础/数据结构/数据结构.md",
-    "计算机基础/计算机组成原理/计算机组成原理.md",
     "计算机基础/操作系统原理/操作系统导论.md",
     "计算机基础/计算机网络/计算机网络.md",
     "计算机基础/操作系统原理/王道操作系统.md",
