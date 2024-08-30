@@ -91,8 +91,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 275.5,
-    "collapsed": true
+    "width": 275.5
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -208,7 +207,7 @@
       "vscode-editor:新建代码文件": false
     }
   },
-  "active": "a5a7a1d2e9f93ebb",
+  "active": "15e649c09f54288e",
   "lastOpenFiles": [
     "计算机基础/操作系统原理/王道 操作系统.md",
     "计算机基础/操作系统原理/操作系统导论.md",
