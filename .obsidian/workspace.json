@@ -6,7 +6,6 @@
       {
         "id": "31dbca06c4590a03",
         "type": "tabs",
-        "dimension": 57.92349726775956,
         "children": [
           {
             "id": "a5a7a1d2e9f93ebb",
@@ -20,30 +19,7 @@
               },
               "icon": "lucide-file",
               "title": "C++ Primer"
-            },
-            "group": "b52233697eebf3ea"
-          }
-        ]
-      },
-      {
-        "id": "c69b2d24b14cd4bd",
-        "type": "tabs",
-        "dimension": 42.07650273224044,
-        "children": [
-          {
-            "id": "0940568d6931d7a1",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "编程语言/C++/C++ Primer.md",
-                "mode": "source",
-                "source": true
-              },
-              "icon": "lucide-file",
-              "title": "C++ Primer"
-            },
-            "group": "b52233697eebf3ea"
+            }
           }
         ]
       }
@@ -101,7 +77,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 275.5
+    "width": 275.5,
+    "collapsed": true
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -233,7 +210,7 @@
       "vscode-editor:新建代码文件": false
     }
   },
-  "active": "0940568d6931d7a1",
+  "active": "a5a7a1d2e9f93ebb",
   "lastOpenFiles": [
     "计算机基础/计算机网络/计算机网络.md",
     "计算机基础/计算机组成原理/计算机组成原理.md",
