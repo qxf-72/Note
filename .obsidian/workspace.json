@@ -14,10 +14,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "计算机基础/计算机网络/计算机网络.md",
+                "file": "编程语言/C++/C++ Primer.md",
                 "mode": "preview",
                 "source": true
-              }
+              },
+              "icon": "lucide-file",
+              "title": "C++ Primer"
             },
             "group": "b52233697eebf3ea"
           }
@@ -34,10 +36,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "计算机基础/计算机网络/计算机网络.md",
+                "file": "编程语言/C++/C++ Primer.md",
                 "mode": "source",
                 "source": true
-              }
+              },
+              "icon": "lucide-file",
+              "title": "C++ Primer"
             },
             "group": "b52233697eebf3ea"
           }
@@ -61,7 +65,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
             }
           },
           {
@@ -76,7 +82,9 @@
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
             }
           },
           {
@@ -84,15 +92,16 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {}
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 275.5,
-    "collapsed": true
+    "width": 275.5
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -108,7 +117,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "计算机基础/计算机网络/计算机网络.md",
+                "file": "编程语言/C++/C++ Primer.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,7 +125,9 @@
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-coming-in",
+              "title": "C++ Primer 的反向链接列表"
             }
           },
           {
@@ -127,7 +138,9 @@
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true
-              }
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
             }
           },
           {
@@ -136,10 +149,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "计算机基础/计算机网络/计算机网络.md",
+                "file": "编程语言/C++/C++ Primer.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": false
-              }
+              },
+              "icon": "links-going-out",
+              "title": "C++ Primer 的出链列表"
             }
           },
           {
@@ -148,8 +163,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "计算机基础/计算机网络/计算机网络.md"
-              }
+                "file": "编程语言/C++/C++ Primer.md"
+              },
+              "icon": "lucide-list",
+              "title": "C++ Primer 的大纲"
             }
           },
           {
@@ -157,7 +174,9 @@
             "type": "leaf",
             "state": {
               "type": "advanced-tables-toolbar",
-              "state": {}
+              "state": {},
+              "icon": "spreadsheet",
+              "title": "Advanced Tables"
             }
           },
           {
@@ -169,7 +188,9 @@
                 "sortOrder": "frequency",
                 "showSearch": false,
                 "searchQuery": ""
-              }
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
             }
           },
           {
@@ -177,7 +198,9 @@
             "type": "leaf",
             "state": {
               "type": "calendar",
-              "state": {}
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
             }
           },
           {
@@ -185,7 +208,9 @@
             "type": "leaf",
             "state": {
               "type": "quiet-outline",
-              "state": {}
+              "state": {},
+              "icon": "lines-of-text",
+              "title": "Quiet Outline"
             }
           }
         ],
@@ -208,10 +233,10 @@
       "vscode-editor:新建代码文件": false
     }
   },
-  "active": "15e649c09f54288e",
+  "active": "0940568d6931d7a1",
   "lastOpenFiles": [
-    "计算机基础/计算机组成原理/计算机组成原理.md",
     "计算机基础/计算机网络/计算机网络.md",
+    "计算机基础/计算机组成原理/计算机组成原理.md",
     "计算机基础/操作系统原理/王道 操作系统.md",
     "计算机基础/数据结构/王道 数据结构.md",
     "计算机基础/操作系统原理/操作系统导论.md",
