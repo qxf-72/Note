@@ -14,11 +14,6 @@ SQL 是用于和数据库打交道的语言。
 
 <br/>
 
-
-<br/>
-
-
-
 ### 1.1.2  表
 表 Table 是数据库中结构化的文件，用于存储特定类型（不等于基本类型，而是不同的对象类型）的数据，例如，顾客清单、产品目录等。
 
@@ -31,24 +26,16 @@ SQL 是用于和数据库打交道的语言。
 
 <br/>
 
-
-<br/>
-
-
-
 ### 1.1.3  列和数据类型
 
-表由列组成，类存储表中特定部分的信息。如客户清单中的，姓名、性别放在不同类中存储。
+表由列组成，列存储表中特定部分的信息。如客户清单中的，姓名、性别放在不同类中存储。
 
-每类都有对应的数据类型。数据类型定义类列可以存储哪些数据种类。
+每列都有对应的数据类型。数据类型定义列可以存储哪些数据种类。
 
 > **数据类型兼容**
 > 数据类型和名称是 SQL 不兼容的一个主要问题，许多高级数据类型没有一致的支持，相同的数据类型在不同的 DBMS 可能会有不同的名称。
 
 ---
-
-<br/>
-
 
 <br/>
 
@@ -60,9 +47,6 @@ SQL 是用于和数据库打交道的语言。
 > 记录 record 和行基本可以互通，从技术上说，行才是正确的术语。
 
 ---
-
-<br/>
-
 
 <br/>
 
@@ -103,12 +87,8 @@ SQL **结构化查询语言（Structured Query Language）**，是一种专门�
 <br/>
 
 
-<br/>
-
-
-
-
 ## 1.3  安装 MYSQL
+
 > - Windows cmd 切换到盘：`D:`
 > - 查看当前目录下文件和目录：`dir \b`
 
@@ -162,13 +142,9 @@ D:\Program Files\mysql-8.2.0-winx64\data
 
 <br/>
 
-
-<br/>
-
-
 # 2.   检索数据
 
-- 切换到指定数据库：`use database_name;`
+切换到指定数据库：`use database_name;`
 
 ## 2.1 SELECT 语句
 
@@ -195,6 +171,7 @@ FROM Products;
 以上语句的意思就是：在 Products 这个表中，检索 prod_name 这一列数据。
 
 > **排序数据**
+> 
 > 如果没有明确指出排序查询结果，则<span style="background:#fff88f">返回的数据没有特定的顺序</span>（可能是数据被添加到表中的顺序），只要返回相同数量的行就是正常的。
 
 > **SQL 语句语法**
@@ -208,13 +185,9 @@ FROM Products;
 
 <br/>
 
-
-<br/>
-
-
 ## 2.3  检索多个列
 
-检索多个类，只需给出多个列名，在之间用逗号分开即可：
+检索多个列，只需给出多个列名，在之间用**逗号分开**即可：
 ```sql
 SELECT prod_id,prod_name,prod_price
 FROM Products;
@@ -230,11 +203,6 @@ FROM Products;
 
 
 <br/>
-
-
-<br/>
-
-
 
 ## 2.4  检索所有列
 
@@ -252,17 +220,14 @@ FROM　Products;
 <br/>
 
 
-
-<br/>
-
-
-
 ## 2.5  检索不同的值
 
 以上语句都是之后返回表中某一类的数据，其中某些行在该列的数据可能会相同：
+
 <div align="center"> <img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-10-29_152024.jpg" width = 300 /> </div>
 
-如上图所以，显示了 9 行，但其中之后三种数据，如果只要显示**不同的值**，使用 `distinct` 关键字：
+如上图所以，显示了 9 行，但其中只有三种数据，如果只要显示**不同的值**，使用 `distinct` 关键字：
+
 ```sql
 SELECT DISTINCT vend_id
 FROM Products;
@@ -275,18 +240,17 @@ FROM Products;
 
 <br/>
 
-
-<br/>
-
-
 ## 2.6  限制结果
 
  `TOP` 限制最多返回多少行，如下：
+ 
  ```sql
  select top 5 prod_name
  from Products;
 ```
+
 但是不同 DBMS 中存在不同的语法，**在 MYSQL 中，使用 `limit` 关键字**， 语法如下：
+
 ```sql
 select prod_name
 from Products
@@ -316,9 +280,6 @@ limit 5  offset 5;
 <br/>
 
 
-<br/>
-
-
 ## 2.7  注释
 
 - 行内注释 `--`
@@ -333,7 +294,6 @@ from Products;
 
 <br/>
 
-
 - 多行注释：`/* */`
 
 
@@ -346,11 +306,6 @@ from Products;
 
 
 <br/>
-
-
-<br/>
-
-
 
 # 3.   排序检索数据
 
@@ -375,11 +330,6 @@ order by prod_name;
 <br/>
 
 
-<br/>
-
-
-
-
 ## 3.2  按多个列排序
 
 按多个列排序时，列名之间用逗号隔开。**排序规则类似于字典序排序**，先按第一个排序，第一个排序级别最高，在按之后的进行排序。
@@ -399,9 +349,6 @@ order by prod_price,prod_name;
 <br/>
 
 
-<br/>
-
-
 ## 3.3  按位置排序
 
 ^c8cc01
@@ -412,16 +359,13 @@ from Products
 order by 2,3;
 ```
 
-跟 [[SQL必知必会#^c8cc01|按多个列排序]]是一样的，**用数字来代表不同的列**。<span style="background:#fff88f">数字代表的是 select 清单中出现的顺序，且第一个是 1 不是 0。在本例中，2 代表 prod_price。</span>
+跟 按多个列排序是一样的，**用数字来代表不同的列**。<span style="background:#fff88f">数字代表的是 select 清单中出现的顺序，且第一个是 1 不是 0。在本例中，2 代表 prod_price。</span>
 
 ---
 
 <br/>
 
 <br/>
-
-<br/>
-
 
 ## 3.4  指定排序方向
 
@@ -455,10 +399,6 @@ order by 2 desc,3;
 
 <br/>
 
-
-<br/>
-
-
 # 4.   过滤数据
 
 ## 4.1  `where` 子句
@@ -466,6 +406,7 @@ order by 2 desc,3;
 **`where` 子句在 `from` 子句之后给出，但位于 `order by` 子句之前**。
 
 > **SQL 过滤和应用过滤**
+> 
 > 数据可以在应用层过滤——SQL 通过 select 语句给客户端检索出数据（可能超过实际所需），然后客户端代码对返回数据进行循环，提取出所需的行。
 > 
 > 这种做法不妥，**让客户端应用处理数据库将会极大影响应用性能，同时还浪费网络带宽。**
@@ -489,10 +430,8 @@ order by 2 desc,3;
 
 **并不是所有 DBMS 都支持这些操作符**。
 
-<br/>
-
-
 ### 4.2.1 范围值检查
+
 使用方式：
 ```sql
 select prod_name,prod_price
@@ -503,10 +442,6 @@ where prod_price between 5 and 10;
 ---
 
 <br/>
-
-
-<br/>
-
 
 ### 4.2.2  空值检查
 
@@ -531,11 +466,6 @@ where prod_price is null;
 
 <br/>
 
-
-<br/>
-
-
-
 # 5.   高级数据过滤
 
 ## 5.1  组合 `where` 子句
@@ -554,11 +484,6 @@ where vend_id='DLL01' and prod_price<=4;
 
 <br/>
 
-
-<br/>
-
-
-
 ### 5.1.2  `or` 操作符
 
 和 `and` 的使用方式一样。**在许多 DBMS 中如果第一个条件得到满足就不再计算第二个条件。**
@@ -566,10 +491,6 @@ where vend_id='DLL01' and prod_price<=4;
 ---
 
 <br/>
-
-
-<br/>
-
 
 
 ### 5.1.3 求值顺序
@@ -589,11 +510,6 @@ where (vend_id ='DLL01' or vend_id= 'BRS01') and prod_price >= 10;
 
 
 <br/>
-
-
-<br/>
-
-
 
 ## 5.2 `in` 操作符
 
@@ -619,14 +535,10 @@ order by prod_name;
 
 <br/>
 
-
-<br/>
-
-
-
 ## 5.3  `not` 操作符
 
 例子如下：
+
 ```sql
 select prod_name
 from Products
@@ -645,11 +557,6 @@ order by prod_name;
 
 
 <br/>
-
-
-<br/>
-
-
 
 # 6.  通配符进行过滤
 
@@ -702,10 +609,6 @@ from Products
 <br/>
 
 
-<br/>
-
-
-
 ### 6.1.2  `_` 通配符
 
 `_` 使用方式和 `%` 一样，但是只能匹配单个字符（不能是 0 个，相当于一个占位符）。
@@ -716,10 +619,6 @@ from Products
 ---
 
 <br/>
-
-
-<br/>
-
 
 
 ### 6.1.3  `[]` 通配符
@@ -751,11 +650,6 @@ where cust_contact like '[^JM]%';
 
 <br/>
 
-
-<br/>
-
-
-
 ## 6.2  使用通配符的技巧
 
 - **不要过度使用通配符**。通配符比其他搜索要耗费更长的处理时间。
@@ -770,11 +664,6 @@ where cust_contact like '[^JM]%';
 
 
 <br/>
-
-
-<br/>
-
-
 
 # 7.   计算字段
 
@@ -791,11 +680,6 @@ where cust_contact like '[^JM]%';
 
 
 <br/>
-
-
-<br/>
-
-
 
 ## 7.2  拼接字段
 
@@ -823,7 +707,8 @@ from Vendors;
 
 **使用别名**
 
-新计算的列实际上并没有名字，**未命名的类不能用于客户端**。使用 **`as` 关键字给计算字段命名**：
+新计算的列实际上并没有名字，**未命名的列不能用于客户端**。使用 **`as` 关键字给计算字段命名**：
+
 ```sql
 select vend_name,concat(vend_name,'(',vend_country,')') as vend_title
 from Vendors
@@ -844,13 +729,10 @@ order by vend_name;
 
 <br/>
 
-
-<br/>
-
-
 ## 7.3  执行算术计算
 
 SQL 可以执行 `+ - * /` 四种基本运算，也可以用括号表明优先级，例子如下：
+
 ```sql
 select prod_id,
 	   quantity,
@@ -875,10 +757,6 @@ where order_num = 20008;
 <br/>
 
 
-<br/>
-
-
-
 # 8.  函数
 
 ## 8.1  函数
@@ -895,11 +773,6 @@ where order_num = 20008;
 
 <br/>
 
-
-<br/>
-
-
-
 ## 8.2  使用函数
 
 大多数 SQL 实现支持以下类型的函数：
@@ -912,6 +785,7 @@ where order_num = 20008;
 ### 8.2.1  文本处理函数
 
 **`upper()`**：转化为大写
+
 ```sql
 select vend_name,upper(vend_name) as vend_name_upcase
 from Vendors
@@ -930,11 +804,6 @@ order by vend_name;
 ---
 
 <br/>
-
-
-<br/>
-
-
 
 ### 8.2.2  日期和时间处理函数
 
@@ -964,11 +833,6 @@ where year(order_date) = 2020;
 
 <br/>
 
-
-<br/>
-
-
-
 ### 8.2.3  数值处理函数
 
 **数值处理函数是最一致、最统一的函数**，常用数值处理函数如下：
@@ -985,11 +849,6 @@ where year(order_date) = 2020;
 
 
 <br/>
-
-
-<br/>
-
-
 
 # 9.  汇总数据
 
@@ -1015,19 +874,12 @@ avg 函数只能作用于**数值列**，作用于非数值列时，结果无效
 
 <br/>
 
-
-<br/>
-
-
 ### 9.1.2   `count()` 函数
 
 - **`count(*)`**：对表中行进行计数，**不会忽略 NULL**。
 - `count(column)`：对特定列具有值的行进行计数，**忽略 NULL 值**。**也可作用于计算字段**。
 
 ---
-
-<br/>
-
 
 <br/>
 
