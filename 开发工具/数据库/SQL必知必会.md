@@ -886,16 +886,12 @@ avg 函数只能作用于**数值列**，作用于非数值列时，结果无效
 
 ### 9.1.3  `max()` 函数
 
-要求指定列名，可以用于计算字段。忽略 NULL。
+要求指定列名，可以用于计算字段。忽略 NULL 。
 
 > 非数值数据使用 MAX
 > max 函数**一般用于找出最大的数值或者日期值**。许多 DBMS 允许返回任意列的最大值。
 
 ---
-
-
-<br/>
-
 
 <br/>
 
@@ -922,10 +918,6 @@ avg 函数只能作用于**数值列**，作用于非数值列时，结果无效
 
 
 <br/>
-
-
-<br/>
-
 
 ## 9.2  聚集不同值
 
@@ -1009,9 +1001,6 @@ FROM Products;
 
 <br/>
 
-
-<br/>
-
 # 10.   分组数据
 
 ## 10.1  数据分组
@@ -1027,13 +1016,10 @@ FROM Products;
 
 <br/>
 
-
-<br/>
-
-
 ## 10.2  创建分组
 
 **`group by` 子句创建分组**：
+
 ```sql
 select vend_id,count(*) as num_prods
 from Products
@@ -1065,9 +1051,6 @@ group by vend_id;
 
 
 ---
-
-<br/>
-
 
 <br/>
 
@@ -1112,9 +1095,6 @@ having num_prods>=2;
 
 <br/>
 
-
-<br/>
-
 # 11. 子查询
 
 
@@ -1137,10 +1117,6 @@ having num_prods>=2;
 
 
 <br/>
-
-
-<br/>
-
 
 ## 11.2  使用子查询进行过滤
 
@@ -1172,10 +1148,6 @@ where cust_id in ( select cust_id
 
 <br/>
 
-
-<br/>
-
-
 ## 11.3  作为计算字段使用子查询
 
 可以使用子查询来作为计算字段。
@@ -1197,9 +1169,6 @@ order by cust_name;
 
 
 ---
-
-
-<br/>
 
 
 <br/>
@@ -1242,8 +1211,6 @@ order by cust_name;
 <br/>
 
 
-<br/>
-
 ## 12.2  创建联结
 
 例子如下：
@@ -1257,15 +1224,12 @@ where Vendors.vend_id = Products.vend_id;
 
 ### 12.2.1  where 子句的重要性
 
-在联结两个表时，实际将第一个表中的每一行和第二个表中的每一行进行匹配，where 作为过滤条件值包含哪些匹配条件的行。
+**在联结两个表时，实际将第一个表中的每一行和第二个表中的每一行进行匹配**，where 作为过滤条件值包含哪些匹配条件的行。
 
 > 没有联结条件的表关系返回结果为笛卡儿积。
 
 
 ---
-
-<br/>
-
 
 <br/>
 
@@ -1283,8 +1247,6 @@ inner join Products on Vendors.vend_id = Products.vend_id;
 
 <br/>
 
-
-<br/>
 
 ### 12.2.3  联结多个表
 
@@ -1310,10 +1272,6 @@ where Products.vend_id = Vendors.vend_id
 
 <br/>
 
-
-<br/>
-
-
 # 13.  高级联结
 
 ## 13.1 使用别名
@@ -1326,9 +1284,6 @@ where Products.vend_id = Vendors.vend_id
 
 
 ---
-
-<br/>
-
 
 <br/>
 
@@ -1362,9 +1317,6 @@ where c1.cust_name = c2.cust_name
 
 <br/>
 
-
-<br/>
-
 ### 13.2.2  自然联结
 
 自然连接是 SQL 中一种特殊的联结，它会**自动连接两个表**，并在两个表中具有**相同名称的列**之间创建连接。
@@ -1375,10 +1327,6 @@ NATURAL JOIN table2;
 ```
 
 ---
-
-
-<br/>
-
 
 <br/>
 
@@ -1401,9 +1349,6 @@ RIGHT OUTER JOIN table2 ON table1.column1 = table2.column2;
 
 
 ---
-
-<br/>
-
 
 <br/>
 
@@ -1437,10 +1382,6 @@ group by Customers.cust_id;
 
 <br/>
 
-
-<br/>
-
-
 # 14. 组合查询
 
 ## 14.1  组合查询
@@ -1455,10 +1396,6 @@ group by Customers.cust_id;
 
 
 <br/>
-
-
-<br/>
-
 
 ## 14.2  创建组合查询
 
@@ -1504,8 +1441,6 @@ where cust_name = 'Fun4All';
 <br/>
 
 
-<br/>
-
 
 ### 14.2.4  对组合查询结果排序
 
@@ -1513,9 +1448,6 @@ where cust_name = 'Fun4All';
 
 
 ---
-
-
-<br/>
 
 
 <br/>
@@ -1573,9 +1505,6 @@ values(1000000006,
 
 <br/>
 
-
-<br/>
-
 ### 15.1.2  插入部分行
 
 即在插入行时，某些列被省略了。
@@ -1600,9 +1529,6 @@ values(1000000006,
 - 给出了默认值
 
 ---
-
-<br/>
-
 
 <br/>
 
@@ -1648,9 +1574,6 @@ from Customers;
 ```
 
 ---
-
-<br/>
-
 
 <br/>
 
@@ -1745,7 +1668,6 @@ TRUNCATE TABLE 命令与 DELETE FROM 命令的区别在于——<span style="bac
 <br/>
 
 
-<br/>
 
 # 17.  创建和操纵表
 
@@ -1771,7 +1693,6 @@ create table Products
 <br/>
 
 
-<br/>
 
 ### 17.1.2  使用 null 值
 
@@ -1784,8 +1705,6 @@ create table Products
 
 <br/>
 
-
-<br/>
 
 
 ### 17.1.3  指定默认值
@@ -1803,9 +1722,6 @@ create table Order Items
 
 
 ---
-
-<br/>
-
 
 <br/>
 
@@ -1880,8 +1796,6 @@ drop table CustCopy;
 
 <br/>
 
-
-<br/>
 
 # 18.  视图
 
