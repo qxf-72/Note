@@ -4,46 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "31dbca06c4590a03",
+        "id": "a41bd99b749108d4",
         "type": "tabs",
-        "dimension": 51.29781420765027,
         "children": [
           {
-            "id": "a5a7a1d2e9f93ebb",
+            "id": "e28b60d28dd336b5",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发工具/数据库/SQL必知必会.md",
+                "file": "编程语言/C++/C++ Primer.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "SQL必知必会"
-            },
-            "group": "659d644f489d6eb3"
-          }
-        ]
-      },
-      {
-        "id": "7912bbf97638ab7d",
-        "type": "tabs",
-        "dimension": 48.70218579234973,
-        "children": [
-          {
-            "id": "ffc26628096a0f31",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "开发工具/数据库/SQL必知必会.md",
-                "mode": "source",
-                "source": true
-              },
-              "icon": "lucide-file",
-              "title": "SQL必知必会"
-            },
-            "group": "659d644f489d6eb3"
+              "title": "C++ Primer"
+            }
           }
         ]
       }
@@ -64,7 +40,8 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
+                "sortOrder": "alphabetical",
+                "autoReveal": false
               },
               "icon": "lucide-folder-closed",
               "title": "文件列表"
@@ -219,7 +196,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 253.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -234,8 +211,9 @@
       "vscode-editor:新建代码文件": false
     }
   },
-  "active": "ffc26628096a0f31",
+  "active": "15e649c09f54288e",
   "lastOpenFiles": [
+    "开发工具/数据库/SQL必知必会.md",
     "杂项/自动控制原理.md",
     "编程语言/C++/C++ Primer.md",
     "计算机基础/计算机网络/计算机网络.md",
@@ -264,7 +242,6 @@
     "开发工具/Linux/鸟哥的Linux私房菜.md",
     "开发工具/Linux/Vim实用技巧.md",
     "杂项/草稿.md",
-    "未命名.md",
     "杂项/思维导图/SQL必知必会.mm",
     "9A06F5FA339DC751B8032B8840B77BD7.png",
     "杂项/思维导图/汇编语言.mm",
