@@ -33,6 +33,7 @@
     "replaceTitle": [],
     "replacePath": [],
     "autoclean": {
+      "includeAttachments": true,
       "enable": false,
       "excluded": []
     },
@@ -59,7 +60,10 @@
       "internal": false,
       "unshared": false,
       "wiki": false,
-      "slugify": false
+      "slugify": false,
+      "unlink": false,
+      "relativePath": true,
+      "textPrefix": "/"
     }
   },
   "embed": {
@@ -69,7 +73,10 @@
     "notes": false,
     "folder": "",
     "convertEmbedToLinks": "keep",
-    "charConvert": "->"
+    "charConvert": "->",
+    "unHandledObsidianExt": [],
+    "sendSimpleLinks": true,
+    "forcePush": true
   },
   "plugin": {
     "shareKey": "share",
