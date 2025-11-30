@@ -4,22 +4,46 @@
     "type": "split",
     "children": [
       {
-        "id": "a41bd99b749108d4",
+        "id": "f679902a214a26a2",
         "type": "tabs",
+        "dimension": 51.442307692307686,
         "children": [
           {
-            "id": "e28b60d28dd336b5",
+            "id": "cff522998ae32ddd",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发工具/编译工具/跟我一起写Makefile.md",
+                "file": "计算机基础/操作系统原理/操作系统导论.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "跟我一起写Makefile"
-            }
+              "title": "操作系统导论"
+            },
+            "group": "20e8fc9ba36e27b7"
+          }
+        ]
+      },
+      {
+        "id": "48360b965253c5b4",
+        "type": "tabs",
+        "dimension": 48.55769230769231,
+        "children": [
+          {
+            "id": "0eea3899079e28d2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "计算机基础/操作系统原理/操作系统导论.md",
+                "mode": "source",
+                "source": true
+              },
+              "icon": "lucide-file",
+              "title": "操作系统导论"
+            },
+            "group": "20e8fc9ba36e27b7"
           }
         ]
       }
@@ -78,7 +102,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 275.5
+    "width": 275.5,
+    "collapsed": true
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -185,7 +210,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 355.5
+    "width": 355.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -202,15 +228,19 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "e28b60d28dd336b5",
+  "active": "0eea3899079e28d2",
   "lastOpenFiles": [
+    "开发工具/数据库/MySQL是怎样运行的.md",
+    "开发工具/Linux/Vim实用技巧.md",
+    "开发工具/Linux/Git入门.md",
+    "开发工具/Linux/鸟哥的Linux私房菜.md",
+    "算法/Algorithm_PrincetonUniversity.md",
+    "算法/挑战程序设计竞赛.md",
+    "开发工具/编译工具/跟我一起写Makefile.md",
     "README.md",
     "杂项/深度学习.md",
     "杂项/机器学习.md",
     "杂项/机器人操作系统.md",
-    "算法/Algorithm_PrincetonUniversity.md",
-    "开发工具/Linux/鸟哥的Linux私房菜.md",
-    "开发工具/数据库/MySQL是怎样运行的.md",
     "开发工具/数据库/SQL必知必会.md",
     "编程语言/C++/C++ Primer.md",
     "杂项/自动控制原理.md",
@@ -223,15 +253,11 @@
     "计算机基础/操作系统原理/操作系统导论.md",
     "0423968B760280EA13974A4BF0CFE8AC.png",
     "计算机基础/计算机组成原理/汇编语言.md",
-    "算法/挑战程序设计竞赛.md",
     "计算机基础/操作系统原理/王道操作系统.md",
-    "开发工具/编译工具/跟我一起写Makefile.md",
     "EA269C57FCE480748A8D543CD6F7B7CA.png",
     "计算机基础/数据结构/王道数据结构.md",
     "杂项/课堂笔记/大三下学期",
     "开发工具/Linux/Ubuntu 使用记录.md",
-    "开发工具/Linux/Git入门.md",
-    "开发工具/Linux/Vim实用技巧.md",
     "杂项/草稿.md",
     "杂项/思维导图/SQL必知必会.mm",
     "9A06F5FA339DC751B8032B8840B77BD7.png",
