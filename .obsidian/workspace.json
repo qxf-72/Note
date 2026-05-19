@@ -6,7 +6,7 @@
       {
         "id": "c76bf560081f9004",
         "type": "tabs",
-        "dimension": 52.49487354750513,
+        "dimension": 59.699453551912576,
         "children": [
           {
             "id": "7b3e7aa76e16d16f",
@@ -14,36 +14,36 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发工具/Linux/Ubuntu 使用记录.md",
+                "file": "编程语言/C++/C++ Primer.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Ubuntu 使用记录"
+              "title": "C++ Primer"
             },
-            "group": "58334c9a23f83e1e"
+            "group": "fed8baac51e7dbde"
           }
         ]
       },
       {
-        "id": "094871c5a50e992e",
+        "id": "b53f2da73466f6b1",
         "type": "tabs",
-        "dimension": 47.50512645249487,
+        "dimension": 40.30054644808743,
         "children": [
           {
-            "id": "c3f94aad8f1ab503",
+            "id": "7d4a9480237d66ce",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发工具/Linux/Ubuntu 使用记录.md",
+                "file": "编程语言/C++/C++ Primer.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Ubuntu 使用记录"
+              "title": "C++ Primer"
             },
-            "group": "58334c9a23f83e1e"
+            "group": "fed8baac51e7dbde"
           }
         ]
       }
@@ -102,7 +102,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -237,24 +238,25 @@
       "command-palette:打开命令面板": false,
       "obsidian-excalidraw-plugin:新建绘图文件": false,
       "table-editor-obsidian:Advanced Tables Toolbar": false,
-      "vscode-editor:新建代码文件": false
+      "vscode-editor:新建代码文件": false,
+      "obsidian-git:Open Git source control": false
     }
   },
-  "active": "c3f94aad8f1ab503",
+  "active": "7d4a9480237d66ce",
   "lastOpenFiles": [
+    "编程语言/C++/C++环境配置.md",
+    "编程语言/C++/C++ Primer.md",
+    "编程语言/Golang/Go语言圣经.md",
+    "开发工具/Linux/Ubuntu 使用记录.md",
     "开发工具/Linux/Git入门.md",
     "开发工具/Linux/Vim 技巧.md",
-    "开发工具/Linux/Ubuntu 使用记录.md",
-    "编程语言/Golang/Go语言圣经.md",
     "杂项/机器学习.md",
     "开发工具/Linux/鸟哥的Linux私房菜.md",
     "开发工具/数据库/MySQL是怎样运行的.md",
     "计算机基础/操作系统原理/王道 操作系统.md",
     "编程语言/Golang",
     "未命名",
-    "编程语言/C++/C++ Primer.md",
     "计算机基础/计算机组成原理/汇编语言.md",
-    "编程语言/C++/C++环境配置.md",
     "计算机基础/计算机组成原理/计算机组成原理.md",
     "计算机基础/数据结构/王道 数据结构.md",
     "README.md",
