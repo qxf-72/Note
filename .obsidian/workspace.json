@@ -4,46 +4,46 @@
     "type": "split",
     "children": [
       {
-        "id": "f679902a214a26a2",
+        "id": "c76bf560081f9004",
         "type": "tabs",
-        "dimension": 51.442307692307686,
+        "dimension": 52.49487354750513,
         "children": [
           {
-            "id": "cff522998ae32ddd",
+            "id": "7b3e7aa76e16d16f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "计算机基础/操作系统原理/操作系统导论.md",
+                "file": "开发工具/Linux/Ubuntu 使用记录.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "操作系统导论"
+              "title": "Ubuntu 使用记录"
             },
-            "group": "20e8fc9ba36e27b7"
+            "group": "58334c9a23f83e1e"
           }
         ]
       },
       {
-        "id": "48360b965253c5b4",
+        "id": "094871c5a50e992e",
         "type": "tabs",
-        "dimension": 48.55769230769231,
+        "dimension": 47.50512645249487,
         "children": [
           {
-            "id": "0eea3899079e28d2",
+            "id": "c3f94aad8f1ab503",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "计算机基础/操作系统原理/操作系统导论.md",
+                "file": "开发工具/Linux/Ubuntu 使用记录.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "操作系统导论"
+              "title": "Ubuntu 使用记录"
             },
-            "group": "20e8fc9ba36e27b7"
+            "group": "58334c9a23f83e1e"
           }
         ]
       }
@@ -102,8 +102,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 275.5,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -139,7 +138,9 @@
               "type": "tag",
               "state": {
                 "sortOrder": "frequency",
-                "useHierarchy": true
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-tags",
               "title": "标签"
@@ -165,7 +166,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "编程语言/C++/C++ Primer.md"
+                "file": "编程语言/C++/C++ Primer.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-list",
               "title": "C++ Primer 的大纲"
@@ -204,18 +208,27 @@
               "icon": "calendar-with-checkmark",
               "title": "Calendar"
             }
+          },
+          {
+            "id": "47429757a8453eb8",
+            "type": "leaf",
+            "state": {
+              "type": "quiet-outline",
+              "state": {},
+              "icon": "lines-of-text",
+              "title": "Quiet Outline"
+            }
           }
         ],
-        "currentTab": 6
+        "currentTab": 7
       }
     ],
     "direction": "horizontal",
-    "width": 355.5,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
-      "bases:创建新数据库": false,
+      "bases:新建数据库": false,
       "switcher:打开快速切换": false,
       "graph:查看关系图谱": false,
       "canvas:新建白板": false,
@@ -224,41 +237,41 @@
       "command-palette:打开命令面板": false,
       "obsidian-excalidraw-plugin:新建绘图文件": false,
       "table-editor-obsidian:Advanced Tables Toolbar": false,
-      "vscode-editor:新建代码文件": false,
-      "obsidian-git:Open Git source control": false
+      "vscode-editor:新建代码文件": false
     }
   },
-  "active": "0eea3899079e28d2",
+  "active": "c3f94aad8f1ab503",
   "lastOpenFiles": [
-    "开发工具/数据库/MySQL是怎样运行的.md",
-    "开发工具/Linux/Vim实用技巧.md",
     "开发工具/Linux/Git入门.md",
+    "开发工具/Linux/Vim 技巧.md",
+    "开发工具/Linux/Ubuntu 使用记录.md",
+    "编程语言/Golang/Go语言圣经.md",
+    "杂项/机器学习.md",
     "开发工具/Linux/鸟哥的Linux私房菜.md",
+    "开发工具/数据库/MySQL是怎样运行的.md",
+    "计算机基础/操作系统原理/王道 操作系统.md",
+    "编程语言/Golang",
+    "未命名",
+    "编程语言/C++/C++ Primer.md",
+    "计算机基础/计算机组成原理/汇编语言.md",
+    "编程语言/C++/C++环境配置.md",
+    "计算机基础/计算机组成原理/计算机组成原理.md",
+    "计算机基础/数据结构/王道 数据结构.md",
+    "README.md",
+    "计算机基础/操作系统原理/操作系统导论.md",
     "算法/Algorithm_PrincetonUniversity.md",
     "算法/挑战程序设计竞赛.md",
     "开发工具/编译工具/跟我一起写Makefile.md",
-    "README.md",
     "杂项/深度学习.md",
-    "杂项/机器学习.md",
     "杂项/机器人操作系统.md",
     "开发工具/数据库/SQL必知必会.md",
-    "编程语言/C++/C++ Primer.md",
     "杂项/自动控制原理.md",
     "杂项/数字图像处理.md",
     "杂项/计算机视觉.md",
     "计算机基础/计算机网络/计算机网络.md",
-    "计算机基础/计算机组成原理/计算机组成原理.md",
-    "计算机基础/操作系统原理/王道 操作系统.md",
-    "计算机基础/数据结构/王道 数据结构.md",
-    "计算机基础/操作系统原理/操作系统导论.md",
     "0423968B760280EA13974A4BF0CFE8AC.png",
-    "计算机基础/计算机组成原理/汇编语言.md",
-    "计算机基础/操作系统原理/王道操作系统.md",
     "EA269C57FCE480748A8D543CD6F7B7CA.png",
-    "计算机基础/数据结构/王道数据结构.md",
     "杂项/课堂笔记/大三下学期",
-    "开发工具/Linux/Ubuntu 使用记录.md",
-    "杂项/草稿.md",
     "杂项/思维导图/SQL必知必会.mm",
     "9A06F5FA339DC751B8032B8840B77BD7.png",
     "杂项/思维导图/汇编语言.mm",
@@ -268,9 +281,7 @@
     "开发工具/数据库",
     "程序设计语言/Python",
     "杂项/思维导图",
-    "个人记录/日记",
     "未命名.canvas",
-    "个人记录",
     "未命名 1.canvas"
   ]
 }

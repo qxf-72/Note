@@ -99,5 +99,6 @@
     "setFrontmatterKey": "Set",
     "migrated": true
   },
-  "tabsID": "github-configuration"
+  "tabsID": "github-configuration",
+  "tabsId": "github-configuration"
 }

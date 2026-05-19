@@ -11,12 +11,6 @@
 
 <br/>
 
-
-<br/>
-
-
-
-
 ## 1.2  添加文件
 
 **暂存文件**：文件放入仓库所在目录中，然后 `git add filename`。
@@ -41,11 +35,6 @@ git commit
 <br/>
 
 
-<br/>
-
-
-
-
 # 2.  版本管理
 
 ## 2.1  查看状态
@@ -55,9 +44,6 @@ git commit
 `git diff` ：查看文件的变化。
 
 ---
-
-
-<br/>
 
 
 <br/>
@@ -96,10 +82,6 @@ git commit
 <br/>
 
 
-<br/>
-
-
-
 ## 3.  工作区和暂存区
 ### 3.1  工作区
 
@@ -107,14 +89,26 @@ git commit
 
 ### 3.2  版本库
 
-工作区中有一个隐藏的目录`.git`，称为版本库。其中有`stage`暂存区和`master`，以及指向`master`的指针`HEAD`。
-使用`add`把文件从工作区添加到暂存区，使用`commit`把文件从暂存区提交到`master`对应分支上面。
+工作区中有一个隐藏的目录 `.git`，称为版本库。其中有 `stage` 暂存区和 `master`，以及指向 `master` 的指针 `HEAD`。
+
+使用 `add` 把文件从工作区添加到暂存区，使用 `commit` 把文件从暂存区提交到 `master` 对应分支上面。
+
 <div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/jpeg/29674612/1684805720462-920a249b-9f47-4775-a18b-319ebd0272de.jpeg" width="500" /> </div>
 
 
 ## 管理修改
 Git跟踪并管理的是修改，而非文件本身。
-对文件修改之后，如果没有`add`到暂存区，即使`commit`不会添加到`master`上面。
+对文件修改之后，如果没有 `add` 到暂存区，即使 `commit` 不会添加到 `master` 上面。
+
+
+---
+
+<br/>
+
+
+<br/>
+
+
 ## 撤销修改
 如果在工作区对文件进行了修改，可以使用`git checkout -- filename`来撤销对于文件`filename`的修改，此时有两种情况：
 
@@ -123,9 +117,20 @@ Git跟踪并管理的是修改，而非文件本身。
 
 总之，就是回到最近一次`add`或者`commit`的状态。
 
-如果文件修改之后`add`了，但是还没有`commit`，使用`git reset HEAD filename`进行撤销，将文件重现放回工作区，所以`reset`即可以是版本回退，也可以是暂存区放回工作区。
+如果文件修改之后 `add` 了，但是还没有 `commit`，使用 `git reset HEAD filename` 进行撤销，将文件重现放回工作区，所以 `reset` 即可以是版本回退，也可以是暂存区放回工作区。
+
+
+---
+<br/>
+
+
+<br/>
+
+
 ## 删除文件
-当在工作区删除一个文件是`rm test.txt`，`git status`会进行提示：
+
+当在工作区删除一个文件是 `rm test.txt`，`git status` 会进行提示：
+
 <div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/jpeg/29674612/1684810134399-32de527c-9f12-485f-862d-40f73f5a7896.jpeg" width="600" /> </div>
 
 
@@ -150,6 +155,7 @@ Git跟踪并管理的是修改，而非文件本身。
 
 
 # 远程仓库
+
 Git 是分布式版本控制系统，同一个 Git 仓库，可以分布到不同的机器上。每台机器的版本库其实都是一样的，并没有主次之分。
 
 实际情况往往是这样，找一台电脑充当服务器的角色，服务器仓库克隆一份到自己的电脑上，并且各自把各自的提交推送到服务器仓库里，也从服务器仓库中拉取别人的提交。Github 可以是提供 Git 仓库托管服务。
@@ -159,6 +165,7 @@ Git 是分布式版本控制系统，同一个 Git 仓库，可以分布到不�
 ### 建立 SSH 连接
 
 这里选择使用 SSH 将本地仓库和远程仓库连接。首先本机创建 ssh key。用户主目录之下. ssh 目录 有两个文件夹：id_rsa（私钥） 和 id_rsa. pub（公钥）。如果没有这两个目录就需要创建：
+
 ```bash
 ssh-keygen -t rsa -C "邮箱地址"
 ```
@@ -195,12 +202,10 @@ git remote add origin git@github.com:用户名/仓库名.git
 
 
 ## 从远程库克隆
+
 使用命令 `git clone git@github.com:github_username/gitskills.git` 将 Github 上面的库克隆到本地。如果有多个人协作开发，那么每个人各自从远程克隆一份就可以了。
 
 ---
-
-<br/>
-
 
 <br/>
 

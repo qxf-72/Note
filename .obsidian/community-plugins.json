@@ -1,13 +1,13 @@
 [
-  "obsidian-quiet-outline",
   "obsidian-excalidraw-plugin",
   "obsidian-emoji-toolbar",
   "easy-typing-obsidian",
   "table-editor-obsidian",
   "editing-toolbar",
-  "obsidian-git",
   "obsidian-mkdocs-publisher",
   "calendar",
   "vscode-editor",
-  "obsidian-style-settings"
+  "obsidian-style-settings",
+  "obsidian-quiet-outline",
+  "obsidian-git"
 ]
