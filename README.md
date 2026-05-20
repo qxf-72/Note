@@ -7,8 +7,10 @@ Note 仓库主要是存放本人**学习笔记📒备份🏦**。
 笔记格式为 **markdown**，其中使用了部分 **markdown 拓展语法**、**LaTeX 公式**、**HTML 语法**，部分编辑器可能不支持显示。图床采用 **Obsidian+Picgo+阿里云OSS** 方式构建。采用 Obsidian 编辑，Obisidain 插件、主题等相关配置文件在 **.obsidian** 目录中 。
 
 
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2026-05-19_18-22-26.png" loading="lazy" style="max-width: 100%; height: auto; width: 700px;"/> </div>
 
 
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2026-05-19_12-06-29.png" loading="lazy" style="max-width: 100%; height: auto; width: 700px;"/> </div>
 
 
 

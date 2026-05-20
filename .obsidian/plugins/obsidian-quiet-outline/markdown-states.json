@@ -1,14 +1,14 @@
 {
   "编程语言/C++/C++ Primer.md": {
-    "scroll": 127.0840108401084,
+    "scroll": 242.93101662529838,
     "cursor": {
       "from": {
-        "line": 202,
-        "ch": 0
+        "line": 4,
+        "ch": 4
       },
       "to": {
-        "line": 202,
-        "ch": 0
+        "line": 4,
+        "ch": 4
       }
     },
     "expandedKeys": [
@@ -145,7 +145,7 @@
     "expandedKeys": []
   },
   "开发工具/Linux/鸟哥的Linux私房菜.md": {
-    "scroll": 0,
+    "scroll": 1.9736625012056326,
     "cursor": {
       "from": {
         "line": 10,
@@ -229,5 +229,75 @@
     "expandedKeys": [
       "item-1-0"
     ]
+  },
+  "杂项/机器人操作系统.md": {
+    "scroll": 124.78333333333333,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "杂项/草稿.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 250,
+        "ch": 0
+      },
+      "to": {
+        "line": 250,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "编程语言/C++/Effective C++.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 10,
+        "ch": 17
+      },
+      "to": {
+        "line": 10,
+        "ch": 17
+      }
+    },
+    "expandedKeys": []
+  },
+  "README.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 9,
+        "ch": 181
+      },
+      "to": {
+        "line": 9,
+        "ch": 181
+      }
+    },
+    "expandedKeys": []
+  },
+  "开发工具/数据库/SQL必知必会.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 9,
+        "ch": 181
+      },
+      "to": {
+        "line": 9,
+        "ch": 181
+      }
+    },
+    "expandedKeys": []
   }
 }

@@ -1,6 +1,4 @@
-<div align="center"> <img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/dd36d385e21c3eaa5752328a76e7f1f.jpg" width = 500 /> </div>
-
-
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2026-05-19_18-18-09.jpg" loading="lazy" style="max-width: 100%; height: auto; width: 500px;"/> </div>
 
 # 01：将 C++视为语言联邦
 
@@ -10,7 +8,7 @@
 - Template C++：关于模板的泛型编程部分
 - STL
 
-<span style="background:#fff88f">C++高效编程守则视情况而定，取决于使用 C++的哪一部分</span>。
+C++高效编程守则视情况而定，取决于使用 C++的哪一部分。
 
 ---
 
