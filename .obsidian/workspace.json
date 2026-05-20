@@ -14,12 +14,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "编程语言/C++/Linux C++环境配置.md",
+                "file": "编程语言/C++/C++ Primer.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Linux C++环境配置"
+              "title": "C++ Primer"
             },
             "group": "fed8baac51e7dbde"
           }
@@ -36,12 +36,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "编程语言/C++/Linux C++环境配置.md",
+                "file": "编程语言/C++/C++ Primer.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Linux C++环境配置"
+              "title": "C++ Primer"
             },
             "group": "fed8baac51e7dbde"
           }
@@ -102,7 +102,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 229.5,
+    "collapsed": true
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -243,12 +244,12 @@
   },
   "active": "7d4a9480237d66ce",
   "lastOpenFiles": [
+    "编程语言/C++/Linux C++环境配置.md",
     "编程语言/C++/C++ Primer.md",
     "README.md",
     "开发工具/数据库/SQL必知必会.md",
     "开发工具/Linux/鸟哥的Linux私房菜.md",
     "编程语言/C++/Effective C++.md",
-    "编程语言/C++/Linux C++环境配置.md",
     "杂项/草稿.md",
     "杂项/机器人操作系统.md",
     "编程语言/Golang/Go语言圣经.md",
