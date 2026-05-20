@@ -161,7 +161,7 @@ C++未定义IO语句，iostream库中包含了两个基础类型`istream`（输�
 - 初始化：在 C++中，初始化和赋值是不同的操作，初始化时创建变量时赋予一个初始值，赋值含义为把对象当前的值擦除，用一个新的值来替代。
 - 列表初始化：一种用花括号来初始化的方式，如下图。**使用列表初始化时，如果初始值存在丢失信息的风险，编译器会报错**（如，给整型赋一个浮点初始值）。
 
-<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-01-15_094047.png" loading="lazy" style="max-width: 100%; height: auto; width: 400px;"/> </div>
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-01-15_094047.png" loading="lazy" style="max-width: 100%; height: auto; width: 500px;"/> </div>
 
 
 - 默认初始化：当内置类型的**变量定义在函数体之外**，作为全局变量，且未被显式初始化时，会被默认初始化为 0。
@@ -242,7 +242,7 @@ C++支持分离式编译，允许将程序分隔为若干个文件，每个文�
 
 默认状态下，const 对象仅仅在文件内有效，多个文件出现同名的 const 值时，相当于在不问文件定义了独立变量（不同于普通变量，对于普通全局变量，在另一个文件用关键字 extern 声明后即可使用）。
 
-若要不同文件使用同一个 const 对象，必须将该对象设置为全局变量，且在加关键字 extern，以表明非本文件独有，如下：
+若要不同文件使用同一个 const 对象，必须在**定义时**将该对象设置为全局变量，且在加关键字 extern，以表明非本文件独有，如下：
 
 ```cpp
 // file_1.cc中定义并初始化了一个常量，该常量能被其他文件访问
@@ -251,6 +251,11 @@ extern const int bufSize = fcn();
 // file_1.h中引入了之前定义的常量，是同一个变量
 extern const int bufSzie;
 ```
+
+
+> **const 变量默认内部链接，普通全局变量默认外部链接。**
+
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2026-05-20_19-29-29.png" loading="lazy" style="max-width: 100%; height: auto; width: 350px;"/> </div>
 
 
 ---
@@ -292,12 +297,13 @@ const int& ri=i;
 
 - **指向常量的指针**：一般而言，指针类型必须和所指内容对应，也是指向const对象的指针必须为const，但是const指针却可以指向非const对象，此时只是能够通过指针对 对象的操作有了限制。
 
+
 <div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-01-15_160925.png" loading="lazy" style="max-width: 100%; height: auto; width: 600px;"/> </div>
 
 
 - **常量指针**：const 指针，指针本身为常量，即不能换绑所指对象，但所指对象内容可以更改
 
-<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-01-15_161357.png" loading="lazy" style="max-width: 100%; height: auto; width: 400px;"/> </div>
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-01-15_161357.png" loading="lazy" style="max-width: 100%; height: auto; width: 350px;"/> </div>
 
 
 
@@ -330,8 +336,8 @@ const int& ri=i;
 - **常量表达式**：值不会改变，并且在编译过程（还没运行）就能得到计算结果的表达式
 - **constexpr 变量**：即**变量本身为常量**，且使用常量表达式初始化，由于常量表达式结果必须在编译时就能扣获取，所以一般使用字面值进行初始化；当使用 constexpr 修饰指针时，仅表示指针本身为常量，（**即 constexper 修饰的是顶层 const**）。
 
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-02-20_093440.png" loading="lazy" style="max-width: 100%; height: auto; width: 350px;"/> </div>
 
-<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-02-20_093440.png" loading="lazy" style="max-width: 100%; height: auto; width: 300px;"/> </div>
 
 ---
 
@@ -353,20 +359,21 @@ const int& ri=i;
 
 - typedef：
 
-
-<center>
-<img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-01-16_100429.png" width="700" />
-</center>
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-01-16_100429.png" loading="lazy" style="max-width: 100%; height: auto; width: 700px;"/> </div>
 
 
 - 别名声明：C++11规定的新方法 
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/png/29674612/1673834825421-0cef22ec-892a-4cab-84d2-2ef8213da7b4.png#averageHue=%23f6f6f6&clientId=u06356861-4d70-4&from=ui&height=34&id=ub218379e&originHeight=67&originWidth=1097&originalType=binary&ratio=1&rotation=0&showTitle=false&size=20639&status=done&style=none&taskId=u697c580e-38bd-4da4-af78-1e4b16c805d&title=&width=550" width="550" /> </div>
+
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-01-16_100658.png" loading="lazy" style="max-width: 100%; height: auto; width: 500px;"/> </div>
 
 
-==**typedef 和 const 一起用时，要注意 const 修饰的对象**==
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/png/29674612/1676867881151-87925af5-3d7d-4c09-a4c8-f23ff7dd565d.png" width="641" /> </div>
 
-==**const 修饰的是类型别名之后的那部分**==，如上图中的 cstr 和 *ps 。
+**typedef 和 const 一起用时，要注意 const 修饰的对象**
+
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-02-20_123750.png" loading="lazy" style="max-width: 100%; height: auto; width: 500px;"/> </div>
+
+
+**const 修饰的是类型别名之后的那部分**，如上图中的 cstr 和 *ps 。
 
 ---
 
@@ -379,7 +386,7 @@ const int& ri=i;
 ### 2.5.2  auto 类型说明符
 
 - auto在同一行声明多个变量时，多个变量类型应当一致。
-- ==auto 会忽略引用==，当引用作为初始值时，真正参加初始化的其实是的引用的对象，如果需要 atuo 推导出来的类型为引用，需要明确指出，如下图：
+- **auto 会忽略引用**，当引用作为初始值时，真正参加初始化的其实是的引用的对象，如果需要 atuo 推导出来的类型为引用，需要明确指出，如下图：
 
 <div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/png/29674612/1676872758377-5e5ca1b9-e375-4688-b89c-21ff0605cfc2.png" width="500" /> </div>
 
