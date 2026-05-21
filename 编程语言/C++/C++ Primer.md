@@ -388,19 +388,22 @@ const int& ri=i;
 - auto在同一行声明多个变量时，多个变量类型应当一致。
 - **auto 会忽略引用**，当引用作为初始值时，真正参加初始化的其实是的引用的对象，如果需要 atuo 推导出来的类型为引用，需要明确指出，如下图：
 
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/png/29674612/1676872758377-5e5ca1b9-e375-4688-b89c-21ff0605cfc2.png" width="500" /> </div>
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-02-20_135900.png" loading="lazy" style="max-width: 100%; height: auto; width: 500px;"/> </div>
 
 
 
-- ==auto 会忽略顶层 const==，如果需要 auto 推导出来的类型是顶层 const，需要明确指出，如下图：
 
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/png/29674612/1676872816982-70fd60ab-bc5e-4b59-bd6c-b5b6fb6bc792.png" width="500" /> </div>
+- **auto 会忽略顶层 const**，如果需要 auto 推导出来的类型是顶层 const，需要明确指出，如下图：
+
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-02-20_135614.png" loading="lazy" style="max-width: 100%; height: auto; width: 500px;"/> </div>
+
 
  
 
-- ==设置一个类型为 auto 的引用时，初始值顶层 const属性保留==，如下：
+- 设置一个类型为 auto 的**引用**时，初始值顶层 const属性保留，如下：
 
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/jpeg/29674612/1688611388636-b2a41466-e5f7-40cb-a926-7c8da83f8394.jpeg" width="600" /> </div>
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-07-06_104233.jpg" loading="lazy" style="max-width: 100%; height: auto; width: 500px;"/> </div>
+
 
 ---
 
@@ -416,19 +419,25 @@ decltype负责获得操作数的数据类型，编译器分析表达式的值，
 当 decltype 使用的表达式为一个**变量**：返回变量类型，包括顶层 const 和引用。
 
 操作数为**表达式**：
-- ==表达式内容为解引用时（即，`*p`），得到解引用的结果的引用类型==。
+- 表达式内容为解引用时（即，`*p`），得到解引用的结果的引用类型。
 
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/png/29674612/1676889637592-b3b57083-83fa-4bb4-9bef-6b9f703a080f.png" width="600" /> </div>
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-02-20_184012.png" loading="lazy" style="max-width: 100%; height: auto; width: 600px;"/> </div>
 
-> 在 C++中，==`*p ` 表达式返回的是指针  p  所指向的对象的引用，而不是对象的值==。因此， `decltype (*p)  `推导出的类型是指向该对象的引用类型。 
 
-- decltype的结果和形式密切相关，==**给变量加括号得到的结果和不加括号的结果不同**==。
+> <div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2026-05-21_09-41-54.png" loading="lazy" style="max-width: 100%; height: auto; width: 700px;"/> </div>
+> 
 
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/png/29674612/1676889690700-2478cdcc-998a-429a-ada3-4aef4a7c82e8.png" width="500" /> </div>
 
-> 在 C++中，decltype 的工作方式是通过分析表达式的类型来推导结果类型。当给变量加上括号时，编译器会将其视为一个表达式，并根据该表达式的求值结果来推导类型。
-> 在 C++中，当使用 `decltype ((x))`时，括号中的表达式会被视为一个左值，因此推导结果会是引用类型。 
-> 括号中的表达式 ` (x)`  被视为对变量  x  的引用，而不是对其值的拷贝。因此，`decltype ((x)) `推导出的类型是  x  的引用类型。 
+- decltype的结果和形式密切相关，**给变量加括号得到的结果和不加括号的结果不同**。
+
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-02-20_184106.png" loading="lazy" style="max-width: 100%; height: auto; width: 500px;"/> </div>
+
+
+> 在 C++中，decltype 的工作方式是通过分析表达式的类型来推导结果类型。当给变量加上括号时，编译器会将其视为一个**表达式**，并根据该表达式的求值结果来推导类型。
+> 
+> 在 C++中，当使用 `decltype ((x))`时，括号中的表达式会被视为一个**左值**，因此推导结果会是引用类型。 
+> 
+> <div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2026-05-21_09-46-26.png" loading="lazy" style="max-width: 100%; height: auto; width: 700px;"/> </div>
 
 
 ---
@@ -1764,7 +1773,9 @@ int main() {
 # 第9章  顺序容器
 ## 9.1 概述
 ### 9.1.1 不同的容器特点
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/png/29674612/1681888683372-7e80ad32-e57e-497e-94b1-4d5d32b39772.png" width="700" /> </div>
+
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-04-19_151705.png" loading="lazy" style="max-width: 100%; height: auto; width: 700px;"/> </div>
+
 
 ---
 
@@ -1775,12 +1786,12 @@ int main() {
 
 
 ### 9.1.2 forward_list和array
-是C++11新增的类型
+是**C++11新增的类型**
 
-- 与内置数组相比，`array`更安全，并且==可以拷贝赋值==。
-- ==`forward_list`的设计目标是达到与最好的手写单链表结构性能相当，故没有`size`==。
+- 与内置数组相比，`array`更安全，并且可以拷贝赋值。
+- `forward_list`的设计目标是达到与最好的手写单链表结构性能相当，故没有`size`。
 
-新标准库的容器比旧版本块很多，现代C++应该使用标准库容器。
+新标准库的容器比旧版本快很多，现代C++应该使用标准库容器。
 
 ---
 
@@ -1813,8 +1824,10 @@ int main() {
 
 ## 9.2 容器库概览
 ### 9.2.1 迭代器
-==`forward_list`的迭代不能执行递减操作。==
-`list`类的容器的迭代器都不能进行大小`>，<`比较。
+
+- `forward_list` 的迭代**不能执行递减**操作。
+
+- `list`类的容器的迭代器都不能进行大小`>，<`比较。
 
 ---
 
@@ -1826,10 +1839,10 @@ int main() {
 
 
 ### 9.2.2 容器类型成员
-每个==容器都定义几种类型（类型别名）这些类型别名在泛型编程中非常有用==：
+每个容器都定义几种类型（类型别名）这些类型别名在泛型编程中非常有用：
 
 - `size_type`：容器大小的类型。
-- `interator`和`const_interator`
+- `interator` 和 `const_interator`：迭代器
 - `value_type`：元素类型。
 - `reference` 和 `const_reference`：元素类型引用。
 
@@ -1858,31 +1871,41 @@ int main() {
 
 ### 9.2.4 容器定义和初始化
 每个容器都定义了一个默认构造函数，（array除外）默认构造函数创建一个空容器。
+
+
 **容器初始化为另一个容器的拷贝**
 
 - 直接拷贝整个容器：两个容器的类型及其元素必须一样。
 `C c1(c2) ;`或者` C c1=c2;`
 
-- 使用迭代器指定拷贝一个范围：==此时无须容器类型相同，元素类型可以进行转化即可==。
+- 使用迭代器指定拷贝一个范围：此时无须容器类型相同，元素类型可以进行转化即可。
 `C c(c1.begin(),c1.end());`
 
 **列表初始化**
+
 当使用列表初始化时，对于除了array之外的容器类型，其隐含指定了容器大小（即列表的长度）。
 
 **与顺序容器大小相关的构造函数**
-顺序容器（array除外）还提供了另一个构造函数——接受一个容器大小和可选的元素初始值。
-当元素类型是内置类型或者具有默认构造函数的类类型时，可不提供元素初始值，否则必须显示提供元素初始值。
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/png/29674612/1679657774156-ef6d3520-8e3f-4f35-918f-f80ef33de226.png" width="600" /> </div>
+
+- 顺序容器（array除外）还提供了另一个构造函数——接受一个容器大小和可选的元素初始值。
+
+- 当元素类型是内置类型或者具有默认构造函数的类类型时，可不提供元素初始值，否则必须显示提供元素初始值。
+
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-03-24_193523.png" loading="lazy" style="max-width: 100%; height: auto; width: 600px;"/> </div>
 
 
 
-**固定长度的**`array`
-大小是`array`类型的一部分，定义一个`array`是需要指定元素类型和容器大小，如下：
-``` cpp
-array<int,42>
-```
-array使用默认初始化时是非空的，大小就是指定的大小，元素被默认初始化（如果是类类型，必须具有默认构造函数）。
-当使用列表对array初始化时，列表大小必须小于等于array的大小，剩余元素进行值初始化。`array`可以进行拷贝或对象赋值操作。
+**固定长度的** `array`
+
+- 大小是 `array` 类型的一部分，定义一个 `array` 时需要指定元素类型和容器大小，如下：
+
+ ``` cpp
+ array<int,42>
+ ```
+
+- array使用默认初始化时是非空的，大小就是指定的大小，元素被默认初始化（如果是类类型，必须具有默认构造函数）。
+
+- 当使用列表对array初始化时，列表大小必须小于等于array的大小，剩余元素进行**值初始化（赋值为 0）**。`array` 可以进行拷贝或对象赋值操作。
 
 ---
 
@@ -1894,21 +1917,28 @@ array使用默认初始化时是非空的，大小就是指定的大小，元素
 
 
 ### 9.2.5 赋值和swap
-`array`**的特殊情况**
-`array`允许赋值，`=`两边必须具有相同的类型。
-由于右侧运算对象大小可能与左侧运算对象的大小不一样，`array`不支持`assign`，也不允许使用列表进行赋值（只能初始化时使用）。
-
-**`=` 和 `assign`**
-==两种方式都是赋值，都是将用右边的值的拷贝替换掉左边容器中**所有元素**==。可以看作是重新初始化。
-`=` 要求左右两边的运算对象类型相同，==`assign` 则可用不同但是相容的类型，不能用于关联容器和 `array`==。使用方法如下：
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/png/29674612/1679655001342-d7ac54e7-3e3a-48d3-8485-43284e2f9e32.png" width="600" /> </div>
 
 
+`array` **的特殊情况**
 
-`swap`**操作**
-`swap`用于==交换两个**相同类型容器**的内容==。（array除外）==`swap`只是交换容器内部数据结构==，元素本身并没有被交换。
-元素本身没有被移动，所以指向容器的迭代器、引用和指针在swap操作之后不会失效，但是所指元素所属的对象已经不同。
-<div align="center"> <img src="https://cdn.nlark.com/yuque/0/2023/png/29674612/1679655386924-ec355dec-0c1f-44de-aaec-443be868fd54.png" width="600" /> </div>
+- `array`允许赋值，`=`两边必须具有相同的类型。
+- 由于右侧运算对象大小可能与左侧运算对象的大小不一样，**`array`不支持`assign`**，也不允许使用列表进行赋值（只能初始化时使用）。
+
+
+** `=` 和 `assign` **
+
+- 两种方式都是赋值，都是将用右边的值的拷贝替换掉左边容器中**所有元素**。可以看作是重新初始化。
+- `=` 要求左右两边的运算对象类型相同，`assign` 则可用不同但是相容的类型，不能用于关联容器和 `array`。使用方法如下：
+
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-03-24_184842.png" loading="lazy" style="max-width: 100%; height: auto; width: 600px;"/> </div>
+
+
+`swap` **操作**
+
+- `swap`用于交换两个**相同类型容器**的内容。（array除外）`swap`只是交换容器内部数据结构，元素本身并没有被交换。
+- 元素本身没有被移动，所以指向容器的迭代器、引用和指针在swap操作之后不会失效，但是所指元素所属的对象已经不同。
+
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2023-03-24_185557.png" loading="lazy" style="max-width: 100%; height: auto; width: 600px;"/> </div>
 
 
 > 其他顺序容器使用的是迭代器来访问元素，而迭代器本质上是一个指针，指向容器中的某个元素。当两个容器进行swap时，它们所存储的指针并没有发生改变，只是指向了另一个容器中的元素。

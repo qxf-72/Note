@@ -6,7 +6,7 @@
       {
         "id": "b53f2da73466f6b1",
         "type": "tabs",
-        "dimension": 59.2896174863388,
+        "dimension": 61.54371584699454,
         "children": [
           {
             "id": "9d763bc3100c4844",
@@ -14,12 +14,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发工具/Linux/Ubuntu 使用记录.md",
+                "file": "编程语言/C++/C++ Primer.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Ubuntu 使用记录"
+              "title": "C++ Primer"
             },
             "group": "caf75db3f1cf130e"
           }
@@ -28,7 +28,7 @@
       {
         "id": "24adb3697803566b",
         "type": "tabs",
-        "dimension": 40.7103825136612,
+        "dimension": 38.45628415300546,
         "children": [
           {
             "id": "91cc11543ec33721",
@@ -36,12 +36,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发工具/Linux/Ubuntu 使用记录.md",
+                "file": "编程语言/C++/C++ Primer.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Ubuntu 使用记录"
+              "title": "C++ Primer"
             },
             "group": "caf75db3f1cf130e"
           }
@@ -244,8 +244,11 @@
   },
   "active": "91cc11543ec33721",
   "lastOpenFiles": [
+    "编程语言/C++/C++面试.md",
     "编程语言/C++/C++ Primer.md",
     "README.md",
+    "开发工具/数据库/MySQL是怎样运行的.md",
+    "开发工具/Linux/Ubuntu 使用记录.md",
     "编程语言/C++/Effective C++.md",
     "编程语言/Golang/Go语言圣经.md",
     "C++ 后端面试速查.md",
@@ -254,11 +257,9 @@
     "开发工具/Linux/鸟哥的Linux私房菜.md",
     "杂项/草稿.md",
     "杂项/机器人操作系统.md",
-    "开发工具/Linux/Ubuntu 使用记录.md",
     "开发工具/Linux/Git入门.md",
     "开发工具/Linux/Vim 技巧.md",
     "杂项/机器学习.md",
-    "开发工具/数据库/MySQL是怎样运行的.md",
     "计算机基础/操作系统原理/王道 操作系统.md",
     "编程语言/Golang",
     "未命名",
@@ -271,7 +272,6 @@
     "开发工具/编译工具/跟我一起写Makefile.md",
     "杂项/深度学习.md",
     "杂项/自动控制原理.md",
-    "杂项/数字图像处理.md",
     "0423968B760280EA13974A4BF0CFE8AC.png",
     "EA269C57FCE480748A8D543CD6F7B7CA.png",
     "杂项/课堂笔记/大三下学期",
