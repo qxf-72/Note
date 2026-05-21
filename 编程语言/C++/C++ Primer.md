@@ -2600,9 +2600,11 @@ lambda的函数体是一个单一的`return`语句时，无需指定返回类型
 
 
 ### 10.3.4 参数绑定
+
 如果需要在很多地方使用相同的操作，通常定义一个函数。当lambda的捕获列表为空时，通常可以用函数进行代替。
 
 **标准库**`bind`**函数**
+
 定义在头文件`functional`中，作用可以看作是一个函数适配器。<span style="background:#fff88f">接受一个可调用对象，生成一个新的可调用对象</span>。使用方法：
 ```cpp
 auto newCallable = bind (Callable , arg_list) ;
@@ -2613,6 +2615,7 @@ auto newCallable = bind (Callable , arg_list) ;
 
 
 `placeholders`**名字**
+
 占位符`_n`定义在`placeholders`的命名空间中，而其又定义在`std`中。
 > 命名空间的嵌套
 > 当一个命名空间b属于命名空间a，当using namespace a之后，如果需要使用b中的变量x，直接b : : x即可，但是不能直接使用 x 。
@@ -2637,6 +2640,7 @@ auto f = [](int e1, int e2, int e3, int e4) {return e1 + e2 + e3 + e4;};
 
 
 **绑定引用参数**
+
 `bind`会拷贝非占位符的参数，并保存到其返回的可调用对象中，如果参数是引用就拷贝引用指向的值，所以会出现以下结果：
 ```cpp
 auto f = [](int &e1, int &e2, int e3, int e4) {return e1 + e2 + e3 + e4;};
@@ -2670,6 +2674,7 @@ auto f = [](int &e1, int &e2, int e3, int e4) {return e1 + e2 + e3 + e4;};
 
 
 ## 10.4 再探迭代器
+
 除了为每种容器定义的迭代器以外，标准库还在头文件`iterator`中定义了额外几种迭代器。
 
 ### 10.4.1 插入迭代器
