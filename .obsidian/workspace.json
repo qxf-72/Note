@@ -14,12 +14,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "编程语言/C++/C++面试.md",
+                "file": "编程语言/C++/C++ Primer.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "C++面试"
+              "title": "C++ Primer"
             },
             "group": "caf75db3f1cf130e"
           }
@@ -36,12 +36,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "编程语言/C++/C++面试.md",
+                "file": "编程语言/C++/C++ Primer.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "C++面试"
+              "title": "C++ Primer"
             },
             "group": "caf75db3f1cf130e"
           }
@@ -244,11 +244,11 @@
   },
   "active": "91cc11543ec33721",
   "lastOpenFiles": [
-    "编程语言/C++/C++ Primer.md",
+    "开发工具/Linux/Ubuntu 使用记录.md",
     "编程语言/C++/C++面试.md",
+    "编程语言/C++/C++ Primer.md",
     "README.md",
     "开发工具/数据库/MySQL是怎样运行的.md",
-    "开发工具/Linux/Ubuntu 使用记录.md",
     "编程语言/C++/Effective C++.md",
     "编程语言/Golang/Go语言圣经.md",
     "C++ 后端面试速查.md",
