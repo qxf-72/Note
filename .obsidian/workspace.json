@@ -4,31 +4,9 @@
     "type": "split",
     "children": [
       {
-        "id": "b53f2da73466f6b1",
-        "type": "tabs",
-        "dimension": 61.54371584699454,
-        "children": [
-          {
-            "id": "9d763bc3100c4844",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "编程语言/C++/C++面试.md",
-                "mode": "preview",
-                "source": true
-              },
-              "icon": "lucide-file",
-              "title": "C++面试"
-            },
-            "group": "caf75db3f1cf130e"
-          }
-        ]
-      },
-      {
         "id": "24adb3697803566b",
         "type": "tabs",
-        "dimension": 38.45628415300546,
+        "dimension": 55.5327868852459,
         "children": [
           {
             "id": "91cc11543ec33721",
@@ -42,8 +20,45 @@
               },
               "icon": "lucide-file",
               "title": "C++面试"
+            }
+          },
+          {
+            "id": "8d5191598bd58690",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "编程语言/C++/候捷C++面向对象高级编程.md",
+                "mode": "preview",
+                "source": true
+              },
+              "icon": "lucide-file",
+              "title": "候捷C++面向对象高级编程"
             },
-            "group": "caf75db3f1cf130e"
+            "group": "f424ebfcb61eb68b"
+          }
+        ],
+        "currentTab": 1
+      },
+      {
+        "id": "e47b630a64ac6768",
+        "type": "tabs",
+        "dimension": 44.4672131147541,
+        "children": [
+          {
+            "id": "4dc4149e91bb6fc5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "编程语言/C++/候捷C++面向对象高级编程.md",
+                "mode": "source",
+                "source": true
+              },
+              "icon": "lucide-file",
+              "title": "候捷C++面向对象高级编程"
+            },
+            "group": "f424ebfcb61eb68b"
           }
         ]
       }
@@ -102,8 +117,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 229.5,
-    "collapsed": true
+    "width": 229.5
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -242,16 +256,17 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "91cc11543ec33721",
+  "active": "4dc4149e91bb6fc5",
   "lastOpenFiles": [
     "编程语言/C++/C++ Primer.md",
-    "开发工具/Linux/Ubuntu 使用记录.md",
+    "编程语言/C++/候捷C++面向对象高级编程.md",
     "编程语言/C++/C++面试.md",
+    "编程语言/C++/C++ 后端面试速查.md",
+    "开发工具/Linux/Ubuntu 使用记录.md",
     "README.md",
     "开发工具/数据库/MySQL是怎样运行的.md",
     "编程语言/C++/Effective C++.md",
     "编程语言/Golang/Go语言圣经.md",
-    "C++ 后端面试速查.md",
     "编程语言/C++/Linux C++环境配置.md",
     "开发工具/数据库/SQL必知必会.md",
     "开发工具/Linux/鸟哥的Linux私房菜.md",
@@ -271,7 +286,6 @@
     "算法/挑战程序设计竞赛.md",
     "开发工具/编译工具/跟我一起写Makefile.md",
     "杂项/深度学习.md",
-    "杂项/自动控制原理.md",
     "0423968B760280EA13974A4BF0CFE8AC.png",
     "EA269C57FCE480748A8D543CD6F7B7CA.png",
     "杂项/课堂笔记/大三下学期",
