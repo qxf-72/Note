@@ -4073,7 +4073,7 @@ cout << &arr + 1 << endl; // 跳过整个数组
 
   
 
-## 30. 数组作为函数参数时会发生什么？
+### 30. 数组作为函数参数时会发生什么？
 
   
 
@@ -4147,7 +4147,7 @@ void func(int (&arr)[3]) {
 
   
 
-## 31. `vector` 和数组有什么区别？
+### 31. `vector` 和数组有什么区别？
 
   
 
@@ -4183,11 +4183,11 @@ void func(int (&arr)[3]) {
 
   
 
-# 八、`map`
+## 八、`map`
 
   
 
-## 32. `map` 的底层原理是什么？
+### 32. `map` 的底层原理是什么？
 
   
 
@@ -4249,7 +4249,7 @@ for (const auto& [name, age] : mp) {
 
   
 
-## 33. `map` 的 key 为什么不能修改？
+### 33. `map` 的 key 为什么不能修改？
 
   
 
@@ -4313,7 +4313,7 @@ it->second = "new value"; // 正确
 
   
 
-## 34. `map[key]` 和 `map.find(key)` 有什么区别？
+### 34. `map[key]` 和 `map.find(key)` 有什么区别？
 
   
 
@@ -4379,7 +4379,7 @@ if (mp.find("def") == mp.end()) {
 
   
 
-## 35. `map` 的 `insert` 和 `operator[]` 有什么区别？
+### 35. `map` 的 `insert` 和 `operator[]` 有什么区别？
 
   
 
@@ -4439,11 +4439,11 @@ mp.insert_or_assign("a", 100);
 
   
 
-# 九、`unordered_map`
+## 九、`unordered_map`
 
   
 
-## 36. `unordered_map` 的底层原理是什么？
+### 36. `unordered_map` 的底层原理是什么？
 
   
 
@@ -4497,7 +4497,7 @@ mp["Jerry"] = 20;
 
   
 
-## 37. 什么是哈希冲突？
+### 37. 什么是哈希冲突？
 
   
 
@@ -4539,7 +4539,7 @@ C++ 标准没有强制规定具体实现，但常见标准库实现通常使用�
 
   
 
-## 38. `unordered_map` 为什么平均 O(1)，最坏 O(n)？
+### 38. `unordered_map` 为什么平均 O(1)，最坏 O(n)？
 
   
 
@@ -4567,7 +4567,7 @@ C++ 标准没有强制规定具体实现，但常见标准库实现通常使用�
 
   
 
-## 39. 什么是负载因子？
+### 39. 什么是负载因子？
 
   
 
@@ -4613,7 +4613,7 @@ mp.max_load_factor();
 
   
 
-## 40. `unordered_map` 的 `reserve` 和 `rehash` 有什么区别？
+### 40. `unordered_map` 的 `reserve` 和 `rehash` 有什么区别？
 
   
 
@@ -4663,11 +4663,11 @@ mp.reserve(n);
 
   
 
-# 十、`map` 和 `unordered_map` 区别
+## 十、`map` 和 `unordered_map` 区别
 
   
 
-## 41. `map` 和 `unordered_map` 有什么区别？
+### 41. `map` 和 `unordered_map` 有什么区别？
 
   
 
@@ -4705,7 +4705,7 @@ mp.reserve(n);
 
   
 
-## 42. 什么时候用 `map`，什么时候用 `unordered_map`？
+### 42. 什么时候用 `map`，什么时候用 `unordered_map`？
 
   
 
@@ -4765,7 +4765,7 @@ unordered_map<string, int> counter;
 
   
 
-## 43. 为什么有时 `unordered_map` 不一定比 `map` 快？
+### 43. 为什么有时 `unordered_map` 不一定比 `map` 快？
 
   
 
@@ -4803,11 +4803,11 @@ unordered_map<string, int> counter;
 
   
 
-# 十一、`set`
+## 十一、`set`
 
   
 
-## 44. `set` 的底层原理是什么？
+### 44. `set` 的底层原理是什么？
 
   
 
@@ -4879,7 +4879,7 @@ for (int x : s) {
 
   
 
-## 45. `set` 和 `map` 有什么区别？
+### 45. `set` 和 `map` 有什么区别？
 
   
 
