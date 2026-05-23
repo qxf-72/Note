@@ -150,3 +150,58 @@ array new 一定要搭配 array delete。
 
 
 ----
+
+
+
+<br/>
+
+
+<br/>
+
+
+<br/>
+
+## 类模板、函数模板
+
+
+**static 成员一定要在类外进行定义**。
+
+**而静态函数没有 this 指针**，只能处理 static 数据成员。
+
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2026-05-23_08-10-50.png" loading="lazy" style="max-width: 100%; height: auto; width: 500px;"/> </div>
+
+Sigleton 设计模式
+
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2026-05-23_08-15-59.png" loading="lazy" style="max-width: 100%; height: auto; width: 500px;"/> </div>
+
+
+---
+
+<br/>
+
+
+<br/>
+
+
+<br/>
+
+
+## 组合与继承
+
+
+**复合**
+
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2026-05-23_08-39-38.png" loading="lazy" style="max-width: 100%; height: auto; width: 500px;"/> </div>
+
+
+**委托**
+
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2026-05-23_08-40-38.png" loading="lazy" style="max-width: 100%; height: auto; width: 600px;"/> </div>
+
+**继承**
+
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2026-05-23_09-17-22.png" loading="lazy" style="max-width: 100%; height: auto; width: 600px;"/> </div>
+
+
+
+---

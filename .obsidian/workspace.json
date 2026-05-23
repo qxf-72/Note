@@ -4,39 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "24adb3697803566b",
+        "id": "10f96f34ba9b4c87",
         "type": "tabs",
         "children": [
           {
-            "id": "91cc11543ec33721",
+            "id": "7e48ab3bcf9b527b",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "编程语言/C++/C++面试.md",
-                "mode": "source",
-                "source": true
-              },
-              "icon": "lucide-file",
-              "title": "C++面试"
-            }
-          },
-          {
-            "id": "8d5191598bd58690",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "编程语言/C++/C++面试.md",
+                "file": "开发工具/Linux/Git入门.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "C++面试"
+              "title": "Git入门"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -93,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 229.5,
-    "collapsed": true
+    "width": 229.5
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -233,13 +217,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "47429757a8453eb8",
+  "active": "7e48ab3bcf9b527b",
   "lastOpenFiles": [
-    "编程语言/C++/候捷C++面向对象高级编程.md",
+    "开发工具/Linux/Ubuntu 使用记录.md",
     "编程语言/C++/C++ Primer.md",
+    "编程语言/C++/候捷C++面向对象高级编程.md",
     "编程语言/C++/C++面试.md",
     "编程语言/C++/C++ 后端面试速查.md",
-    "开发工具/Linux/Ubuntu 使用记录.md",
     "README.md",
     "开发工具/数据库/MySQL是怎样运行的.md",
     "编程语言/C++/Effective C++.md",
