@@ -6,7 +6,6 @@
       {
         "id": "24adb3697803566b",
         "type": "tabs",
-        "dimension": 55.5327868852459,
         "children": [
           {
             "id": "91cc11543ec33721",
@@ -28,39 +27,16 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "编程语言/C++/候捷C++面向对象高级编程.md",
+                "file": "编程语言/C++/C++面试.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "候捷C++面向对象高级编程"
-            },
-            "group": "f424ebfcb61eb68b"
+              "title": "C++面试"
+            }
           }
         ],
         "currentTab": 1
-      },
-      {
-        "id": "e47b630a64ac6768",
-        "type": "tabs",
-        "dimension": 44.4672131147541,
-        "children": [
-          {
-            "id": "4dc4149e91bb6fc5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "编程语言/C++/候捷C++面向对象高级编程.md",
-                "mode": "source",
-                "source": true
-              },
-              "icon": "lucide-file",
-              "title": "候捷C++面向对象高级编程"
-            },
-            "group": "f424ebfcb61eb68b"
-          }
-        ]
       }
     ],
     "direction": "vertical"
@@ -117,7 +93,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 229.5
+    "width": 229.5,
+    "collapsed": true
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -256,10 +233,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "4dc4149e91bb6fc5",
+  "active": "47429757a8453eb8",
   "lastOpenFiles": [
-    "编程语言/C++/C++ Primer.md",
     "编程语言/C++/候捷C++面向对象高级编程.md",
+    "编程语言/C++/C++ Primer.md",
     "编程语言/C++/C++面试.md",
     "编程语言/C++/C++ 后端面试速查.md",
     "开发工具/Linux/Ubuntu 使用记录.md",
