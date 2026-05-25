@@ -120,7 +120,7 @@
     ]
   },
   "计算机基础/操作系统原理/王道 操作系统.md": {
-    "scroll": 1.5580246536820024,
+    "scroll": 476.87719298245617,
     "cursor": {
       "from": {
         "line": 0,
@@ -134,7 +134,7 @@
     "expandedKeys": []
   },
   "开发工具/Linux/鸟哥的Linux私房菜.md": {
-    "scroll": 1.9736625012056326,
+    "scroll": 0,
     "cursor": {
       "from": {
         "line": 10,
@@ -204,7 +204,7 @@
     "expandedKeys": []
   },
   "开发工具/Linux/Git入门.md": {
-    "scroll": 160.26666666666668,
+    "scroll": 190.54385536595396,
     "cursor": {
       "from": {
         "line": 166,
@@ -388,5 +388,37 @@
       }
     },
     "expandedKeys": []
+  },
+  "计算机基础/计算机网络/计算机网络.md": {
+    "scroll": 2677.2772277227723,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "计算机基础/操作系统原理/操作系统导论.md": {
+    "scroll": 1751.5343511450383,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": [
+      "item-1-0",
+      "item-1-66",
+      "item-1-95"
+    ]
   }
 }
