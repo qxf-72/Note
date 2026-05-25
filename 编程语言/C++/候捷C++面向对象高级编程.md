@@ -200,8 +200,20 @@ Sigleton 设计模式
 
 **继承**
 
+继承代表“是一种 xx ”的关系。
+
 <div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2026-05-23_09-17-22.png" loading="lazy" style="max-width: 100%; height: auto; width: 600px;"/> </div>
+
+
+**虚函数**
+
+
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2026-05-25_16-04-41.png" loading="lazy" style="max-width: 100%; height: auto; width: 600px;"/> </div>
 
 
 
 ---
+
+
+# 转换函数
+
