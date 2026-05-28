@@ -4,12 +4,12 @@
     "type": "split",
     "children": [
       {
-        "id": "10f96f34ba9b4c87",
+        "id": "4d104e0b4c76604c",
         "type": "tabs",
-        "dimension": 56.14754098360656,
+        "dimension": 56.89890710382514,
         "children": [
           {
-            "id": "7e48ab3bcf9b527b",
+            "id": "8132670aaf61b1a7",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -21,17 +21,17 @@
               "icon": "lucide-file",
               "title": "C++并发编程实战"
             },
-            "group": "c261babd79b45e4a"
+            "group": "057522c2236843a4"
           }
         ]
       },
       {
-        "id": "4d104e0b4c76604c",
+        "id": "74297d1a52d1cabc",
         "type": "tabs",
-        "dimension": 43.85245901639344,
+        "dimension": 43.10109289617486,
         "children": [
           {
-            "id": "e9a80128960dbf76",
+            "id": "011dba503f7f8ec2",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -43,7 +43,7 @@
               "icon": "lucide-file",
               "title": "C++并发编程实战"
             },
-            "group": "c261babd79b45e4a"
+            "group": "057522c2236843a4"
           }
         ]
       }
@@ -242,22 +242,24 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "e9a80128960dbf76",
+  "active": "011dba503f7f8ec2",
   "lastOpenFiles": [
-    "编程语言/Golang/Go语言圣经.md",
+    "EA269C57FCE480748A8D543CD6F7B7CA.png",
+    "编程语言/C++/C++工程API.md",
+    "编程语言/C++/C++面试.md",
+    "编程语言/C++/候捷C++面向对象高级编程.md",
+    "计算机基础/操作系统原理/王道 操作系统.md",
     "开发工具/并发编程/C++并发编程实战.md",
+    "编程语言/Golang/Go语言圣经.md",
     "编程语言/C++/C++ Primer.md",
     "算法/挑战程序设计竞赛.md",
     "算法/Algorithm_PrincetonUniversity.md",
     "计算机基础/操作系统原理/操作系统导论.md",
     "开发工具/并发编程",
-    "编程语言/C++/候捷C++面向对象高级编程.md",
     "开发工具/Linux/鸟哥的Linux私房菜.md",
-    "计算机基础/操作系统原理/王道 操作系统.md",
     "计算机基础/计算机网络/计算机网络.md",
     "开发工具/Linux/Git入门.md",
     "开发工具/Linux/Ubuntu 使用记录.md",
-    "编程语言/C++/C++面试.md",
     "编程语言/C++/C++ 后端面试速查.md",
     "README.md",
     "开发工具/数据库/MySQL是怎样运行的.md",
@@ -271,10 +273,7 @@
     "编程语言/Golang",
     "未命名",
     "计算机基础/计算机组成原理/汇编语言.md",
-    "计算机基础/计算机组成原理/计算机组成原理.md",
-    "计算机基础/数据结构/王道 数据结构.md",
     "0423968B760280EA13974A4BF0CFE8AC.png",
-    "EA269C57FCE480748A8D543CD6F7B7CA.png",
     "杂项/课堂笔记/大三下学期",
     "杂项/思维导图/SQL必知必会.mm",
     "9A06F5FA339DC751B8032B8840B77BD7.png",
