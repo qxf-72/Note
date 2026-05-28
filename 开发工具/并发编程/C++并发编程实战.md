@@ -75,7 +75,9 @@ int main()
 
 线程具有内部存储空间，参数会按照默认方式先**复制**到该处，新创建的执行线程才能直接访问它们。然后，这些副本被当成**临时变量**，以**右值**形式传给新线程上的函数或可调用对象
 
-- <div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2026-05-26_17-01-24.png" loading="lazy" style="max-width: 100%; height: auto; width: 500px;"/> </div>
+- 传指针时，线程保存的可能只是地址，不是内容本身。 
+
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2026-05-26_17-01-24.png" loading="lazy" style="max-width: 100%; height: auto; width: 500px;"/> </div>
 
 - <div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2026-05-26_17-02-48.png" loading="lazy" style="max-width: 100%; height: auto; width: 700px;"/> </div>
 
