@@ -14,12 +14,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发工具/并发编程/C++并发编程实战.md",
+                "file": "开发工具/Linux/Ubuntu 使用记录.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "C++并发编程实战"
+              "title": "Ubuntu 使用记录"
             },
             "group": "057522c2236843a4"
           }
@@ -36,12 +36,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发工具/并发编程/C++并发编程实战.md",
+                "file": "开发工具/Linux/Ubuntu 使用记录.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "C++并发编程实战"
+              "title": "Ubuntu 使用记录"
             },
             "group": "057522c2236843a4"
           }
@@ -244,12 +244,12 @@
   },
   "active": "011dba503f7f8ec2",
   "lastOpenFiles": [
+    "开发工具/并发编程/C++并发编程实战.md",
     "EA269C57FCE480748A8D543CD6F7B7CA.png",
     "编程语言/C++/C++工程API.md",
     "编程语言/C++/C++面试.md",
     "编程语言/C++/候捷C++面向对象高级编程.md",
     "计算机基础/操作系统原理/王道 操作系统.md",
-    "开发工具/并发编程/C++并发编程实战.md",
     "编程语言/Golang/Go语言圣经.md",
     "编程语言/C++/C++ Primer.md",
     "算法/挑战程序设计竞赛.md",
