@@ -30,10 +30,40 @@
 <br/>
 
 
-# XShell 远程连接
+# 远程连接
 
-使用 `ifconfig` 查看本机 ip 地址，如果没有该命令，使用 `sudo apt install net-tools` 安装工具。
+## 建立连接
 
+- 使用 `ifconfig` 查看本机 ip 地址，如果没有该命令，使用 `sudo apt install net-tools` 安装工具。
+- `ssh xiaofeng@192.168.213.135`，测试连接
+- 为了避免每次都输 IP 地址 ：
+	- 生成本地公钥 `ssh-keygen -t ed25519 -C "your_email@example.com"`，一般保存在 user/用户名/.ssh/id_rsa.pub 里面
+	- 将公钥复制到远程主机，打开 ~/.ssh/authorized_keys，将公钥添加进去
+	- 配置 ~/.ssh/config
+```text
+Host 远程主机名字  
+HostName 192.168.1.101  
+User xiaofeng  
+Port 22  
+```
+
+- 之后 `ssh 主机名字` 就可以连接了。
+
+
+## 文件传输
+
+
+从本地传到远程：
+
+```bash
+scp <文件名字> xiaofeng@192.168.213.135:<目标目录>
+```
+
+从远程下载到本地：
+
+```bash
+scp xiaofeng@192.168.213.135:<文件名字> <目标目录>
+```
 
 
 ---
