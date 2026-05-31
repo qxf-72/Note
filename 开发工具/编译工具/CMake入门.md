@@ -13,3 +13,38 @@
 	- `target_compile_features(my_target PRIVATE cxx_std_11)`
 - 链接目标文件与其他库：
 	- `target_link_libraries(<target> <libraries>...)`
+
+## 单文件项目
+
+```cmake
+cmake_minimum_required(VERSION 3.10)
+
+project(cpp_demo LANGUAGES CXX)
+
+add_executable(cpp_demo main.cpp)
+
+target_compile_features(cpp_demo PRIVATE cxx_std_11)
+```
+
+---
+
+## 多文件项目
+
+```cmake
+cmake_minimum_required(VERSION 3.10)
+
+project(cpp_demo LANGUAGES CXX)
+
+add_executable(cpp_demo
+    src/main.cpp
+    src/Logger.cpp
+)
+
+target_include_directories(cpp_demo PRIVATE
+    ${PROJECT_SOURCE_DIR}/include
+)
+
+target_compile_features(cpp_demo PRIVATE cxx_std_11)
+```
+
+---

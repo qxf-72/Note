@@ -250,7 +250,7 @@ Ctrl + Shift + P 打开命令面板快捷键，输入 Go: Install/Update Tools �
 
 ---
 
-安装**其他工具**：
+**安装其他工具**：
 - goimports：做了gofmt 的工作，还能自动添加/删除 import
 - staticcheck：高级静态分析
 - dlv：官方调试器
