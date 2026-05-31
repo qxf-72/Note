@@ -278,7 +278,7 @@ go install github.com/go-delve/delve/cmd/dlv@latest
 
 
 
-# 配置 Cpp+Cmake 环境
+# 配置 C++环境
 
 
 
@@ -302,5 +302,24 @@ go install github.com/go-delve/delve/cmd/dlv@latest
 ```bash
 sudo timedatectl set-timezone Asia/Shanghai
 ```
+
+---
+
+
+<br/>
+
+
+<br/>
+
+
+<br/>
+
+
+# C++开发
+
+
+## GDB
+
+
 
 ---
