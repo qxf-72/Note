@@ -1,13 +1,13 @@
 {
   "编程语言/C++/C++ Primer.md": {
-    "scroll": 0,
+    "scroll": 1395.6842105263158,
     "cursor": {
       "from": {
-        "line": 2364,
+        "line": 1214,
         "ch": 0
       },
       "to": {
-        "line": 2364,
+        "line": 1214,
         "ch": 0
       }
     },
@@ -431,7 +431,7 @@
     "expandedKeys": []
   },
   "开发工具/并发编程/C++并发编程实战.md": {
-    "scroll": 18.957408311631944,
+    "scroll": 94.62264150943396,
     "cursor": {
       "from": {
         "line": 134,
@@ -519,7 +519,7 @@
     "expandedKeys": []
   },
   "开发工具/编译工具/CMake入门.md": {
-    "scroll": 0.503401347569057,
+    "scroll": 6.023809160505023,
     "cursor": {
       "from": {
         "line": 46,
@@ -532,6 +532,50 @@
     },
     "expandedKeys": [
       "item-1-0"
+    ]
+  },
+  "开发工具/调试工具/未命名.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "开发工具/调试工具/GDB入门.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 12,
+        "ch": 3
+      },
+      "to": {
+        "line": 9,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "开发工具/调试工具/Valgrind入门.md": {
+    "scroll": 12.636363636363637,
+    "cursor": {
+      "from": {
+        "line": 98,
+        "ch": 0
+      },
+      "to": {
+        "line": 98,
+        "ch": 0
+      }
+    },
+    "expandedKeys": [
+      "item-1-2"
     ]
   }
 }
