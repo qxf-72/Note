@@ -6,7 +6,7 @@
       {
         "id": "4d104e0b4c76604c",
         "type": "tabs",
-        "dimension": 54.03005464480874,
+        "dimension": 56.215846994535525,
         "children": [
           {
             "id": "8132670aaf61b1a7",
@@ -28,7 +28,7 @@
       {
         "id": "74297d1a52d1cabc",
         "type": "tabs",
-        "dimension": 45.96994535519126,
+        "dimension": 43.78415300546448,
         "children": [
           {
             "id": "011dba503f7f8ec2",
@@ -102,8 +102,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 219.5,
-    "collapsed": true
+    "width": 219.5
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -244,6 +243,8 @@
   },
   "active": "011dba503f7f8ec2",
   "lastOpenFiles": [
+    "编程语言/C++/候捷C++面向对象高级编程.md",
+    "编程语言/C++/C++ Primer.md",
     "开发工具/并发编程/C++并发编程实战.md",
     "开发工具/调试工具/Valgrind入门.md",
     "开发工具/调试工具/GDB入门.md",
@@ -254,8 +255,6 @@
     "开发工具/调试工具",
     "开发工具/未命名.canvas",
     "开发工具/Linux/鸟哥的Linux私房菜.md",
-    "编程语言/C++/候捷C++面向对象高级编程.md",
-    "编程语言/C++/C++ Primer.md",
     "编程语言/C++/C++面试.md",
     "编程语言/C++/C++工程API.md",
     "开发工具/Linux/Vim入门.md",
