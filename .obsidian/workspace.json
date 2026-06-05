@@ -4,31 +4,9 @@
     "type": "split",
     "children": [
       {
-        "id": "74297d1a52d1cabc",
-        "type": "tabs",
-        "dimension": 57.377049180327866,
-        "children": [
-          {
-            "id": "78c9b54e66813d64",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "编程语言/C++/C++ Primer.md",
-                "mode": "preview",
-                "source": true
-              },
-              "icon": "lucide-file",
-              "title": "C++ Primer"
-            },
-            "group": "facf913adefb686f"
-          }
-        ]
-      },
-      {
         "id": "7d50cb6ef55500fb",
         "type": "tabs",
-        "dimension": 42.62295081967213,
+        "dimension": 62.704918032786885,
         "children": [
           {
             "id": "deb5d3dbcadcb61c",
@@ -36,14 +14,36 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "编程语言/C++/C++ Primer.md",
+                "file": "编程语言/C++/Effective Modern C++.md",
+                "mode": "preview",
+                "source": true
+              },
+              "icon": "lucide-file",
+              "title": "Effective Modern C++"
+            },
+            "group": "970eb45b0d6ea5a9"
+          }
+        ]
+      },
+      {
+        "id": "ffcfcd87c5241b65",
+        "type": "tabs",
+        "dimension": 37.295081967213115,
+        "children": [
+          {
+            "id": "8bac9522bfedd6da",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "编程语言/C++/Effective Modern C++.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "C++ Primer"
+              "title": "Effective Modern C++"
             },
-            "group": "facf913adefb686f"
+            "group": "970eb45b0d6ea5a9"
           }
         ]
       }
@@ -102,7 +102,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 219.5
+    "width": 219.5,
+    "collapsed": true
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -241,11 +242,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "deb5d3dbcadcb61c",
+  "active": "8bac9522bfedd6da",
   "lastOpenFiles": [
+    "编程语言/C++/C++ Primer.md",
     "编程语言/C++/Effective C++.md",
     "编程语言/C++/Effective Modern C++.md",
-    "编程语言/C++/C++ Primer.md",
     "编程语言/C++/C++工程API.md",
     "编程语言/C++/候捷C++面向对象高级编程.md",
     "计算机基础/数据结构/王道 数据结构.md",
