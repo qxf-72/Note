@@ -4,12 +4,12 @@
     "type": "split",
     "children": [
       {
-        "id": "4d104e0b4c76604c",
+        "id": "74297d1a52d1cabc",
         "type": "tabs",
-        "dimension": 56.215846994535525,
+        "dimension": 57.377049180327866,
         "children": [
           {
-            "id": "8132670aaf61b1a7",
+            "id": "78c9b54e66813d64",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -21,17 +21,17 @@
               "icon": "lucide-file",
               "title": "C++ Primer"
             },
-            "group": "057522c2236843a4"
+            "group": "facf913adefb686f"
           }
         ]
       },
       {
-        "id": "74297d1a52d1cabc",
+        "id": "7d50cb6ef55500fb",
         "type": "tabs",
-        "dimension": 43.78415300546448,
+        "dimension": 42.62295081967213,
         "children": [
           {
-            "id": "011dba503f7f8ec2",
+            "id": "deb5d3dbcadcb61c",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -43,7 +43,7 @@
               "icon": "lucide-file",
               "title": "C++ Primer"
             },
-            "group": "057522c2236843a4"
+            "group": "facf913adefb686f"
           }
         ]
       }
@@ -241,25 +241,30 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "011dba503f7f8ec2",
+  "active": "deb5d3dbcadcb61c",
   "lastOpenFiles": [
-    "编程语言/C++/候捷C++面向对象高级编程.md",
+    "编程语言/C++/Effective C++.md",
+    "编程语言/C++/Effective Modern C++.md",
     "编程语言/C++/C++ Primer.md",
-    "开发工具/并发编程/C++并发编程实战.md",
+    "编程语言/C++/C++工程API.md",
+    "编程语言/C++/候捷C++面向对象高级编程.md",
+    "计算机基础/数据结构/王道 数据结构.md",
+    "开发工具/Linux/Vim入门.md",
+    "开发工具/Linux/Ubuntu 使用记录.md",
+    "开发工具/Linux/Git入门.md",
+    "开发工具/Linux/鸟哥的Linux私房菜.md",
+    "开发工具/数据库/SQL必知必会.md",
+    "开发工具/数据库/MySQL是怎样运行的.md",
     "开发工具/调试工具/Valgrind入门.md",
     "开发工具/调试工具/GDB入门.md",
+    "开发工具/编译工具/CMake入门.md",
+    "开发工具/编译工具/跟我一起写Makefile.md",
+    "开发工具/并发编程/C++并发编程实战.md",
     "482743F2FD33B7CE58A9F431F7FC20D3 1.png",
     "482743F2FD33B7CE58A9F431F7FC20D3.png",
-    "开发工具/编译工具/CMake入门.md",
-    "开发工具/Linux/Ubuntu 使用记录.md",
     "开发工具/调试工具",
     "开发工具/未命名.canvas",
-    "开发工具/Linux/鸟哥的Linux私房菜.md",
     "编程语言/C++/C++面试.md",
-    "编程语言/C++/C++工程API.md",
-    "开发工具/Linux/Vim入门.md",
-    "开发工具/编译工具/跟我一起写Makefile.md",
-    "开发工具/Linux/Git入门.md",
     "EA269C57FCE480748A8D543CD6F7B7CA.png",
     "计算机基础/操作系统原理/王道 操作系统.md",
     "编程语言/Golang/Go语言圣经.md",
@@ -270,11 +275,6 @@
     "计算机基础/计算机网络/计算机网络.md",
     "编程语言/C++/C++ 后端面试速查.md",
     "README.md",
-    "开发工具/数据库/MySQL是怎样运行的.md",
-    "编程语言/C++/Effective C++.md",
-    "编程语言/C++/Linux C++环境配置.md",
-    "开发工具/数据库/SQL必知必会.md",
-    "杂项/草稿.md",
     "编程语言/Golang",
     "未命名",
     "0423968B760280EA13974A4BF0CFE8AC.png",

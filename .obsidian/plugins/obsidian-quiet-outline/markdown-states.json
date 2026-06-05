@@ -1,14 +1,14 @@
 {
   "编程语言/C++/C++ Primer.md": {
-    "scroll": 3277.7027027027025,
+    "scroll": 3.8314177414466597,
     "cursor": {
       "from": {
-        "line": 3288,
-        "ch": 4
+        "line": 4071,
+        "ch": 0
       },
       "to": {
-        "line": 3288,
-        "ch": 52
+        "line": 4071,
+        "ch": 0
       }
     },
     "expandedKeys": []
@@ -66,7 +66,7 @@
     "expandedKeys": []
   },
   "开发工具/Linux/Ubuntu 使用记录.md": {
-    "scroll": 6.023809160505023,
+    "scroll": 63.53148295084635,
     "cursor": {
       "from": {
         "line": 32,
@@ -126,7 +126,7 @@
     "expandedKeys": []
   },
   "开发工具/Linux/鸟哥的Linux私房菜.md": {
-    "scroll": 200.8695652173913,
+    "scroll": 1215.2193153782894,
     "cursor": {
       "from": {
         "line": 8,
@@ -140,7 +140,7 @@
     "expandedKeys": []
   },
   "开发工具/数据库/MySQL是怎样运行的.md": {
-    "scroll": 225.10370347764757,
+    "scroll": 22.789472078022204,
     "cursor": {
       "from": {
         "line": 10,
@@ -196,7 +196,7 @@
     "expandedKeys": []
   },
   "开发工具/Linux/Git入门.md": {
-    "scroll": 130.17777506510416,
+    "scroll": 63.54546009410512,
     "cursor": {
       "from": {
         "line": 127,
@@ -243,7 +243,7 @@
     "expandedKeys": []
   },
   "编程语言/C++/Effective C++.md": {
-    "scroll": 235.83888634575737,
+    "scroll": 103.12258064516129,
     "cursor": {
       "from": {
         "line": 10,
@@ -271,15 +271,15 @@
     "expandedKeys": []
   },
   "开发工具/数据库/SQL必知必会.md": {
-    "scroll": 0,
+    "scroll": 1215.2193153782894,
     "cursor": {
       "from": {
-        "line": 9,
-        "ch": 181
+        "line": 20,
+        "ch": 14
       },
       "to": {
-        "line": 9,
-        "ch": 181
+        "line": 20,
+        "ch": 14
       }
     },
     "expandedKeys": []
@@ -371,7 +371,7 @@
     "expandedKeys": []
   },
   "编程语言/C++/候捷C++面向对象高级编程.md": {
-    "scroll": 146.70678936993633,
+    "scroll": 103.12258064516129,
     "cursor": {
       "from": {
         "line": 210,
@@ -477,7 +477,7 @@
     "expandedKeys": []
   },
   "编程语言/C++/C++工程API.md": {
-    "scroll": 0,
+    "scroll": 103.12258064516129,
     "cursor": {
       "from": {
         "line": 48,
@@ -491,7 +491,7 @@
     "expandedKeys": []
   },
   "开发工具/编译工具/跟我一起写Makefile.md": {
-    "scroll": 0.5051394895309919,
+    "scroll": 4100.2786885245905,
     "cursor": {
       "from": {
         "line": 0,
@@ -519,7 +519,7 @@
     "expandedKeys": []
   },
   "开发工具/编译工具/CMake入门.md": {
-    "scroll": 6.023809160505023,
+    "scroll": 4100.2786885245905,
     "cursor": {
       "from": {
         "line": 46,
@@ -549,7 +549,7 @@
     "expandedKeys": []
   },
   "开发工具/调试工具/GDB入门.md": {
-    "scroll": 0,
+    "scroll": 32.375,
     "cursor": {
       "from": {
         "line": 12,
@@ -563,7 +563,7 @@
     "expandedKeys": []
   },
   "开发工具/调试工具/Valgrind入门.md": {
-    "scroll": 12.636363636363637,
+    "scroll": 76.05405405405405,
     "cursor": {
       "from": {
         "line": 98,
@@ -577,5 +577,75 @@
     "expandedKeys": [
       "item-1-2"
     ]
+  },
+  "Effective Modern C.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "Effective Modern C++.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 2,
+        "ch": 0
+      },
+      "to": {
+        "line": 2,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "开发工具/Linux/Vim入门.md": {
+    "scroll": 63.53148295084635,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "编程语言/C++/Effective Modern C++.md": {
+    "scroll": 103.12258064516129,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "计算机基础/数据结构/王道 数据结构.md": {
+    "scroll": 841.5410493859922,
+    "cursor": {
+      "from": {
+        "line": 1433,
+        "ch": 0
+      },
+      "to": {
+        "line": 1433,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
   }
 }
