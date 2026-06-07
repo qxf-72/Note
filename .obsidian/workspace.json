@@ -4,12 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "7d50cb6ef55500fb",
+        "id": "d2930b3075f70e7e",
         "type": "tabs",
-        "dimension": 62.70491803278688,
         "children": [
           {
-            "id": "deb5d3dbcadcb61c",
+            "id": "6f57c12b8bd9e8a2",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -21,17 +20,16 @@
               "icon": "lucide-file",
               "title": "Effective Modern C++"
             },
-            "group": "970eb45b0d6ea5a9"
+            "group": "800bafc730cbc041"
           }
         ]
       },
       {
-        "id": "ffcfcd87c5241b65",
+        "id": "8ef5de8c1a2403c8",
         "type": "tabs",
-        "dimension": 37.295081967213115,
         "children": [
           {
-            "id": "8bac9522bfedd6da",
+            "id": "495a9254d7ec14e3",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -43,7 +41,7 @@
               "icon": "lucide-file",
               "title": "Effective Modern C++"
             },
-            "group": "970eb45b0d6ea5a9"
+            "group": "800bafc730cbc041"
           }
         ]
       }
@@ -102,7 +100,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 219.5
+    "width": 219.5,
+    "collapsed": true
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -224,7 +223,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -241,7 +241,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "8bac9522bfedd6da",
+  "active": "495a9254d7ec14e3",
   "lastOpenFiles": [
     "编程语言/C++/C++ Primer.md",
     "编程语言/C++/Effective C++.md",

@@ -2,7 +2,7 @@
 
 ## lambda 表达式初探
 
-**lambda 表达式底层实现原理**：编译器构建一个类——可调用的类，并且重载了（）运算符。其  实就是仿函数。
+**lambda 表达式底层实现原理**：编译器构建一个类——可调用的类，并且重载了（）运算符。其实就是仿函数。
 
 ```cpp
 size_t sz=0;
@@ -58,16 +58,137 @@ private:
 
 ----
 
-## 优先考虑 `auto` 而非显式声明
+## 条款 5：优先考虑 `auto` 而非显式声明
 
+### 优点
 
+**变量必须初始化**：强迫编程者初始化变量，否则无法进行类型推导。
 
+**避免写又长又复杂的类型**：比如容器的迭代器类型。
 
+**避免手写类型出错**
 
+```cpp
+std::vector<int>::size_type
+```
+在一些平台上，它可能是 64 位无符号整数，而 `unsigned` 可能只有 32 位。使用 `unsigned` 去接可以会出错。
 
+**避免关联容器中的隐藏拷贝**
 
+```cpp
+std::unordered_map<std::string, int> m;
+for (const std::pair<std::string, int>& p : m) {
+    // ...
+}
+```
 
+因为 key 是 `const std::string`，所以编译器可能会创建一个临时对象，然后让引用绑定到这个临时对象上。
 
+**`auto` 对 lambda 特别重要**：lambda 表达式的真实类型是编译器生成的匿名类型，根本写不出来。
+
+---
+
+### 注意点
+
+**`auto` 默认会丢掉顶层 const 和引用** ：需要显式写出 `const auto&`
+
+---
+
+### 常见场景
+
+- 普通变量
+- 迭代器
+- lambda
+- 范围 for 语句：`auto&`
+- 指针指针：`auto p=std::make_shared<int>(10)`
 
 
 ---
+
+## 条款 6：auto 推导若非己愿，使用显式类型初始化器惯用法
+
+
+**auto 会推导“真实类型”，但真实类型不一定是你想要的**
+
+`std::vector<bool>`：为了节省空间，不会把每个 bool 存成一个字节，而是把多个 bool 压缩到 bit 位里面。
+
+```cpp
+std::vector<bool> flags{true, false, true};
+auto b = flags[0];
+b = false;
+```
+
+b 并不是一个独立 bool 副本，而是一个**代理对象**，仍然关联着 `flags[0]`， 表现得像 `bool&`，但实际上不是 `bool&`。
+
+**显式类型初始化器惯用法**
+
+```cpp
+auto x = static_cast<T>(expr);
+```
+
+
+---
+
+
+# 移步现代 C++
+
+## 条款 7：区别使用 `{}` 和 `()` 创建对象
+
+**`{}` 初始化更统一，更安全，但它会优先匹配 `std::initializer_list` 构造函数，有时会导致意料之外的结果。**
+
+**`{}` 初始化的优点**
+- 适用范围更广
+- 防止窄化转换
+- 避免“最令人头疼的解析”
+
+```cpp
+class Widget {};
+Widget w();
+```
+
+这是并不是创建了一个 `Widget` 对象。实际上，它声明了一个函数。解决方法是使用 `{}` 替代 `()`。
+
+
+**`{}` 会优先匹配 `std::initializer_list` **
+
+```cpp
+#include <initializer_list>
+#include <iostream>
+
+class Widget {
+public:
+    Widget(int i, bool b) {
+        std::cout << "Widget(int, bool)\n";
+    }
+
+    Widget(int i, double d) {
+        std::cout << "Widget(int, double)\n";
+    }
+
+    Widget(std::initializer_list<long double> il) {
+        std::cout << "Widget(initializer_list<long double>)\n";
+    }
+};
+```
+
+```cpp
+Widget w1(10, true);  // Widget(int, bool)
+Widget w2{10, true};  // Widget(initializer_list<long double>)
+
+Widget w3(10, 5.0);   // Widget(int, double)
+Widget w4{10, 5.0};   // Widget(initializer_list<long double>)
+```
+
+
+---
+
+## 条款 8：优先使用 `nullptr` 而不是 `0` 和 `NULL`
+
+`nullptr` 是**真正的空指针字面量**，而 `0` 和 `NULL` 本质上更像整数。
+
+所以在重载函数和模板推导问题中，会将 `NULL` 推导为 int 或者 long 类型，只有 nullptr 会被推导为指针类型。
+
+---
+
+# 智能指针
+
