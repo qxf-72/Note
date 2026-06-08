@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "编程语言/C++/Effective Modern C++.md",
+                "file": "开发工具/编译工具/CMake入门.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Effective Modern C++"
+              "title": "CMake入门"
             },
             "group": "800bafc730cbc041"
           }
@@ -34,12 +34,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "编程语言/C++/Effective Modern C++.md",
+                "file": "开发工具/编译工具/CMake入门.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Effective Modern C++"
+              "title": "CMake入门"
             },
             "group": "800bafc730cbc041"
           }
@@ -222,8 +222,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -242,9 +241,11 @@
   },
   "active": "495a9254d7ec14e3",
   "lastOpenFiles": [
+    "开发工具/调试工具/Valgrind入门.md",
+    "README.md",
     "编程语言/C++/C++ Primer.md",
-    "编程语言/C++/Effective C++.md",
     "编程语言/C++/Effective Modern C++.md",
+    "编程语言/C++/Effective C++.md",
     "编程语言/C++/C++工程API.md",
     "编程语言/C++/候捷C++面向对象高级编程.md",
     "计算机基础/数据结构/王道 数据结构.md",
@@ -254,7 +255,6 @@
     "开发工具/Linux/鸟哥的Linux私房菜.md",
     "开发工具/数据库/SQL必知必会.md",
     "开发工具/数据库/MySQL是怎样运行的.md",
-    "开发工具/调试工具/Valgrind入门.md",
     "开发工具/调试工具/GDB入门.md",
     "开发工具/编译工具/CMake入门.md",
     "开发工具/编译工具/跟我一起写Makefile.md",
@@ -273,7 +273,6 @@
     "开发工具/并发编程",
     "计算机基础/计算机网络/计算机网络.md",
     "编程语言/C++/C++ 后端面试速查.md",
-    "README.md",
     "编程语言/Golang",
     "未命名",
     "0423968B760280EA13974A4BF0CFE8AC.png",

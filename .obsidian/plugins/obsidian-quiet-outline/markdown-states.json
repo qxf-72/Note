@@ -1,13 +1,13 @@
 {
   "编程语言/C++/C++ Primer.md": {
-    "scroll": 6008.527052238806,
+    "scroll": 2772.135135135135,
     "cursor": {
       "from": {
-        "line": 4057,
+        "line": 2365,
         "ch": 0
       },
       "to": {
-        "line": 4057,
+        "line": 2365,
         "ch": 0
       }
     },
@@ -259,15 +259,15 @@
     "expandedKeys": []
   },
   "README.md": {
-    "scroll": 417.6907354849356,
+    "scroll": 0.17597293369661127,
     "cursor": {
       "from": {
-        "line": 9,
-        "ch": 181
+        "line": 12,
+        "ch": 0
       },
       "to": {
-        "line": 9,
-        "ch": 181
+        "line": 12,
+        "ch": 0
       }
     },
     "expandedKeys": []
@@ -521,7 +521,7 @@
     "expandedKeys": []
   },
   "开发工具/编译工具/CMake入门.md": {
-    "scroll": 4100.2786885245905,
+    "scroll": 0.16326530612244897,
     "cursor": {
       "from": {
         "line": 46,
@@ -565,7 +565,7 @@
     "expandedKeys": []
   },
   "开发工具/调试工具/Valgrind入门.md": {
-    "scroll": 76.05405405405405,
+    "scroll": 0.17597293369661127,
     "cursor": {
       "from": {
         "line": 98,
