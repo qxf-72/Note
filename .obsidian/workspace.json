@@ -6,6 +6,7 @@
       {
         "id": "d2930b3075f70e7e",
         "type": "tabs",
+        "dimension": 61.54371584699454,
         "children": [
           {
             "id": "6f57c12b8bd9e8a2",
@@ -13,12 +14,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发工具/编译工具/CMake入门.md",
+                "file": "开发工具/并发编程/C++并发编程实战.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "CMake入门"
+              "title": "C++并发编程实战"
             },
             "group": "800bafc730cbc041"
           }
@@ -27,6 +28,7 @@
       {
         "id": "8ef5de8c1a2403c8",
         "type": "tabs",
+        "dimension": 38.45628415300546,
         "children": [
           {
             "id": "495a9254d7ec14e3",
@@ -34,12 +36,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发工具/编译工具/CMake入门.md",
+                "file": "开发工具/并发编程/C++并发编程实战.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "CMake入门"
+              "title": "C++并发编程实战"
             },
             "group": "800bafc730cbc041"
           }
@@ -241,6 +243,8 @@
   },
   "active": "495a9254d7ec14e3",
   "lastOpenFiles": [
+    "开发工具/编译工具/CMake入门.md",
+    "开发工具/编译工具/跟我一起写Makefile.md",
     "开发工具/调试工具/Valgrind入门.md",
     "README.md",
     "编程语言/C++/C++ Primer.md",
@@ -256,8 +260,6 @@
     "开发工具/数据库/SQL必知必会.md",
     "开发工具/数据库/MySQL是怎样运行的.md",
     "开发工具/调试工具/GDB入门.md",
-    "开发工具/编译工具/CMake入门.md",
-    "开发工具/编译工具/跟我一起写Makefile.md",
     "开发工具/并发编程/C++并发编程实战.md",
     "482743F2FD33B7CE58A9F431F7FC20D3 1.png",
     "482743F2FD33B7CE58A9F431F7FC20D3.png",
