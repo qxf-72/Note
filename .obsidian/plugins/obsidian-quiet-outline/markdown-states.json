@@ -54,7 +54,7 @@
     ]
   },
   "计算机基础/计算机组成原理/汇编语言.md": {
-    "scroll": 11.544444444444444,
+    "scroll": 609.3182262073864,
     "cursor": {
       "from": {
         "line": 0,
@@ -109,12 +109,10 @@
         "ch": 0
       }
     },
-    "expandedKeys": [
-      "item-1-0"
-    ]
+    "expandedKeys": []
   },
   "计算机基础/操作系统原理/王道 操作系统.md": {
-    "scroll": 1989.3000578138563,
+    "scroll": 566.1403680098684,
     "cursor": {
       "from": {
         "line": 1841,
@@ -231,7 +229,7 @@
     "expandedKeys": []
   },
   "杂项/草稿.md": {
-    "scroll": 0,
+    "scroll": 1.5904334371934556,
     "cursor": {
       "from": {
         "line": 250,
@@ -624,7 +622,7 @@
     "expandedKeys": []
   },
   "编程语言/C++/Effective Modern C++.md": {
-    "scroll": 113.6612048539959,
+    "scroll": 0,
     "cursor": {
       "from": {
         "line": 4,
@@ -664,6 +662,34 @@
       },
       "to": {
         "line": 2,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "杂项/数字图像处理.md": {
+    "scroll": 96.36937156883445,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "杂项/自动控制原理.md": {
+    "scroll": 96.36937156883445,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
         "ch": 0
       }
     },
