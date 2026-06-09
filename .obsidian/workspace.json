@@ -4,31 +4,9 @@
     "type": "split",
     "children": [
       {
-        "id": "8ef5de8c1a2403c8",
+        "id": "318f3ca38a55fc61",
         "type": "tabs",
-        "dimension": 62.704918032786885,
-        "children": [
-          {
-            "id": "495a9254d7ec14e3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "计算机基础/操作系统原理/操作系统导论.md",
-                "mode": "preview",
-                "source": true
-              },
-              "icon": "lucide-file",
-              "title": "操作系统导论"
-            },
-            "group": "1b76175de0417bcf"
-          }
-        ]
-      },
-      {
-        "id": "fc4433d36da00d60",
-        "type": "tabs",
-        "dimension": 37.295081967213115,
+        "dimension": 55.25956284153006,
         "children": [
           {
             "id": "d0b7cd88b4b50055",
@@ -36,14 +14,36 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "计算机基础/操作系统原理/操作系统导论.md",
+                "file": "算法/挑战程序设计竞赛.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "挑战程序设计竞赛"
+            },
+            "group": "15337c1f317c8cc1"
+          }
+        ]
+      },
+      {
+        "id": "279e358a449a0daa",
+        "type": "tabs",
+        "dimension": 44.74043715846994,
+        "children": [
+          {
+            "id": "f07c76d599ae1236",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "算法/挑战程序设计竞赛.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "操作系统导论"
+              "title": "挑战程序设计竞赛"
             },
-            "group": "1b76175de0417bcf"
+            "group": "15337c1f317c8cc1"
           }
         ]
       }
@@ -102,8 +102,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 287.5,
-    "collapsed": true
+    "width": 287.5
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -242,20 +241,25 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "d0b7cd88b4b50055",
+  "active": "f07c76d599ae1236",
   "lastOpenFiles": [
+    "算法/Algorithm_PrincetonUniversity.md",
+    "算法/挑战程序设计竞赛.md",
+    "README.md",
+    "开发工具/并发编程/Linux多线程服务端编程.md",
     "开发工具/并发编程/C++并发编程实战.md",
+    "开发工具/调试工具/GDB入门.md",
+    "计算机基础/操作系统原理/操作系统导论.md",
+    "计算机基础/操作系统原理/王道 操作系统.md",
     "开发工具/Linux/Git入门.md",
     "开发工具/Linux/鸟哥的Linux私房菜.md",
     "开发工具/数据库/SQL必知必会.md",
     "开发工具/数据库/MySQL是怎样运行的.md",
     "开发工具/调试工具/Valgrind入门.md",
-    "开发工具/调试工具/GDB入门.md",
     "开发工具/编译工具/CMake入门.md",
     "开发工具/编译工具/跟我一起写Makefile.md",
     "编程语言/Golang/Go语言圣经.md",
     "编程语言/C++/C++ Primer.md",
-    "README.md",
     "编程语言/C++/Effective Modern C++.md",
     "编程语言/C++/Effective C++.md",
     "编程语言/C++/C++工程API.md",
@@ -269,13 +273,8 @@
     "开发工具/未命名.canvas",
     "编程语言/C++/C++面试.md",
     "EA269C57FCE480748A8D543CD6F7B7CA.png",
-    "计算机基础/操作系统原理/王道 操作系统.md",
-    "算法/挑战程序设计竞赛.md",
-    "算法/Algorithm_PrincetonUniversity.md",
-    "计算机基础/操作系统原理/操作系统导论.md",
     "开发工具/并发编程",
     "计算机基础/计算机网络/计算机网络.md",
-    "编程语言/C++/C++ 后端面试速查.md",
     "编程语言/Golang",
     "未命名",
     "0423968B760280EA13974A4BF0CFE8AC.png",

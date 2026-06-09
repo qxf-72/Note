@@ -81,6 +81,14 @@ int main()
 
 
 ---
+
+
+<br/>
+
+
+<br/>
+
+
 ## 向线程传递参数
 
 线程具有内部存储空间，参数会按照默认方式先**复制**到该处，新创建的执行线程才能直接访问它们。然后，这些副本被当成**临时变量**，以**右值**形式传给新线程上的函数或可调用对象
@@ -111,6 +119,12 @@ std::thread 创建线程时，会把参数保存起来再在线程中调用函�
 
 ---
 
+<br/>
+
+
+<br/>
+
+
 ## 识别线程
 
 
@@ -129,6 +143,10 @@ std::thread 创建线程时，会把参数保存起来再在线程中调用函�
 
 
 # 共享数据
+
+> 多个线程同时访问共享数据时，怎么保护数据？
+
+
 ## 线程间共享数据的问题
 
 ### 竞态条件
@@ -151,6 +169,13 @@ std::thread 创建线程时，会把参数保存起来再在线程中调用函�
 
 
 ---
+
+<br/>
+
+
+<br/>
+
+
 ## 用 mutex 保护共享数据
 
 ### 不要手动 lock/unloc
@@ -311,6 +336,12 @@ lock.lock();
 
 ---
 
+<br/>
+
+
+<br/>
+
+
 ## 保护数据的其他方式
 
 ### 只初始化一次
@@ -384,20 +415,22 @@ private:
 };
 ```
 
-从 C++11 开始，函数内局部静态变量的初始化是线程安全的。以上就是单例模式中的懒汉模式。
+从 C++11 开始，函数内局部静态变量的初始化是线程安全的。以上就是单例模式中的**懒汉模式**：
 - 懒初始化
 - 线程安全
 - 不需要手动 new/delete
 
+---
+
 ### 读多写少
 
 对于读多写少的场景，即使是读，也需要排队等待取得锁，虽然不会破坏数据结构，真正需要注意的：
-- 读多时候有人写
+- 读的时候有人写
 - 写的时候有人写
 
 C++17 提供了 `std::shared_mutex` ，允许两种加锁方式：
-- 共享锁 `std::shared_lock<std::shared_mutex>`：多个线程可以同时持有，用于读操作
-- 独占锁 `std::unique_lock<std::shared_mutex>`：同一时刻只能一个线程持有，用于写操作
+- 共享锁 `std::shared_lock<std::shared_mutex>`：允许多个线程可以同时持有锁，用于读操作。
+- 独占锁 `std::unique_lock<std::shared_mutex>`：要求同一时刻只能一个线程持有锁，用于写操作。
 
 ```cpp
 class Config {
@@ -430,7 +463,7 @@ shared_mutex 适用场景：
 - 数据结构比较大
 
 
-
+---
 
 ### 同一线程重复加锁
 
@@ -459,5 +492,159 @@ recursive_mutex 使用场景：
 ---
 
 
-## 并发操作的同步
+<br/>
 
+
+<br/>
+
+
+<br/>
+
+
+# 并发操作的同步
+
+> 一个线程需要等待另一个线程完成某件事，应该怎么等？
+
+
+## 等待事件或条件
+
+### 条件变量 condition_variable
+
+- 让一个线程在某个条件不满足时睡眠；
+- 另一个线程在条件**可能**满足时，通知它醒来**检查**。
+
+```cpp
+std::mutex m;
+std::condition_variable cv;
+std::queue<int> q;
+
+void producer(int val)
+{
+    {
+        std::lock_guard<std::mutex> lock(m);
+        q.push(val);
+    }
+    cv.notify_one();
+}
+
+void consumer()
+{
+    std::unique_lock<std::mutex> lock(m);
+    cv.wait(lock, []() -> bool {
+        return !q.empty();
+    });
+
+    int val = q.front();
+    q.pop();
+    lock.unlock();
+    //  处理val
+}
+```
+
+
+- 如果条件 !q.empty( ) 已经成立：
+    - 直接继续执行
+- 如果条件不成立：
+    - **自动释放 mutex**
+    - 让当前线程睡眠
+- 当其他线程 notify_one / notify_all：
+    - 当前线程被唤醒
+    - 重新尝试加锁 mutex
+    - **再次检查条件**
+    - 条件成立才继续执行
+
+**条件变量总是配合 std::unique_lock 使用**，因为中途可能需要主动解锁。
+
+不推荐只写 `cv.wait(lock)`，因为条件变量存在**虚假唤醒**现象，即便没有任何线程的条件成立，等待现场可能被唤醒，所以在被唤醒之后，需要谓词来检查条件是否成立。
+
+`cv.wait(lock,predicate)` 内部类似于：
+
+```cpp
+while(!predicate()){
+	cv.wait(lock);
+}
+```
+
+---
+
+### notify_one 位置问题
+
+**notify_one 放在锁里面还是锁外面？**
+
+推荐放在锁里面，如果先通知，但是锁没有释放，被唤醒的线程又需要等待这把锁，造成不必要的阻塞。
+
+---
+
+### notify_one 和 notify_all
+
+- `notify_one` 唤醒一个等待线程，适合一个任务只需要一个消费者处理的场景。
+- `notify_all` 唤醒所有等待线程，适合全局状态改变、程序关闭、配置变化等所有等待线程都应该重新检查条件的场景。
+
+
+---
+
+### 生产者消费者例子
+
+```cpp
+template <typename T>
+class BlockingQueue {
+private:
+    std::queue<T> q_;
+    mutable std::mutex mtx_;
+    std::condition_variable cv_;
+    bool closed_{false};
+
+public:
+    void push(T val)
+    {
+        {
+            std::lock_guard<std::mutex> lock(mtx_);
+            if (closed_) {
+                return;
+            }
+            q_.push(val);
+        }
+        cv_.notify_one();
+    }
+
+    bool wait_and_pop(T &val)
+    {
+        std::unique_lock<std::mutex> lock(mtx_);
+        // 如果队列关闭了，线程不必休眠
+        cv_.wait(lock, [this]() -> bool {
+            return closed_ || !q_.empty();
+        });
+        if (q_.empty()) {
+            return false;
+        }
+        val = std::move(q_.front());
+        q_.pop();
+        return true;
+    }
+
+    void close()
+    {
+        {
+            std::lock_guard<std::mutex> lock(mtx_);
+            closed_ = true;
+        }
+        cv_.notify_all();
+    }
+};
+```
+
+
+---
+
+
+<br/>
+
+
+<br/>
+
+
+## 使用 future 等待一次性事件发生
+
+
+
+---
