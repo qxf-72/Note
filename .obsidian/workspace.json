@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "编程语言/C++/C++ Primer.md",
+                "file": "计算机基础/计算机组成原理/汇编语言.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "C++ Primer 的大纲"
+              "title": "汇编语言 的大纲"
             }
           },
           {
@@ -206,11 +206,11 @@
             }
           }
         ],
-        "currentTab": 8
+        "currentTab": 6
       }
     ],
     "direction": "horizontal",
-    "width": 540.5
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -227,7 +227,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "d0b7cd88b4b50055",
+  "active": "47429757a8453eb8",
   "lastOpenFiles": [
     "计算机基础/计算机组成原理/汇编语言.md",
     "计算机基础/操作系统原理/王道 操作系统.md",
