@@ -1,6 +1,6 @@
 {
   "编程语言/C++/C++ Primer.md": {
-    "scroll": 2772.135135135135,
+    "scroll": 3.5172413793103448,
     "cursor": {
       "from": {
         "line": 2365,
@@ -98,7 +98,7 @@
     "expandedKeys": []
   },
   "编程语言/Golang/Go语言圣经.md": {
-    "scroll": 72.22916793823242,
+    "scroll": 2.188340807174888,
     "cursor": {
       "from": {
         "line": 15,
@@ -128,7 +128,7 @@
     "expandedKeys": []
   },
   "开发工具/Linux/鸟哥的Linux私房菜.md": {
-    "scroll": 1215.2193153782894,
+    "scroll": 448.4736842105263,
     "cursor": {
       "from": {
         "line": 8,
@@ -142,7 +142,7 @@
     "expandedKeys": []
   },
   "开发工具/数据库/MySQL是怎样运行的.md": {
-    "scroll": 22.789472078022204,
+    "scroll": 0,
     "cursor": {
       "from": {
         "line": 10,
@@ -198,7 +198,7 @@
     "expandedKeys": []
   },
   "开发工具/Linux/Git入门.md": {
-    "scroll": 63.54546009410512,
+    "scroll": 0,
     "cursor": {
       "from": {
         "line": 127,
@@ -273,7 +273,7 @@
     "expandedKeys": []
   },
   "开发工具/数据库/SQL必知必会.md": {
-    "scroll": 1215.2193153782894,
+    "scroll": 448.4736842105263,
     "cursor": {
       "from": {
         "line": 20,
@@ -401,14 +401,14 @@
     "expandedKeys": []
   },
   "计算机基础/操作系统原理/操作系统导论.md": {
-    "scroll": 2119.458106884058,
+    "scroll": 1197.0888671875,
     "cursor": {
       "from": {
-        "line": 5,
+        "line": 1210,
         "ch": 0
       },
       "to": {
-        "line": 5,
+        "line": 1210,
         "ch": 0
       }
     },
@@ -433,20 +433,20 @@
     "expandedKeys": []
   },
   "开发工具/并发编程/C++并发编程实战.md": {
-    "scroll": 0,
+    "scroll": 319.2682599852071,
     "cursor": {
       "from": {
-        "line": 93,
-        "ch": 78
+        "line": 463,
+        "ch": 0
       },
       "to": {
-        "line": 93,
-        "ch": 78
+        "line": 463,
+        "ch": 0
       }
     },
     "expandedKeys": [
       "item-1-0",
-      "item-1-4"
+      "item-1-7"
     ]
   },
   "算法/Algorithm_PrincetonUniversity.md": {
@@ -492,7 +492,7 @@
     "expandedKeys": []
   },
   "开发工具/编译工具/跟我一起写Makefile.md": {
-    "scroll": 0,
+    "scroll": 2.188340807174888,
     "cursor": {
       "from": {
         "line": 0,
@@ -550,7 +550,7 @@
     "expandedKeys": []
   },
   "开发工具/调试工具/GDB入门.md": {
-    "scroll": 32.375,
+    "scroll": 7.771929289165296,
     "cursor": {
       "from": {
         "line": 12,
@@ -564,7 +564,7 @@
     "expandedKeys": []
   },
   "开发工具/调试工具/Valgrind入门.md": {
-    "scroll": 0.17597293369661127,
+    "scroll": 36.355048859934854,
     "cursor": {
       "from": {
         "line": 98,

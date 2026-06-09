@@ -4,31 +4,9 @@
     "type": "split",
     "children": [
       {
-        "id": "d2930b3075f70e7e",
-        "type": "tabs",
-        "dimension": 66.53005464480874,
-        "children": [
-          {
-            "id": "6f57c12b8bd9e8a2",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "开发工具/并发编程/C++并发编程实战.md",
-                "mode": "preview",
-                "source": true
-              },
-              "icon": "lucide-file",
-              "title": "C++并发编程实战"
-            },
-            "group": "800bafc730cbc041"
-          }
-        ]
-      },
-      {
         "id": "8ef5de8c1a2403c8",
         "type": "tabs",
-        "dimension": 33.46994535519126,
+        "dimension": 62.704918032786885,
         "children": [
           {
             "id": "495a9254d7ec14e3",
@@ -36,14 +14,36 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发工具/并发编程/C++并发编程实战.md",
+                "file": "计算机基础/操作系统原理/操作系统导论.md",
+                "mode": "preview",
+                "source": true
+              },
+              "icon": "lucide-file",
+              "title": "操作系统导论"
+            },
+            "group": "1b76175de0417bcf"
+          }
+        ]
+      },
+      {
+        "id": "fc4433d36da00d60",
+        "type": "tabs",
+        "dimension": 37.295081967213115,
+        "children": [
+          {
+            "id": "d0b7cd88b4b50055",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "计算机基础/操作系统原理/操作系统导论.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "C++并发编程实战"
+              "title": "操作系统导论"
             },
-            "group": "800bafc730cbc041"
+            "group": "1b76175de0417bcf"
           }
         ]
       }
@@ -102,7 +102,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 219.5
+    "width": 287.5,
+    "collapsed": true
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -181,8 +182,8 @@
             "state": {
               "type": "advanced-tables-toolbar",
               "state": {},
-              "icon": "spreadsheet",
-              "title": "Advanced Tables"
+              "icon": "lucide-ghost",
+              "title": "advanced-tables-toolbar"
             }
           },
           {
@@ -200,16 +201,6 @@
             }
           },
           {
-            "id": "740c4131a34d7c68",
-            "type": "leaf",
-            "state": {
-              "type": "calendar",
-              "state": {},
-              "icon": "calendar-with-checkmark",
-              "title": "Calendar"
-            }
-          },
-          {
             "id": "47429757a8453eb8",
             "type": "leaf",
             "state": {
@@ -218,9 +209,19 @@
               "icon": "lines-of-text",
               "title": "Quiet Outline"
             }
+          },
+          {
+            "id": "8d357f7ea7f34598",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
+            }
           }
         ],
-        "currentTab": 7
+        "currentTab": 6
       }
     ],
     "direction": "horizontal",
@@ -241,13 +242,20 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "495a9254d7ec14e3",
+  "active": "d0b7cd88b4b50055",
   "lastOpenFiles": [
+    "开发工具/并发编程/C++并发编程实战.md",
+    "开发工具/Linux/Git入门.md",
+    "开发工具/Linux/鸟哥的Linux私房菜.md",
+    "开发工具/数据库/SQL必知必会.md",
+    "开发工具/数据库/MySQL是怎样运行的.md",
+    "开发工具/调试工具/Valgrind入门.md",
+    "开发工具/调试工具/GDB入门.md",
     "开发工具/编译工具/CMake入门.md",
     "开发工具/编译工具/跟我一起写Makefile.md",
-    "开发工具/调试工具/Valgrind入门.md",
-    "README.md",
+    "编程语言/Golang/Go语言圣经.md",
     "编程语言/C++/C++ Primer.md",
+    "README.md",
     "编程语言/C++/Effective Modern C++.md",
     "编程语言/C++/Effective C++.md",
     "编程语言/C++/C++工程API.md",
@@ -255,12 +263,6 @@
     "计算机基础/数据结构/王道 数据结构.md",
     "开发工具/Linux/Vim入门.md",
     "开发工具/Linux/Ubuntu 使用记录.md",
-    "开发工具/Linux/Git入门.md",
-    "开发工具/Linux/鸟哥的Linux私房菜.md",
-    "开发工具/数据库/SQL必知必会.md",
-    "开发工具/数据库/MySQL是怎样运行的.md",
-    "开发工具/调试工具/GDB入门.md",
-    "开发工具/并发编程/C++并发编程实战.md",
     "482743F2FD33B7CE58A9F431F7FC20D3 1.png",
     "482743F2FD33B7CE58A9F431F7FC20D3.png",
     "开发工具/调试工具",
@@ -268,7 +270,6 @@
     "编程语言/C++/C++面试.md",
     "EA269C57FCE480748A8D543CD6F7B7CA.png",
     "计算机基础/操作系统原理/王道 操作系统.md",
-    "编程语言/Golang/Go语言圣经.md",
     "算法/挑战程序设计竞赛.md",
     "算法/Algorithm_PrincetonUniversity.md",
     "计算机基础/操作系统原理/操作系统导论.md",

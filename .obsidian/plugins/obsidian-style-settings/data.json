@@ -11,7 +11,6 @@
   "blue-topaz-theme@@print-h1-color@@light": "#DB0000",
   "blue-topaz-theme@@print-h2-color@@light": "#00A53A",
   "blue-topaz-theme@@bg-markdown-page-opacity-cp": 1,
-  "blue-topaz-theme@@background-image-settings-markdown-page-random": false,
   "blue-topaz-theme@@toggle-split-note-background": false,
   "Blue-Topaz-Codebox-Highlight@@code-theme-selection": "code-theme-sublime",
   "blue-topaz-theme@@bt-colorful-titlebar": true,
