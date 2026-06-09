@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "计算机基础/计算机组成原理/汇编语言.md",
+                "file": "开发技能/并发编程/C++并发编程实战.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "汇编语言"
+              "title": "C++并发编程实战"
             }
           }
         ]
@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 287.5
+    "width": 287.5,
+    "collapsed": true
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -142,13 +143,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "计算机基础/计算机组成原理/汇编语言.md",
+                "file": "开发技能/并发编程/C++并发编程实战.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "汇编语言 的大纲"
+              "title": "C++并发编程实战 的大纲"
             }
           },
           {
@@ -157,8 +158,8 @@
             "state": {
               "type": "advanced-tables-toolbar",
               "state": {},
-              "icon": "lucide-ghost",
-              "title": "advanced-tables-toolbar"
+              "icon": "spreadsheet",
+              "title": "Advanced Tables"
             }
           },
           {
@@ -229,6 +230,8 @@
   },
   "active": "47429757a8453eb8",
   "lastOpenFiles": [
+    "开发技能/并发编程/Linux多线程服务端编程.md",
+    "编程语言/C++/候捷C++面向对象高级编程.md",
     "计算机基础/计算机组成原理/汇编语言.md",
     "计算机基础/操作系统原理/王道 操作系统.md",
     "编程语言/C++/Effective Modern C++.md",
@@ -239,7 +242,6 @@
     "算法/挑战程序设计竞赛.md",
     "算法/Algorithm_PrincetonUniversity.md",
     "README.md",
-    "开发技能/并发编程/Linux多线程服务端编程.md",
     "开发技能/并发编程/C++并发编程实战.md",
     "开发技能/调试工具/GDB入门.md",
     "计算机基础/操作系统原理/操作系统导论.md",
@@ -253,7 +255,6 @@
     "编程语言/C++/C++ Primer.md",
     "编程语言/C++/Effective C++.md",
     "编程语言/C++/C++工程API.md",
-    "编程语言/C++/候捷C++面向对象高级编程.md",
     "计算机基础/数据结构/王道 数据结构.md",
     "482743F2FD33B7CE58A9F431F7FC20D3 1.png",
     "482743F2FD33B7CE58A9F431F7FC20D3.png",
