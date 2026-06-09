@@ -91,7 +91,7 @@ std::thread 创建线程时，会把参数保存起来再在线程中调用函�
 
 - 传指针时，线程保存的可能只是地址，不是内容本身。 
 
-<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2026-05-26_17-01-24.png" loading="lazy" style="max-width: 100%; height: auto; width: 500px;"/> </div>
+<div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2026-05-26_17-01-24.png" loading="lazy" style="max-width: 100%; height: auto; width: 400px;"/> </div>
 
 - <div style="text-align: center;"><img src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2026-05-26_17-02-48.png" loading="lazy" style="max-width: 100%; height: auto; width: 700px;"/> </div>
 
