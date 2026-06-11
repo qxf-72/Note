@@ -12,12 +12,13 @@
   "blue-topaz-theme@@print-h2-color@@light": "#00A53A",
   "blue-topaz-theme@@bg-markdown-page-opacity-cp": 1,
   "blue-topaz-theme@@toggle-split-note-background": false,
-  "Blue-Topaz-Codebox-Highlight@@code-theme-selection": "code-theme-sublime",
   "blue-topaz-theme@@bt-colorful-titlebar": true,
   "blue-topaz-theme@@layout-style-options": "layout-style-options-default",
   "blue-topaz-theme@@color-scheme-options": "color-scheme-options-default",
   "blue-topaz-theme@@print-h1-color@@dark": "#DB0000",
   "blue-topaz-theme@@print-h3-color@@light": "#006AD5",
   "blue-topaz-theme@@background-image-settings-switch": false,
-  "blue-topaz-theme@@background-image-settings-markdown-page-options": "background-image-settings-markdown-page-sea-and-sky"
+  "blue-topaz-theme@@background-image-settings-markdown-page-options": "background-image-settings-markdown-page-sea-and-sky",
+  "Blue-Topaz-Codebox-Highlight@@code-line-number": false,
+  "Blue-Topaz-Codebox-Highlight@@whole-code-wrap": false
 }

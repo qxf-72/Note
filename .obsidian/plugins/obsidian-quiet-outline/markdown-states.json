@@ -1,14 +1,14 @@
 {
   "编程语言/C++/C++ Primer.md": {
-    "scroll": 1078.9133858267717,
+    "scroll": 191.52173913043478,
     "cursor": {
       "from": {
-        "line": 1521,
-        "ch": 0
+        "line": 2,
+        "ch": 196
       },
       "to": {
-        "line": 1521,
-        "ch": 0
+        "line": 2,
+        "ch": 196
       }
     },
     "expandedKeys": [
@@ -30,14 +30,14 @@
     "expandedKeys": []
   },
   "计算机基础/计算机组成原理/计算机组成原理.md": {
-    "scroll": 386.1777920193142,
+    "scroll": 536.9634223090278,
     "cursor": {
       "from": {
-        "line": 5,
+        "line": 519,
         "ch": 0
       },
       "to": {
-        "line": 5,
+        "line": 519,
         "ch": 0
       }
     },
@@ -54,7 +54,7 @@
     ]
   },
   "计算机基础/计算机组成原理/汇编语言.md": {
-    "scroll": 609.3182262073864,
+    "scroll": 2602.4690721649486,
     "cursor": {
       "from": {
         "line": 0,
@@ -112,7 +112,7 @@
     "expandedKeys": []
   },
   "计算机基础/操作系统原理/王道 操作系统.md": {
-    "scroll": 566.1403680098684,
+    "scroll": 168.6277813381619,
     "cursor": {
       "from": {
         "line": 1841,
@@ -385,7 +385,7 @@
     "expandedKeys": []
   },
   "计算机基础/计算机网络/计算机网络.md": {
-    "scroll": 2677.2772277227723,
+    "scroll": 190.92683274183815,
     "cursor": {
       "from": {
         "line": 0,
@@ -399,15 +399,15 @@
     "expandedKeys": []
   },
   "计算机基础/操作系统原理/操作系统导论.md": {
-    "scroll": 460.6,
+    "scroll": 168.6277813381619,
     "cursor": {
       "from": {
-        "line": 2974,
-        "ch": 2
+        "line": 2716,
+        "ch": 183
       },
       "to": {
-        "line": 2974,
-        "ch": 2
+        "line": 2716,
+        "ch": 66
       }
     },
     "expandedKeys": [
@@ -640,7 +640,7 @@
     ]
   },
   "计算机基础/数据结构/王道 数据结构.md": {
-    "scroll": 841.5410493859922,
+    "scroll": 1395.482421875,
     "cursor": {
       "from": {
         "line": 1433,
@@ -696,7 +696,7 @@
     "expandedKeys": []
   },
   "开发技能/并发编程/Linux多线程服务端编程.md": {
-    "scroll": 209.88982187906902,
+    "scroll": 0,
     "cursor": {
       "from": {
         "line": 0,
@@ -710,7 +710,38 @@
     "expandedKeys": []
   },
   "开发技能/并发编程/C++并发编程实战.md": {
-    "scroll": 209.88982187906902,
+    "scroll": 47.83333518288352,
+    "cursor": {
+      "from": {
+        "line": 802,
+        "ch": 21
+      },
+      "to": {
+        "line": 802,
+        "ch": 21
+      }
+    },
+    "expandedKeys": [
+      "item-1-26",
+      "item-2-32"
+    ]
+  },
+  "开发技能/编译工具/CMake入门.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "开发技能/Linux/Git入门.md": {
+    "scroll": 0,
     "cursor": {
       "from": {
         "line": 0,

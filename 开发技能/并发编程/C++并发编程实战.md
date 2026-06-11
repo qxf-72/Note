@@ -99,7 +99,7 @@ std::thread 创建线程时，会把参数保存起来再在线程中调用函�
 - 默认是拷贝。  
 - 要引用，用 std::ref。  
 - 要移动，用 std::move。  
-- 要调成员函数，传 &Class::func 和对象地址。  
+- **要调成员函数，传 &Class::func 和对象地址**。  
 - 只要传引用、指针、this，就必须保证对象活得比线程久。
 
 <br/>
@@ -151,7 +151,7 @@ std::thread 创建线程时，会把参数保存起来再在线程中调用函�
 
 ### 竞态条件
 
-程序执行的结果依赖于多个线程的执行顺序，并且这种顺序不受程序控制，如果某些执行顺序会导致错误结果、数据损坏或未定义行为，这就是有害静态条件。
+程序执行的结果依赖于多个线程的执行顺序，并且这种顺序不受程序控制，如果某些执行顺序会导致错误结果、数据损坏或未定义行为，这就是有害竞态条件。
 
 ### data race
 
@@ -332,7 +332,7 @@ lock.lock();
 //现在才加锁
 ```
 
-- **搭配条件变量使用**
+- <mark style="background:#fff88f"> **搭配条件变量使用**</mark>
 
 ---
 
@@ -571,7 +571,7 @@ while(!predicate()){
 
 **notify_one 放在锁里面还是锁外面？**
 
-推荐放在锁里面，如果先通知，但是锁没有释放，被唤醒的线程又需要等待这把锁，造成不必要的阻塞。
+推荐放在锁外面，如果先通知，但是锁没有释放，被唤醒的线程又需要等待这把锁，造成不必要的阻塞。
 
 ---
 
@@ -645,6 +645,195 @@ public:
 
 ## 使用 future 等待一次性事件发生
 
+> 一个线程要等待另一个线程完成某个任务，并且拿到结果。
+
+### std::future
+
+意思是未来的某个时刻有一个结果，其接口：
+- get：返回结果，如果结果没有算完，会阻塞等待。只能调用一次。
+	- 会返回异常：如果在异步任务中抛异常，异常会被保存到 future 中，get 的时候在主线程抛出。
+- wait：只等待完成。
+- wait_for：等待一段时间。
+
+```cpp
+// 耗时操作
+int calculate()
+{
+    std::this_thread::sleep_for(std::chrono::seconds(3));
+    return 42;
+}
+
+int main()
+{
+    std::future<int> f = std::async(std::launch::async, calculate);
+
+    auto status = f.wait_for(std::chrono::seconds(1));
+
+    if (status == std::future_status::ready) {
+        std::cout << f.get() << "\n";
+    }
+
+    return 0;
+}
+```
+
+
+---
+
+### std::async
+
+最容易上手的异步接口：
+
+```cpp
+// 耗时操作
+// 耗时操作
+int calculate()
+{
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    return 42;
+}
+
+int main()
+{
+    std::future<int> f = std::async(std::launch::async,calculate);
+    std::cout << "do something else\n";
+    int result = f.get();
+    std::cout << result << '\n';
+    return 0;
+}
+```
+
+std::async 有两种启动策略：
+- std::launch::async：尽量立即在**另一个线程**中执行操作。
+- std::launch::deferred：先不执行操作，在调用 wait 或者 get 的时候，在**当前线程**中执行操作。
+- 如果不输入参数，标准实现会选择其中一种，不一定创建新的线程。
+
+该方法适合简单的异步场景，只有几个小任务。
+
+---
+
+### std::packaged_task
+
+把一个可调用对象包装起来，并且和一个 future 绑定。可以自行决定在哪一个线程执行。
+
+```cpp
+int calculate(int x)
+{
+    return x * x;
+}
+
+int main()
+{
+    std::packaged_task<int(int)> task(calculate);
+    std::future<int> f = task.get_future();
+    std::thread t(std::move(task), 10);
+    std::cout << f.get() << "\n";
+
+    return 0;
+}
+```
+
+
+---
+
+
+### std::promise
+
+承诺未来会放入一个值，别人可以通过 future 等这个值。更灵活，不仅不与线程绑定，甚至不与可调用对象绑定。
+
+需要作为参数，传到可调用对象中。**需要注意，promise 和 future 一样，都是不可以复制，只能移动**。
+
+```cpp
+void worker(std::promise<int> p)
+{
+    p.set_value(42);
+}
+
+int main()
+{
+    std::promise<int> p;
+    std::future<int> f = p.get_future();
+
+    std::thread t(worker, std::move(p));
+
+    std::cout << f.get() << "\n";
+    t.join();
+
+    return 0;
+}
+```
+
+
+
+和 future 配合时，promise 可以传递异常：
+
+```cpp
+void worker(std::promise<int> p)
+{
+    try {
+        throw std::runtime_error("worker failed");
+    } catch (...) {
+        p.set_exception(std::current_exception());
+    }
+}
+
+```
+
+
+
+---
+
+### 共享状态
+
+
+```text
+promise / async / packaged_task 负责生产结果
+future 负责消费结果
+中间有一个共享状态保存结果或异常
+```
+
+---
+
+### std::shared_future
+
+如何确实需要多个线程都等待同一个结果，可以用 `std::shared_future<T>` 。
+
+
+- shared_future 解决的是“一次结果，多人等待”
+- condition_variable 更适合“状态反复变化，多次通知”
+
+
+用法如下：
+
+```cpp
+#include <future>
+#include <iostream>
+#include <thread>
+#include <vector>
+
+int load_config()
+{
+    return 100;
+}
+
+int main()
+{
+    std::future<int> f = std::async(std::launch::async, load_config);
+
+    std::shared_future<int> sf = f.share();
+
+    std::thread t 1([sf] {
+        std::cout << sf.get() << '\n';
+    });
+
+    std::thread t 2([sf] {
+        std::cout << sf.get() << '\n';
+    });
+
+    t 1.join();
+    t 2.join();
+}
+```
 
 
 ---
