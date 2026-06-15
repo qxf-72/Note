@@ -30,14 +30,14 @@
     "expandedKeys": []
   },
   "计算机基础/计算机组成原理/计算机组成原理.md": {
-    "scroll": 536.9634223090278,
+    "scroll": 1976.7592592027452,
     "cursor": {
       "from": {
-        "line": 519,
+        "line": 1290,
         "ch": 0
       },
       "to": {
-        "line": 519,
+        "line": 1290,
         "ch": 0
       }
     },
@@ -399,15 +399,15 @@
     "expandedKeys": []
   },
   "计算机基础/操作系统原理/操作系统导论.md": {
-    "scroll": 168.6277813381619,
+    "scroll": 4330.766550869412,
     "cursor": {
       "from": {
-        "line": 2716,
-        "ch": 183
+        "line": 4096,
+        "ch": 22
       },
       "to": {
-        "line": 2716,
-        "ch": 66
+        "line": 4096,
+        "ch": 22
       }
     },
     "expandedKeys": [
@@ -464,7 +464,7 @@
     "expandedKeys": []
   },
   "算法/挑战程序设计竞赛.md": {
-    "scroll": 1160.8731761380077,
+    "scroll": 1649.6060014204545,
     "cursor": {
       "from": {
         "line": 0,
@@ -696,7 +696,7 @@
     "expandedKeys": []
   },
   "开发技能/并发编程/Linux多线程服务端编程.md": {
-    "scroll": 0,
+    "scroll": 1976.7592592027452,
     "cursor": {
       "from": {
         "line": 0,
@@ -710,15 +710,15 @@
     "expandedKeys": []
   },
   "开发技能/并发编程/C++并发编程实战.md": {
-    "scroll": 47.83333518288352,
+    "scroll": 73.81395348837209,
     "cursor": {
       "from": {
-        "line": 802,
-        "ch": 21
+        "line": 131,
+        "ch": 29
       },
       "to": {
-        "line": 802,
-        "ch": 21
+        "line": 131,
+        "ch": 29
       }
     },
     "expandedKeys": [
@@ -742,6 +742,20 @@
   },
   "开发技能/Linux/Git入门.md": {
     "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "开发技能/Linux/鸟哥的Linux私房菜.md": {
+    "scroll": 73.81395348837209,
     "cursor": {
       "from": {
         "line": 0,
