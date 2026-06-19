@@ -4,46 +4,46 @@
     "type": "split",
     "children": [
       {
-        "id": "12be9237276a1b9b",
+        "id": "517b6c5391c779a4",
         "type": "tabs",
-        "dimension": 59.068797776233495,
+        "dimension": 53.7568306010929,
         "children": [
           {
-            "id": "5b99f5c0551e13a9",
+            "id": "2d0900c37f5ebdfd",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "计算机基础/操作系统原理/操作系统导论.md",
+                "file": "开发技能/调试工具/Valgrind入门.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "操作系统导论"
+              "title": "Valgrind入门"
             },
-            "group": "33cb89114d06bfba"
+            "group": "6bc8558553aa3620"
           }
         ]
       },
       {
-        "id": "517b6c5391c779a4",
+        "id": "e2c034dc3fd751ae",
         "type": "tabs",
-        "dimension": 40.931202223766505,
+        "dimension": 46.2431693989071,
         "children": [
           {
-            "id": "32f629f5a7aa7236",
+            "id": "cc975aa7a301de6d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "计算机基础/操作系统原理/操作系统导论.md",
+                "file": "开发技能/调试工具/Valgrind入门.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "操作系统导论"
+              "title": "Valgrind入门"
             },
-            "group": "33cb89114d06bfba"
+            "group": "6bc8558553aa3620"
           }
         ]
       }
@@ -102,7 +102,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 287.5
+    "width": 311.5
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -251,20 +251,22 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "32f629f5a7aa7236",
+  "active": "cc975aa7a301de6d",
   "lastOpenFiles": [
-    "开发技能/Linux/鸟哥的Linux私房菜.md",
     "开发技能/并发编程/C++并发编程实战.md",
+    "开发技能/Linux_UNIX/UNIX环境高级编程.md",
+    "开发技能/Linux_UNIX/Ubuntu 使用记录.md",
+    "计算机基础/操作系统原理/操作系统导论.md",
+    "开发技能/Linux_UNIX/鸟哥的Linux私房菜.md",
     "开发技能/并发编程/Linux多线程服务端编程.md",
     "计算机基础/计算机组成原理/计算机组成原理.md",
-    "计算机基础/操作系统原理/操作系统导论.md",
     "算法/挑战程序设计竞赛.md",
     "计算机基础/数据结构/王道 数据结构.md",
     "计算机基础/计算机组成原理/汇编语言.md",
     "计算机基础/计算机网络/计算机网络.md",
     "编程语言/C++/C++ Primer.md",
     "计算机基础/操作系统原理/王道 操作系统.md",
-    "开发技能/Linux/Git入门.md",
+    "开发技能/Linux_UNIX/Git入门.md",
     "开发技能/编译工具/CMake入门.md",
     "编程语言/C++/候捷C++面向对象高级编程.md",
     "编程语言/C++/Effective Modern C++.md",
@@ -277,8 +279,6 @@
     "开发技能/调试工具/GDB入门.md",
     "开发技能/数据库/SQL必知必会.md",
     "开发技能/数据库/MySQL是怎样运行的.md",
-    "开发技能/调试工具/Valgrind入门.md",
-    "开发技能/编译工具/跟我一起写Makefile.md",
     "482743F2FD33B7CE58A9F431F7FC20D3 1.png",
     "482743F2FD33B7CE58A9F431F7FC20D3.png",
     "开发技能/调试工具",

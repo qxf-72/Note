@@ -399,7 +399,7 @@
     "expandedKeys": []
   },
   "计算机基础/操作系统原理/操作系统导论.md": {
-    "scroll": 4330.766550869412,
+    "scroll": 4400.777777777777,
     "cursor": {
       "from": {
         "line": 4096,
@@ -710,7 +710,7 @@
     "expandedKeys": []
   },
   "开发技能/并发编程/C++并发编程实战.md": {
-    "scroll": 73.81395348837209,
+    "scroll": 769.7807004515209,
     "cursor": {
       "from": {
         "line": 131,
@@ -756,6 +756,48 @@
   },
   "开发技能/Linux/鸟哥的Linux私房菜.md": {
     "scroll": 73.81395348837209,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "开发技能/Linux/Ubuntu 使用记录.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "开发技能/Linux_UNIX/UNIX环境高级编程.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 2,
+        "ch": 0
+      },
+      "to": {
+        "line": 2,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "开发技能/调试工具/Valgrind入门.md": {
+    "scroll": 77.22522302576013,
     "cursor": {
       "from": {
         "line": 0,
