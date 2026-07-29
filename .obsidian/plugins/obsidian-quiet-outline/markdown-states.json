@@ -1,6 +1,6 @@
 {
   "编程语言/C++/C++ Primer.md": {
-    "scroll": 191.52173913043478,
+    "scroll": 77.19629448784723,
     "cursor": {
       "from": {
         "line": 2,
@@ -257,7 +257,7 @@
     "expandedKeys": []
   },
   "README.md": {
-    "scroll": 0,
+    "scroll": 1.365740712483724,
     "cursor": {
       "from": {
         "line": 12,
@@ -371,7 +371,7 @@
     "expandedKeys": []
   },
   "编程语言/C++/候捷C++面向对象高级编程.md": {
-    "scroll": 209.9189189189189,
+    "scroll": 77.19629448784723,
     "cursor": {
       "from": {
         "line": 210,
@@ -696,7 +696,7 @@
     "expandedKeys": []
   },
   "开发技能/并发编程/Linux多线程服务端编程.md": {
-    "scroll": 1976.7592592027452,
+    "scroll": 254.80512152777777,
     "cursor": {
       "from": {
         "line": 0,
@@ -710,7 +710,7 @@
     "expandedKeys": []
   },
   "开发技能/并发编程/C++并发编程实战.md": {
-    "scroll": 769.7807004515209,
+    "scroll": 818.8029244245884,
     "cursor": {
       "from": {
         "line": 131,
@@ -783,7 +783,7 @@
     "expandedKeys": []
   },
   "开发技能/Linux_UNIX/UNIX环境高级编程.md": {
-    "scroll": 0,
+    "scroll": 77.22522302576013,
     "cursor": {
       "from": {
         "line": 2,
@@ -798,6 +798,79 @@
   },
   "开发技能/调试工具/Valgrind入门.md": {
     "scroll": 77.22522302576013,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "其他/机器人操作系统.md": {
+    "scroll": 913.587910254397,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "开发技能/数据库/SQL必知必会.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 67,
+        "ch": 0
+      },
+      "to": {
+        "line": 67,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "开发技能/数据库/MySQL是怎样运行的.md": {
+    "scroll": 2.662229515748492,
+    "cursor": {
+      "from": {
+        "line": 119,
+        "ch": 3
+      },
+      "to": {
+        "line": 119,
+        "ch": 3
+      }
+    },
+    "expandedKeys": [
+      "item-1-0",
+      "item-2-3"
+    ]
+  },
+  "开发技能/Linux_UNIX/Ubuntu 使用记录.md": {
+    "scroll": 254.80512152777777,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "其他/深度学习.md": {
+    "scroll": 0,
     "cursor": {
       "from": {
         "line": 0,
