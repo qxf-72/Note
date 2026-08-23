@@ -30,14 +30,14 @@
     "expandedKeys": []
   },
   "计算机基础/计算机组成原理/计算机组成原理.md": {
-    "scroll": 1976.7592592027452,
+    "scroll": 265.09375,
     "cursor": {
       "from": {
-        "line": 1290,
+        "line": 0,
         "ch": 0
       },
       "to": {
-        "line": 1290,
+        "line": 5730,
         "ch": 0
       }
     },
@@ -54,7 +54,7 @@
     ]
   },
   "计算机基础/计算机组成原理/汇编语言.md": {
-    "scroll": 2602.4690721649486,
+    "scroll": 2459.4594594594596,
     "cursor": {
       "from": {
         "line": 0,
@@ -257,14 +257,14 @@
     "expandedKeys": []
   },
   "README.md": {
-    "scroll": 1.365740712483724,
+    "scroll": 0,
     "cursor": {
       "from": {
-        "line": 12,
-        "ch": 0
+        "line": 2,
+        "ch": 4
       },
       "to": {
-        "line": 12,
+        "line": 0,
         "ch": 0
       }
     },
@@ -825,15 +825,15 @@
     "expandedKeys": []
   },
   "开发技能/数据库/SQL必知必会.md": {
-    "scroll": 0,
+    "scroll": 1.8140588877152424,
     "cursor": {
       "from": {
-        "line": 67,
-        "ch": 0
+        "line": 32,
+        "ch": 2
       },
       "to": {
-        "line": 67,
-        "ch": 0
+        "line": 32,
+        "ch": 2
       }
     },
     "expandedKeys": []
@@ -870,6 +870,34 @@
     "expandedKeys": []
   },
   "其他/深度学习.md": {
+    "scroll": 0.03524229074889868,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "开发技能/Linux_Unix/UNIX环境高级编程.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "开发技能/Linux_Unix/Vim入门.md": {
     "scroll": 0,
     "cursor": {
       "from": {

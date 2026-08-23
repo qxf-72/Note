@@ -6,44 +6,16 @@
       {
         "id": "517b6c5391c779a4",
         "type": "tabs",
-        "dimension": 58.26502732240438,
         "children": [
           {
             "id": "2d0900c37f5ebdfd",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "其他/深度学习.md",
-                "mode": "preview",
-                "source": true
-              },
-              "icon": "lucide-file",
-              "title": "深度学习"
-            },
-            "group": "6bc8558553aa3620"
-          }
-        ]
-      },
-      {
-        "id": "e2c034dc3fd751ae",
-        "type": "tabs",
-        "dimension": 41.73497267759562,
-        "children": [
-          {
-            "id": "cc975aa7a301de6d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "其他/深度学习.md",
-                "mode": "source",
-                "source": true
-              },
-              "icon": "lucide-file",
-              "title": "深度学习"
-            },
-            "group": "6bc8558553aa3620"
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "关系图谱"
+            }
           }
         ]
       }
@@ -65,7 +37,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "文件列表"
@@ -102,7 +76,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 227.5
+    "width": 331.5
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -234,7 +208,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 356.5
+    "width": 433.1666259765625
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -251,13 +225,18 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "fb8dc3bc7f6bb644",
+  "active": "2d0900c37f5ebdfd",
   "lastOpenFiles": [
+    "计算机基础/计算机组成原理/计算机组成原理.md",
+    "计算机基础/计算机组成原理/汇编语言.md",
+    "开发技能/Linux_Unix/Vim入门.md",
     "README.md",
+    "开发技能/Linux_Unix/UNIX环境高级编程.md",
+    "开发技能/数据库/SQL必知必会.md",
+    "其他/深度学习.md",
     "开发技能/并发编程/C++并发编程实战.md",
     "开发技能/并发编程/Linux多线程服务端编程.md",
     "开发技能/Linux_UNIX/Ubuntu 使用记录.md",
-    "开发技能/数据库/SQL必知必会.md",
     "开发技能/数据库/MySQL是怎样运行的.md",
     "其他/机器人操作系统.md",
     "编程语言/C++/候捷C++面向对象高级编程.md",
@@ -266,19 +245,14 @@
     "开发技能/调试工具/Valgrind入门.md",
     "计算机基础/操作系统原理/操作系统导论.md",
     "开发技能/Linux_UNIX/鸟哥的Linux私房菜.md",
-    "计算机基础/计算机组成原理/计算机组成原理.md",
     "算法/挑战程序设计竞赛.md",
     "计算机基础/数据结构/王道 数据结构.md",
-    "计算机基础/计算机组成原理/汇编语言.md",
     "计算机基础/计算机网络/计算机网络.md",
     "计算机基础/操作系统原理/王道 操作系统.md",
     "开发技能/Linux_UNIX/Git入门.md",
     "开发技能/编译工具/CMake入门.md",
     "编程语言/C++/Effective Modern C++.md",
     "其他/自动控制原理.md",
-    "其他/数字图像处理.md",
-    "编程语言/Golang/Go语言圣经.md",
-    "杂项/草稿.md",
     "482743F2FD33B7CE58A9F431F7FC20D3 1.png",
     "482743F2FD33B7CE58A9F431F7FC20D3.png",
     "开发技能/调试工具",
