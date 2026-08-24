@@ -4,18 +4,44 @@
     "type": "split",
     "children": [
       {
-        "id": "517b6c5391c779a4",
+        "id": "1a55f25684f4bedb",
         "type": "tabs",
         "children": [
           {
-            "id": "2d0900c37f5ebdfd",
+            "id": "aec9e22b825236f9",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "关系图谱"
-            }
+              "type": "markdown",
+              "state": {
+                "file": "编程语言/C++/C++面试.md",
+                "mode": "preview",
+                "source": true
+              },
+              "icon": "lucide-file",
+              "title": "C++面试"
+            },
+            "group": "141dbd8e439c4e28"
+          }
+        ]
+      },
+      {
+        "id": "5c28ae1c9674ff2f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "da5132efb71804bb",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "编程语言/C++/C++面试.md",
+                "mode": "source",
+                "source": true
+              },
+              "icon": "lucide-file",
+              "title": "C++面试"
+            },
+            "group": "141dbd8e439c4e28"
           }
         ]
       }
@@ -76,7 +102,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 331.5
+    "width": 331.5,
+    "collapsed": true
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -225,8 +252,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "2d0900c37f5ebdfd",
+  "active": "da5132efb71804bb",
   "lastOpenFiles": [
+    "编程语言/C++/C++工程API.md",
+    "计算机基础/操作系统原理/操作系统导论.md",
     "计算机基础/计算机组成原理/计算机组成原理.md",
     "计算机基础/计算机组成原理/汇编语言.md",
     "开发技能/Linux_Unix/Vim入门.md",
@@ -243,7 +272,6 @@
     "编程语言/C++/C++ Primer.md",
     "开发技能/Linux_UNIX/UNIX环境高级编程.md",
     "开发技能/调试工具/Valgrind入门.md",
-    "计算机基础/操作系统原理/操作系统导论.md",
     "开发技能/Linux_UNIX/鸟哥的Linux私房菜.md",
     "算法/挑战程序设计竞赛.md",
     "计算机基础/数据结构/王道 数据结构.md",
@@ -252,7 +280,6 @@
     "开发技能/Linux_UNIX/Git入门.md",
     "开发技能/编译工具/CMake入门.md",
     "编程语言/C++/Effective Modern C++.md",
-    "其他/自动控制原理.md",
     "482743F2FD33B7CE58A9F431F7FC20D3 1.png",
     "482743F2FD33B7CE58A9F431F7FC20D3.png",
     "开发技能/调试工具",
