@@ -1207,8 +1207,6 @@ where Vendors.vend_id = Products.vend_id;
 
 ---
 
-<br/>
-
 ### 12.2.2 内联结
 
 目前使用的联结为**等值联结**，也称为**内联结**。可以使用以下不同的语法：
@@ -1221,7 +1219,6 @@ inner join Products on Vendors.vend_id = Products.vend_id;
 
 ---
 
-<br/>
 
 
 ### 12.2.3  联结多个表
@@ -1291,8 +1288,6 @@ where c1.cust_name = c2.cust_name
 
 ---
 
-<br/>
-
 ### 13.2.2  自然联结
 
 自然连接是 SQL 中一种特殊的联结，它会**自动连接两个表**，并在两个表中具有**相同名称的列**之间创建连接。
@@ -1303,8 +1298,6 @@ NATURAL JOIN table2;
 ```
 
 ---
-
-<br/>
 
 ### 13.2.3  外联结
 
@@ -1391,21 +1384,11 @@ where cust_name = 'Fun4All';
 
 ---
 
-<br/>
-
-
-<br/>
-
 ### 14.2.2 UNION 规则
 
 **如果结合 UNION 使用的 select 语句遇到不同的列名，会返回第一个名字。**
 
 ---
-
-<br/>
-
-
-<br/>
 
 ### 14.2.3  包含或者取消重复的行
 
@@ -1413,8 +1396,6 @@ where cust_name = 'Fun4All';
 
 
 ---
-
-<br/>
 
 
 
@@ -1479,7 +1460,7 @@ values(1000000006,
 
 ---
 
-<br/>
+
 
 ### 15.1.2  插入部分行
 
@@ -1505,8 +1486,6 @@ values(1000000006,
 - 给出了默认值
 
 ---
-
-<br/>
 
 ### 15.1.3  插入检索出的数据
 
@@ -1539,7 +1518,7 @@ select 的列名并**不需要和 insert into 对应的列名一样**，使用�
 <br/>
 
 
-<br/>
+
 
 ## 15.2  从一个表复制到另一个表
 
@@ -1582,8 +1561,6 @@ where cust_id = 100000006;
 
 <br/>
 
-
-<br/>
 
 
 ## 16.2  删除数据
@@ -1666,10 +1643,6 @@ create table Products
 
 ---
 
-<br/>
-
-
-
 ### 17.1.2  使用 null 值
 
 在不指定 not null 时，多数但不是全部 DBMS 认为默认指定 null。
@@ -1677,10 +1650,6 @@ create table Products
 允许 null 的列不能作为唯一标识。
 
 ---
-
-
-<br/>
-
 
 
 ### 17.1.3  指定默认值
@@ -1736,7 +1705,6 @@ drop column vend_phone;
 <br/>
 
 
-<br/>
 
 ## 17.3  删除表
 
@@ -1752,8 +1720,6 @@ drop table CustCopy;
 
 <br/>
 
-
-<br/>
 
 ## 17.4  重命名表
 
@@ -1791,11 +1757,6 @@ drop table CustCopy;
 
 
 <br/>
-
-
-<br/>
-
-
 
 ## 18.2  创建视图
 
@@ -1848,11 +1809,6 @@ select * from VendorLocations;
 
 ---
 
-<br/>
-
-
-<br/>
-
 ### 18.2.3  使用视图过滤数据
 
 可以在创建视图时，使用 `where` 子句过滤数据，先过滤掉不需要的数据。之后使用时，也可以根据要求对于视图，使用 `where` 子句。
@@ -1870,7 +1826,6 @@ select * from VendorLocations;
 <br/>
 
 
-<br/>
 
 
 # 19.  存储过程
@@ -1882,9 +1837,6 @@ select * from VendorLocations;
 > SQLite 不支持存储过程。
 
 ---
-
-
-<br/>
 
 
 <br/>
@@ -1913,9 +1865,6 @@ select * from VendorLocations;
 
 <br/>
 
-
-<br/>
-
 ## 20.2  控制事物处理
 
 **不同 DBMS 实现有不同语法。**
@@ -1932,22 +1881,12 @@ start transaction
 
 ---
 
-<br/>
-
-
-<br/>
-
 ### 20.2.2  提交
 
 一般的 sql 语句是针对数据库表直接执行和编写的。但是在事物处理块中，提交一般不会隐式进行，需要使用 `commit` 语句。
 
 
 ---
-
-<br/>
-
-
-<br/>
 
 ### 20.2.3  保留点
 
@@ -1976,9 +1915,6 @@ rollback to delete1;
 
 <br/>
 
-
-<br/>
-
 # 21.  游标
 
 ## 21.1  游标
@@ -1992,9 +1928,6 @@ sql 检索操作返回的数据为结果集。简单 sql 语句没法获得结�
 - 可以将游标标志为只读。
 
 ---
-
-
-<br/>
 
 
 <br/>
@@ -2040,9 +1973,6 @@ close CustCursor;
 <br/>
 
 
-<br/>
-
-
 # 22.  高级 SQL 特性
 
 ## 22.1  约束
@@ -2066,11 +1996,6 @@ create table Vendors
 ```
 
 ---
-
-<br/>
-
-
-<br/>
 
 ### 22.1.2  外键
 
@@ -2097,11 +2022,6 @@ foreign key (cust_id) references Customers (cust_id);
 
 ---
 
-<br/>
-
-
-<br/>
-
 ### 22.1.3  唯一约束
 
 用于保证某一列的数据时唯一的。和主键区别如下：
@@ -2115,11 +2035,6 @@ foreign key (cust_id) references Customers (cust_id);
 
 
 ---
-
-<br/>
-
-
-<br/>
 
 ### 22.1.4  检查约束
 
@@ -2148,8 +2063,6 @@ CREATE TABLE employees (
 <br/>
 
 
-<br/>
-
 
 ## 22.2  索引
 
@@ -2177,8 +2090,6 @@ where prod_name = 100;
 
 <br/>
 
-
-<br/>
 
 ## 22.3 触发器
 
