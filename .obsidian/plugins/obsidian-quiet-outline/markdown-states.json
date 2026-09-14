@@ -30,7 +30,7 @@
     "expandedKeys": []
   },
   "计算机基础/计算机组成原理/计算机组成原理.md": {
-    "scroll": 265.09375,
+    "scroll": 1173.1407986111112,
     "cursor": {
       "from": {
         "line": 0,
@@ -98,7 +98,7 @@
     "expandedKeys": []
   },
   "编程语言/Golang/Go语言圣经.md": {
-    "scroll": 2.188340807174888,
+    "scroll": 796.2403031015784,
     "cursor": {
       "from": {
         "line": 15,
@@ -112,7 +112,7 @@
     "expandedKeys": []
   },
   "计算机基础/操作系统原理/王道 操作系统.md": {
-    "scroll": 168.6277813381619,
+    "scroll": 1010.2,
     "cursor": {
       "from": {
         "line": 1841,
@@ -315,7 +315,7 @@
     ]
   },
   "编程语言/C++/C++面试.md": {
-    "scroll": 57.07528781022313,
+    "scroll": 181.7943879599883,
     "cursor": {
       "from": {
         "line": 195,
@@ -640,18 +640,27 @@
     ]
   },
   "计算机基础/数据结构/王道 数据结构.md": {
-    "scroll": 1395.482421875,
+    "scroll": 181.7875,
     "cursor": {
       "from": {
-        "line": 1433,
+        "line": 850,
         "ch": 0
       },
       "to": {
-        "line": 1433,
-        "ch": 0
+        "line": 851,
+        "ch": 24
       }
     },
-    "expandedKeys": []
+    "expandedKeys": [
+      "item-1-0",
+      "item-1-4",
+      "item-1-10",
+      "item-1-16",
+      "item-1-31",
+      "item-1-43",
+      "item-1-58",
+      "item-1-75"
+    ]
   },
   "开发工具/并发编程/Linux多线程服务端编程.md": {
     "scroll": 0,
@@ -696,7 +705,7 @@
     "expandedKeys": []
   },
   "开发技能/并发编程/Linux多线程服务端编程.md": {
-    "scroll": 254.80512152777777,
+    "scroll": 796.2403031015784,
     "cursor": {
       "from": {
         "line": 0,
@@ -727,7 +736,7 @@
     ]
   },
   "开发技能/编译工具/CMake入门.md": {
-    "scroll": 0,
+    "scroll": 30.49673282398897,
     "cursor": {
       "from": {
         "line": 0,
@@ -797,7 +806,7 @@
     "expandedKeys": []
   },
   "开发技能/调试工具/Valgrind入门.md": {
-    "scroll": 77.22522302576013,
+    "scroll": 0,
     "cursor": {
       "from": {
         "line": 0,
@@ -825,29 +834,29 @@
     "expandedKeys": []
   },
   "开发技能/数据库/SQL必知必会.md": {
-    "scroll": 0,
+    "scroll": 1991.8451162010733,
     "cursor": {
       "from": {
-        "line": 2091,
+        "line": 1975,
         "ch": 0
       },
       "to": {
-        "line": 2091,
+        "line": 1975,
         "ch": 0
       }
     },
     "expandedKeys": []
   },
   "开发技能/数据库/MySQL是怎样运行的.md": {
-    "scroll": 2.662229515748492,
+    "scroll": 66.35555419921874,
     "cursor": {
       "from": {
         "line": 119,
-        "ch": 3
+        "ch": 0
       },
       "to": {
         "line": 119,
-        "ch": 3
+        "ch": 0
       }
     },
     "expandedKeys": [
@@ -899,6 +908,20 @@
   },
   "开发技能/Linux_Unix/Vim入门.md": {
     "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "开发技能/编译工具/跟我一起写Makefile.md": {
+    "scroll": 1010.2,
     "cursor": {
       "from": {
         "line": 0,
