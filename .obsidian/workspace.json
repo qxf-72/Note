@@ -14,12 +14,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发技能/编译工具/跟我一起写Makefile.md",
+                "file": "开发技能/数据库/MySQL是怎样运行的.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "跟我一起写Makefile"
+              "title": "MySQL是怎样运行的"
             },
             "group": "75282025ed07e3f6"
           }
@@ -36,12 +36,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发技能/编译工具/跟我一起写Makefile.md",
+                "file": "开发技能/数据库/MySQL是怎样运行的.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "跟我一起写Makefile"
+              "title": "MySQL是怎样运行的"
             },
             "group": "75282025ed07e3f6"
           }
@@ -255,6 +255,7 @@
   },
   "active": "462b961c8de6d6a6",
   "lastOpenFiles": [
+    "开发技能/编译工具/跟我一起写Makefile.md",
     "计算机基础/操作系统原理/王道 操作系统.md",
     "计算机基础/数据结构/王道 数据结构.md",
     "编程语言/C++/C++面试.md",
@@ -280,7 +281,6 @@
     "开发技能/Linux_UNIX/UNIX环境高级编程.md",
     "开发技能/Linux_UNIX/鸟哥的Linux私房菜.md",
     "算法/挑战程序设计竞赛.md",
-    "计算机基础/计算机网络/计算机网络.md",
     "482743F2FD33B7CE58A9F431F7FC20D3 1.png",
     "482743F2FD33B7CE58A9F431F7FC20D3.png",
     "开发技能/调试工具",
