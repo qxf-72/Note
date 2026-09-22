@@ -14,12 +14,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发技能/数据库/MySQL是怎样运行的.md",
+                "file": "编程语言/lua/Lua程序设计.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "MySQL是怎样运行的"
+              "title": "Lua程序设计"
             },
             "group": "75282025ed07e3f6"
           }
@@ -36,12 +36,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发技能/数据库/MySQL是怎样运行的.md",
+                "file": "编程语言/lua/Lua程序设计.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "MySQL是怎样运行的"
+              "title": "Lua程序设计"
             },
             "group": "75282025ed07e3f6"
           }
@@ -104,7 +104,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 331.5
+    "width": 331.5,
+    "collapsed": true
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -168,7 +169,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "计算机基础/数据结构/王道 数据结构.md",
+                "file": "开发技能/数据库/SQL必知必会.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -236,7 +237,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 375.833251953125
+    "width": 257.833251953125
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -255,6 +256,11 @@
   },
   "active": "462b961c8de6d6a6",
   "lastOpenFiles": [
+    "编程语言/C++/Effective Modern C++.md",
+    "编程语言/lua/Lua程序设计.md",
+    "开发技能/数据库/MySQL是怎样运行的.md",
+    "编程语言/lua",
+    "开发技能/数据库/SQL必知必会.md",
     "开发技能/编译工具/跟我一起写Makefile.md",
     "计算机基础/操作系统原理/王道 操作系统.md",
     "计算机基础/数据结构/王道 数据结构.md",
@@ -263,8 +269,6 @@
     "开发技能/并发编程/Linux多线程服务端编程.md",
     "编程语言/Golang/Go语言圣经.md",
     "计算机基础/计算机组成原理/计算机组成原理.md",
-    "开发技能/数据库/SQL必知必会.md",
-    "开发技能/数据库/MySQL是怎样运行的.md",
     "开发技能/调试工具/Valgrind入门.md",
     "编程语言/C++/C++工程API.md",
     "计算机基础/操作系统原理/操作系统导论.md",
@@ -279,8 +283,6 @@
     "编程语言/C++/候捷C++面向对象高级编程.md",
     "编程语言/C++/C++ Primer.md",
     "开发技能/Linux_UNIX/UNIX环境高级编程.md",
-    "开发技能/Linux_UNIX/鸟哥的Linux私房菜.md",
-    "算法/挑战程序设计竞赛.md",
     "482743F2FD33B7CE58A9F431F7FC20D3 1.png",
     "482743F2FD33B7CE58A9F431F7FC20D3.png",
     "开发技能/调试工具",
@@ -288,7 +290,6 @@
     "EA269C57FCE480748A8D543CD6F7B7CA.png",
     "开发技能/并发编程",
     "编程语言/Golang",
-    "未命名",
     "0423968B760280EA13974A4BF0CFE8AC.png",
     "杂项/课堂笔记/大三下学期",
     "杂项/思维导图/SQL必知必会.mm",
