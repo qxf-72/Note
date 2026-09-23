@@ -112,7 +112,7 @@
     "expandedKeys": []
   },
   "计算机基础/操作系统原理/王道 操作系统.md": {
-    "scroll": 1010.2,
+    "scroll": 49.08064614572832,
     "cursor": {
       "from": {
         "line": 1841,
@@ -243,15 +243,15 @@
     "expandedKeys": []
   },
   "编程语言/C++/Effective C++.md": {
-    "scroll": 103.12258064516129,
+    "scroll": 2.1666673932756697,
     "cursor": {
       "from": {
-        "line": 10,
-        "ch": 17
+        "line": 22,
+        "ch": 3
       },
       "to": {
-        "line": 10,
-        "ch": 17
+        "line": 22,
+        "ch": 3
       }
     },
     "expandedKeys": []
@@ -315,7 +315,7 @@
     ]
   },
   "编程语言/C++/C++面试.md": {
-    "scroll": 181.7943879599883,
+    "scroll": 0,
     "cursor": {
       "from": {
         "line": 195,
@@ -371,21 +371,21 @@
     "expandedKeys": []
   },
   "编程语言/C++/候捷C++面向对象高级编程.md": {
-    "scroll": 77.19629448784723,
+    "scroll": 210.1053569908038,
     "cursor": {
       "from": {
-        "line": 210,
-        "ch": 93
+        "line": 217,
+        "ch": 0
       },
       "to": {
-        "line": 210,
-        "ch": 93
+        "line": 217,
+        "ch": 0
       }
     },
     "expandedKeys": []
   },
   "计算机基础/计算机网络/计算机网络.md": {
-    "scroll": 190.92683274183815,
+    "scroll": 49.08064614572832,
     "cursor": {
       "from": {
         "line": 0,
@@ -478,7 +478,7 @@
     "expandedKeys": []
   },
   "编程语言/C++/C++工程API.md": {
-    "scroll": 103.12258064516129,
+    "scroll": 0,
     "cursor": {
       "from": {
         "line": 48,
@@ -622,15 +622,15 @@
     "expandedKeys": []
   },
   "编程语言/C++/Effective Modern C++.md": {
-    "scroll": 66,
+    "scroll": 0,
     "cursor": {
       "from": {
-        "line": 4,
-        "ch": 49
+        "line": 194,
+        "ch": 3
       },
       "to": {
-        "line": 4,
-        "ch": 49
+        "line": 194,
+        "ch": 3
       }
     },
     "expandedKeys": [
@@ -834,7 +834,7 @@
     "expandedKeys": []
   },
   "开发技能/数据库/SQL必知必会.md": {
-    "scroll": 1191.0824072943794,
+    "scroll": 0,
     "cursor": {
       "from": {
         "line": 1162,
@@ -848,7 +848,7 @@
     "expandedKeys": []
   },
   "开发技能/数据库/MySQL是怎样运行的.md": {
-    "scroll": 56.23423643369932,
+    "scroll": 43.35185411241319,
     "cursor": {
       "from": {
         "line": 123,
@@ -879,7 +879,7 @@
     "expandedKeys": []
   },
   "其他/深度学习.md": {
-    "scroll": 0.03524229074889868,
+    "scroll": 228.66357783564814,
     "cursor": {
       "from": {
         "line": 0,
@@ -907,7 +907,7 @@
     "expandedKeys": []
   },
   "开发技能/Linux_Unix/Vim入门.md": {
-    "scroll": 0,
+    "scroll": 11.551724137931034,
     "cursor": {
       "from": {
         "line": 0,
@@ -952,11 +952,81 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 19,
+        "line": 33,
+        "ch": 3
+      },
+      "to": {
+        "line": 33,
+        "ch": 3
+      }
+    },
+    "expandedKeys": []
+  },
+  "开发技能/Linux_Unix/Ubuntu 使用记录.md": {
+    "scroll": 49.08064614572832,
+    "cursor": {
+      "from": {
+        "line": 0,
         "ch": 0
       },
       "to": {
-        "line": 19,
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "其他/计算机视觉.md": {
+    "scroll": 228.66357783564814,
+    "cursor": {
+      "from": {
+        "line": 242,
+        "ch": 3
+      },
+      "to": {
+        "line": 242,
+        "ch": 3
+      }
+    },
+    "expandedKeys": []
+  },
+  "其他/数字图像处理.md": {
+    "scroll": 76.80090956964591,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "其他/自动控制原理.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "其他/机器学习.md": {
+    "scroll": 108.17036675347222,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
         "ch": 0
       }
     },
