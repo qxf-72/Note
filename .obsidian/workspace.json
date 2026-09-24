@@ -14,12 +14,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "编程语言/lua/Lua程序设计.md",
+                "file": "编程语言/C++/C++工程API.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Lua程序设计"
+              "title": "C++工程API"
             },
             "group": "75282025ed07e3f6"
           }
@@ -36,12 +36,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "编程语言/lua/Lua程序设计.md",
+                "file": "编程语言/C++/C++工程API.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Lua程序设计"
+              "title": "C++工程API"
             },
             "group": "75282025ed07e3f6"
           }
@@ -104,8 +104,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 331.5,
-    "collapsed": true
+    "width": 331.5
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -256,13 +255,16 @@
   },
   "active": "462b961c8de6d6a6",
   "lastOpenFiles": [
+    "编程语言/C++/Effective Modern C++.md",
+    "编程语言/C++/Effective C++.md",
+    "开发技能/Linux_Unix/鸟哥的Linux私房菜.md",
+    "开发技能/并发编程/C++并发编程实战.md",
+    "编程语言/Golang/Go语言圣经.md",
+    "编程语言/lua/Lua程序设计.md",
     "其他/机器学习.md",
     "其他/数字图像处理.md",
     "开发技能/数据库/MySQL是怎样运行的.md",
     "开发技能/数据库/SQL必知必会.md",
-    "编程语言/C++/Effective Modern C++.md",
-    "编程语言/C++/Effective C++.md",
-    "编程语言/lua/Lua程序设计.md",
     "开发技能/Linux_Unix/Vim入门.md",
     "其他/自动控制原理.md",
     "其他/深度学习.md",
@@ -278,11 +280,8 @@
     "计算机基础/数据结构/王道 数据结构.md",
     "开发技能/编译工具/CMake入门.md",
     "开发技能/并发编程/Linux多线程服务端编程.md",
-    "编程语言/Golang/Go语言圣经.md",
     "计算机基础/计算机组成原理/计算机组成原理.md",
     "开发技能/调试工具/Valgrind入门.md",
-    "计算机基础/操作系统原理/操作系统导论.md",
-    "计算机基础/计算机组成原理/汇编语言.md",
     "482743F2FD33B7CE58A9F431F7FC20D3 1.png",
     "482743F2FD33B7CE58A9F431F7FC20D3.png",
     "开发技能/调试工具",
