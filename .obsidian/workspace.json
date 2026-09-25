@@ -6,7 +6,7 @@
       {
         "id": "1a55f25684f4bedb",
         "type": "tabs",
-        "dimension": 60.71428571428571,
+        "dimension": 56.1034275405893,
         "children": [
           {
             "id": "aec9e22b825236f9",
@@ -14,12 +14,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "编程语言/C++/C++工程API.md",
+                "file": "编程语言/lua/Lua程序设计.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "C++工程API"
+              "title": "Lua程序设计"
             },
             "group": "75282025ed07e3f6"
           }
@@ -28,7 +28,7 @@
       {
         "id": "4b39815a8abeb294",
         "type": "tabs",
-        "dimension": 39.285714285714285,
+        "dimension": 43.896572459410706,
         "children": [
           {
             "id": "462b961c8de6d6a6",
@@ -36,12 +36,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "编程语言/C++/C++工程API.md",
+                "file": "编程语言/lua/Lua程序设计.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "C++工程API"
+              "title": "Lua程序设计"
             },
             "group": "75282025ed07e3f6"
           }
@@ -104,7 +104,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 331.5
+    "width": 331.5,
+    "collapsed": true
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -255,6 +256,7 @@
   },
   "active": "462b961c8de6d6a6",
   "lastOpenFiles": [
+    "编程语言/C++/C++工程API.md",
     "编程语言/C++/Effective Modern C++.md",
     "编程语言/C++/Effective C++.md",
     "开发技能/Linux_Unix/鸟哥的Linux私房菜.md",
@@ -274,7 +276,6 @@
     "开发技能/Linux_Unix/Ubuntu 使用记录.md",
     "编程语言/C++/候捷C++面向对象高级编程.md",
     "编程语言/C++/C++面试.md",
-    "编程语言/C++/C++工程API.md",
     "编程语言/lua",
     "开发技能/编译工具/跟我一起写Makefile.md",
     "计算机基础/数据结构/王道 数据结构.md",
