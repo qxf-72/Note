@@ -237,7 +237,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 217.833251953125
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -256,13 +256,13 @@
   },
   "active": "462b961c8de6d6a6",
   "lastOpenFiles": [
+    "编程语言/lua/Lua程序设计.md",
     "编程语言/C++/C++工程API.md",
     "编程语言/C++/Effective Modern C++.md",
     "编程语言/C++/Effective C++.md",
     "开发技能/Linux_Unix/鸟哥的Linux私房菜.md",
     "开发技能/并发编程/C++并发编程实战.md",
     "编程语言/Golang/Go语言圣经.md",
-    "编程语言/lua/Lua程序设计.md",
     "其他/机器学习.md",
     "其他/数字图像处理.md",
     "开发技能/数据库/MySQL是怎样运行的.md",
