@@ -8,7 +8,7 @@
 - `type()`：获取一个值对应的类型名称。
 - 只有 boolean 的 false 和 nil 表示逻辑的假，其余任何值在条件判断中都是真。
 - `and` 如果第一个操作数为假，则返回第一个操作数。
-- `or` 如果第一个操作数为真，则返回第一个操作数。、
+- `or` 如果第一个操作数为真，则返回第一个操作数。
 - `lua -e`：直接在命令行输入代码。
 
 
@@ -290,6 +290,122 @@ print((func()))    --> a
 ---
 
 ## 可变长参数函数
+
+
+收集参数的方式：
+- 表达式 `{...}`：返回一个由参数组成的表。
+- `table.pack(...)`：同样是返回一个参数组成的表，但是多了一个键 `n` 表示参数数量。
+- `select(n,...)`：返回第 `n` 个参数以及之后的所有参数，当 `n` 为 `#` 时返回参数数量。
+
+```lua
+function add(...)
+    local s = 0
+    for _, v in ipairs { ... } do
+        s = s + v
+    end
+    return s
+end
+```
+
+```lua
+function add(...)
+    local s = 0
+    local arg = table.pack(...)
+    for i = 1, arg.n do
+        s = s + arg[i]
+    end
+    return s
+end
+```
+
+
+```lua
+function add(...)
+    local s = 0
+    for i = 1, select("#", ...) do
+        s = s + select(i, ...)
+    end
+    return s
+end
+```
+
+
+---
+
+
+## `table.unpack`
+
+- `table.pack()`：将参数转化为表。
+- `table.unpack()`：将表转化为参数。常用于将表转化为一系列参数传递给变长参数函数。
+	- `table.unpack(a,i)`：返回列表中第 i 个以及之后的元素。
+	- `table.unpack(a,i,j)`：返回列表中第 i 到第 j 个元素。
+
+```lua
+local a = { "1", "2", "3" }
+print(table.unpack(a))
+```
+
+---
+
+## 尾调用
+
+
+尾调用消除：lua 在尾调用时不使用额外的栈空间。
+
+需要注意的是，以下情况都不是尾调用：
+- `function f(x) g(x) end`：原因是在调用完 g 之后需要返回 f 中丢弃所有结果。
+- `return (g(x))`：丢弃部分结果，返回值限制为 1 个。
+
+
+
+---
+
+
+<br/>
+
+
+<br/>
+
+
+# 闭包
+
+
+## 函数是第一类值
+
+
+Lua 中的函数是一等值，可以像其他值一样赋值、传参和返回。Lua 的函数值本身没有固定的名字，通常所谓的“函数名”只是保存或引用函数值的变量名，例如 `function f() ... end` 本质上可以理解为 `f = function() ... end` 的语法糖。
+
+从使用方式上看，Lua 的函数与 C++ lambda 有一定相似性：它们都可以形成闭包并捕获外部变量。不过二者的底层实现不同。C++ lambda 会由编译器生成一个匿名的闭包类型，其对象保存捕获的数据；Lua 则由虚拟机通过 closure 和 upvalue 等机制保存函数及其捕获的外部变量。
+
+
+
+---
+
+## 非全局函数
+
+函数可以存储在表字段中，有一类特殊语法定义此类函数：
+
+```lua
+Lib = {}
+function Lib.foo(x, y)
+    return x + y
+end
+
+```
+
+
+---
+
+
+
+<br/>
+
+
+<br/>
+
+# 编译、执行和错误
+
+
 
 
 
