@@ -1,6 +1,6 @@
 {
   "编程语言/C++/C++ Primer.md": {
-    "scroll": 77.19629448784723,
+    "scroll": 0,
     "cursor": {
       "from": {
         "line": 2,
@@ -30,15 +30,15 @@
     "expandedKeys": []
   },
   "计算机基础/计算机组成原理/计算机组成原理.md": {
-    "scroll": 1173.1407986111112,
+    "scroll": 354.05849581924076,
     "cursor": {
       "from": {
-        "line": 0,
-        "ch": 0
+        "line": 370,
+        "ch": 4
       },
       "to": {
-        "line": 5730,
-        "ch": 0
+        "line": 370,
+        "ch": 4
       }
     },
     "expandedKeys": [
@@ -54,7 +54,7 @@
     ]
   },
   "计算机基础/计算机组成原理/汇编语言.md": {
-    "scroll": 2459.4594594594596,
+    "scroll": 882.973359375,
     "cursor": {
       "from": {
         "line": 0,
@@ -98,15 +98,15 @@
     "expandedKeys": []
   },
   "编程语言/Golang/Go语言圣经.md": {
-    "scroll": 796.2403031015784,
+    "scroll": 3.1144032231083623,
     "cursor": {
       "from": {
-        "line": 15,
-        "ch": 0
+        "line": 23,
+        "ch": 3
       },
       "to": {
-        "line": 15,
-        "ch": 0
+        "line": 23,
+        "ch": 3
       }
     },
     "expandedKeys": []
@@ -243,7 +243,7 @@
     "expandedKeys": []
   },
   "编程语言/C++/Effective C++.md": {
-    "scroll": 2.1666673932756697,
+    "scroll": 0,
     "cursor": {
       "from": {
         "line": 22,
@@ -371,7 +371,7 @@
     "expandedKeys": []
   },
   "编程语言/C++/候捷C++面向对象高级编程.md": {
-    "scroll": 210.1053569908038,
+    "scroll": 206.17582417582418,
     "cursor": {
       "from": {
         "line": 217,
@@ -399,7 +399,7 @@
     "expandedKeys": []
   },
   "计算机基础/操作系统原理/操作系统导论.md": {
-    "scroll": 321.05454545454546,
+    "scroll": 882.9685468885634,
     "cursor": {
       "from": {
         "line": 4096,
@@ -622,7 +622,7 @@
     "expandedKeys": []
   },
   "编程语言/C++/Effective Modern C++.md": {
-    "scroll": 176.03469054822978,
+    "scroll": 0,
     "cursor": {
       "from": {
         "line": 194,
@@ -949,18 +949,20 @@
     "expandedKeys": []
   },
   "编程语言/lua/Lua程序设计.md": {
-    "scroll": 354.1621621621622,
+    "scroll": 1799.806949013158,
     "cursor": {
       "from": {
-        "line": 408,
+        "line": 2100,
         "ch": 0
       },
       "to": {
-        "line": 408,
+        "line": 2100,
         "ch": 0
       }
     },
-    "expandedKeys": []
+    "expandedKeys": [
+      "item-2-56"
+    ]
   },
   "开发技能/Linux_Unix/Ubuntu 使用记录.md": {
     "scroll": 49.08064614572832,
@@ -1042,6 +1044,34 @@
       "to": {
         "line": 8,
         "ch": 3
+      }
+    },
+    "expandedKeys": []
+  },
+  "开发技能/框架/未命名.md": {
+    "scroll": 354.7523074679905,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "开发技能/框架/skynet.md": {
+    "scroll": 354.7523074679905,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
       }
     },
     "expandedKeys": []
