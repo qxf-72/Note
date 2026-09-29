@@ -4,31 +4,8 @@
     "type": "split",
     "children": [
       {
-        "id": "1a55f25684f4bedb",
-        "type": "tabs",
-        "dimension": 56.1034275405893,
-        "children": [
-          {
-            "id": "aec9e22b825236f9",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "编程语言/lua/Lua程序设计.md",
-                "mode": "preview",
-                "source": true
-              },
-              "icon": "lucide-file",
-              "title": "Lua程序设计"
-            },
-            "group": "75282025ed07e3f6"
-          }
-        ]
-      },
-      {
         "id": "4b39815a8abeb294",
         "type": "tabs",
-        "dimension": 43.896572459410706,
         "children": [
           {
             "id": "462b961c8de6d6a6",
@@ -36,14 +13,35 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "编程语言/lua/Lua程序设计.md",
+                "file": "开发技能/框架/Skynet基础.md",
+                "mode": "preview",
+                "source": true
+              },
+              "icon": "lucide-file",
+              "title": "Skynet基础"
+            },
+            "group": "0d7e61eebcbc3b1f"
+          }
+        ]
+      },
+      {
+        "id": "ad6ebae9bc1d6367",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9ae13f3b7328d529",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "开发技能/框架/Skynet基础.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Lua程序设计"
+              "title": "Skynet基础"
             },
-            "group": "75282025ed07e3f6"
+            "group": "0d7e61eebcbc3b1f"
           }
         ]
       }
@@ -253,10 +251,17 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "462b961c8de6d6a6",
+  "active": "9ae13f3b7328d529",
   "lastOpenFiles": [
+    "开发技能/数据库/MongoDB基础.md",
+    "开发技能/框架/Skynet基础.md",
+    "开发技能/并发编程/C++并发编程实战.md",
+    "计算机基础/计算机网络/计算机网络.md",
+    "开发技能/Unix/Ubuntu 使用记录.md",
+    "开发技能/Unix/UNIX环境高级编程.md",
+    "开发技能/调试工具/GDB入门.md",
     "编程语言/Golang/Go语言圣经.md",
-    "编程语言/lua/Lua程序设计.md",
+    "编程语言/Lua/Lua程序设计.md",
     "编程语言/C++/候捷C++面向对象高级编程.md",
     "编程语言/C++/C++ Primer.md",
     "编程语言/C++/Effective C++.md",
@@ -265,11 +270,9 @@
     "计算机基础/操作系统原理/操作系统导论.md",
     "计算机基础/计算机组成原理/汇编语言.md",
     "计算机基础/计算机组成原理/计算机组成原理.md",
-    "开发技能/框架/skynet.md",
     "开发技能/框架",
     "编程语言/C++/C++工程API.md",
     "开发技能/Unix/鸟哥的Linux私房菜.md",
-    "开发技能/并发编程/C++并发编程实战.md",
     "其他/机器学习.md",
     "其他/数字图像处理.md",
     "开发技能/数据库/MySQL是怎样运行的.md",
@@ -277,12 +280,7 @@
     "开发技能/Unix/Vim入门.md",
     "其他/自动控制原理.md",
     "其他/深度学习.md",
-    "其他/计算机视觉.md",
-    "计算机基础/计算机网络/计算机网络.md",
-    "计算机基础/操作系统原理/王道 操作系统.md",
-    "开发技能/Unix/Ubuntu 使用记录.md",
-    "编程语言/lua",
-    "开发技能/构建工具/跟我一起写Makefile.md",
+    "编程语言/Lua",
     "482743F2FD33B7CE58A9F431F7FC20D3 1.png",
     "482743F2FD33B7CE58A9F431F7FC20D3.png",
     "开发技能/调试工具",

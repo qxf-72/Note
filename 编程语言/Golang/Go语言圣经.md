@@ -1,6 +1,6 @@
 <div style="text-align: center;">
   <img 
-    src=" https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2026-05-15_16-53-40.png"
+    src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2026-05-15_16-53-40.png"
     alt="图片说明"
     loading="lazy"
     style="max-width: 100%; height: auto; width: 500;"

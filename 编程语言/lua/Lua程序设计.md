@@ -1,6 +1,6 @@
 <div style="text-align: center;">
   <img 
-    src=" https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2026-09-28_17-33-23.png"
+    src="https://picture-in-md.oss-cn-guangzhou.aliyuncs.com/2026-09-28_17-33-23.png"
     alt="封面"
     loading="lazy"
     style="max-width: 100%; height: auto; width: 500;"
@@ -2098,6 +2098,825 @@ Optimize second.
 
 # 协程
 
+**Lua 协程（coroutine）可以理解为一种能够暂停，并在之后从暂停位置继续执行的执行流。**
 
+一个 coroutine 会保存自己的：
+
+```text
+调用栈
+局部变量
+当前执行位置
+```
+
+因此，coroutine.yield() 暂停后，再次 coroutine.resume(co) 并不是重新执行协程函数，而是从上一次暂停的位置继续执行。
+
+---
+
+## Coroutine 与 Closure
+
+闭包和协程都可以保存状态，但二者保存的东西不同：
+
+```text
+Closure
+    ↓
+函数 + 捕获的外部变量
+
+Coroutine
+    ↓
+完整的执行状态
+    ├── 调用栈
+    ├── 局部变量
+    └── 当前执行位置
+```
+
+例如闭包通常需要显式保存：
+
+```lua
+local i = 0
+```
+
+而 coroutine 可以直接暂停整个函数调用过程。因此 coroutine 特别适合：
+
+```text
+generator
+复杂 iterator
+producer-consumer
+异步流程
+事件驱动程序
+```
+
+---
+
+## Coroutine 与线程
+
+Lua 中：
+
+```lua
+type(coroutine.create(function() end))
+```
+
+返回：
+
+```
+"thread"
+```
+
+但这里的 `thread` 是 **Lua coroutine 对象**，并不是操作系统线程或 `pthread`。
+
+Lua coroutine 使用：**协作式调度（cooperative scheduling）**：也就是说，一个正在运行的 coroutine 不会像 OS 线程那样被调度器在任意位置抢占。
+
+控制权通常在以下情况交还出去：
+
+```text
+coroutine.yield()
+协程函数正常 return
+协程发生错误
+```
+
+因此：
+
+```text
+OS Thread
+    ↓
+通常由 OS 抢占式调度
+    ↓
+可能真正并行
+
+Lua Coroutine
+    ↓
+由程序主动控制切换
+    ↓
+单个 Lua state 中通常一次只运行一个 coroutine
+```
+
+所以：
+
+> **Coroutine 提供并发控制流，但本身不提供 CPU 并行。**
+
+如果某个 coroutine 长时间运行而不 `yield`：
+
+```text
+while true do
+    -- 一直计算
+end
+```
+
+其他 coroutine 就没有机会运行。
+
+---
+
+## 协程的基本使用
+
+### `coroutine.create`
+
+创建 coroutine：
+
+```lua
+local co = coroutine.create(function(...)
+    print("hello, coroutine")
+    print(...)
+end)
+```
+
+`create` 只是创建协程：
+
+```
+create
+  ↓
+suspended
+```
+
+并不会立即执行其中的函数。
+
+
+### `coroutine.resume`
+
+使用：
+
+```lua
+coroutine.resume(co, 1, 2, 3)
+```
+
+第一次 `resume` 时，额外参数会传递给 coroutine 的主函数：
+
+```lua
+local co = coroutine.create(function(a, b, c)
+    print(a, b, c)
+end)
+
+coroutine.resume(co, 1, 2, 3)
+```
+
+相当于：
+
+```
+resume(co, 1, 2, 3)
+          │
+          ▼
+function(1, 2, 3)
+```
+
+---
+
+## `resume` 与 `yield`
+
+### `yield` 暂停协程
+
+例如：
+
+```lua
+local co = coroutine.create(function()
+    print("A")
+
+    coroutine.yield()
+
+    print("B")
+end)
+```
+
+第一次：
+
+```
+coroutine.resume(co)
+```
+
+输出：
+
+```
+A
+```
+
+此时 coroutine 暂停在：
+
+```
+coroutine.yield()
+```
+
+再次：
+
+```
+coroutine.resume(co)
+```
+
+从 `yield` 后继续执行：
+
+```
+B
+```
+
+---
+
+## `resume` 与 `yield` 可以双向传递数据
+
+这是 coroutine 最重要的机制之一。
+
+### `yield` → `resume`
+
+
+```lua
+local co = coroutine.create(function()
+    coroutine.yield(100)
+end)
+
+print(coroutine.resume(co))  -- true    100
+```
+
+
+```text
+coroutine.yield(100)
+          │
+          ▼
+coroutine.resume(co)
+返回：
+true, 100
+```
+
+
+
+### `resume` → `yield`
+
+反过来：
+
+```lua
+local co = coroutine.create(function()
+    local x, y = coroutine.yield()
+
+    print(x, y)
+end)
+
+coroutine.resume(co)
+
+coroutine.resume(co, 10, 20)  --10, 20
+```
+
+---
+
+## `resume` 的返回值与错误处理
+
+`coroutine.resume` 的第一个返回值表示执行是否成功：
+
+```lua
+local ok, value = coroutine.resume(co)
+```
+
+成功：
+
+```
+true, ...
+```
+
+失败：
+
+```
+false, error
+```
+
+
+因此实际代码中应该注意检查：
+
+```lua
+local ok, value = coroutine.resume(co)
+
+if not ok then
+    error(value)
+end
+```
+
+---
+
+## Coroutine 状态
+
+可以使用：
+
+```lua
+coroutine.status(co)
+```
+
+查看状态。
+
+主要有：
+
+```text
+suspended
+    尚未启动，或者已经 yield
+
+running
+    当前正在运行
+
+normal
+    自己暂时没有运行，但它 resume 的另一个 coroutine 正在运行
+
+dead
+    已经正常结束，或者因为错误终止
+```
+
+`dead` coroutine 不能再次成功 `resume`。
+
+---
+
+## `coroutine.wrap`
+
+`coroutine.wrap` 可以把 coroutine 包装成一个普通函数：
+
+```lua
+local f = coroutine.wrap(function()
+    coroutine.yield(10)
+    coroutine.yield(20)
+
+    return 30
+end)
+
+print(f())    -- 10
+print(f())    -- 20
+print(f())    -- 30
+```
+
+可以理解为：
+
+```
+coroutine.create + coroutine.resume
+              ↓
+包装成普通函数调用形式
+```
+
+---
+
+## 生产者—消费者
+
+Coroutine 很适合 producer-consumer 模型。
+
+基本关系：
+
+```text
+consumer
+    │
+    │ resume
+    ▼
+producer
+    │
+    │ yield(data)
+    ▼
+consumer
+```
+
+可以先封装：
+
+```lua
+function send(x)
+    coroutine.yield(x)
+end
+
+function receive(prod)
+    local ok, value = coroutine.resume(prod)
+
+    if not ok then
+        error(value)
+    end
+
+    return value
+end
+```
+
+Producer：
+
+```lua
+function producer()
+    return coroutine.create(function()
+        while true do
+            local x = io.read()
+
+            if x == nil then
+                return
+            end
+
+            send(x)
+        end
+    end)
+end
+```
+
+Filter：
+
+```lua
+function filter(prod)
+    return coroutine.create(function()
+        local line = 1
+
+        while true do
+            local x = receive(prod)
+
+            if x == nil then
+                return
+            end
+
+            x = string.format("%5d %s", line, x)
+
+            line = line + 1
+
+            send(x)
+        end
+    end)
+end
+```
+
+Consumer：
+
+```lua
+function consumer(prod)
+    while true do
+        local x = receive(prod)
+
+        if x == nil then
+            return
+        end
+
+        print(x)
+    end
+end
+```
+
+连接：
+
+```lua
+consumer(filter(producer()))
+```
+
+形成：
+
+```
+producer
+    │
+    ▼
+ filter
+    │
+    ▼
+consumer
+```
+
+这种结构可以类比 Unix Pipeline：
+
+```
+producer | filter | consumer
+```
+
+但二者有本质区别：
+
+```text
+Unix pipeline
+    ↓
+通常由多个进程组成
+    ↓
+OS 可以并发调度
+
+Lua coroutine pipeline
+    ↓
+多个 coroutine
+    ↓
+通过 resume/yield 协作切换
+```
+
+---
+
+## Coroutine 作为 Iterator / Generator
+
+Coroutine 保存整个执行状态，因此很适合实现 iterator。
+
+例如：
+
+```lua
+function values(t)
+    return coroutine.wrap(function()
+        for i = 1, #t do
+            coroutine.yield(t[i])
+        end
+    end)
+end
+```
+
+使用：
+
+```lua
+for x in values({10, 20, 30}) do
+    print(x)
+end
+```
+
+执行过程：
+
+```
+for 调用 iterator
+      ↓
+resume coroutine
+      ↓
+yield(10)
+      ↓
+for 得到 10
+
+再次调用 iterator
+      ↓
+从 yield 后继续
+      ↓
+yield(20)
+      ↓
+for 得到 20
+```
+
+因此：
+
+```
+coroutine + yield
+        ↓
+generator
+```
+
+---
+
+## Coroutine 特别适合复杂 Iterator
+
+简单 iterator 可以用闭包保存：
+
+```
+local i = 0
+```
+
+但复杂遍历可能需要保存：
+
+```text
+递归调用栈
+当前节点
+遍历阶段
+多个局部变量
+```
+
+例如二叉树中序遍历：
+
+```lua
+function traverse(node)
+    if node == nil then
+        return
+    end
+
+    traverse(node.left)
+
+    coroutine.yield(node.value)
+
+    traverse(node.right)
+end
+```
+
+包装成 iterator：
+
+```lua
+function inorder(root)
+    return coroutine.wrap(function()
+        traverse(root)
+    end)
+end
+```
+
+使用：
+
+```lua
+for value in inorder(root) do
+    print(value)
+end
+```
+
+这里最大的好处是：
+
+> 遍历代码仍然可以按照正常递归逻辑编写。
+
+不需要手动维护：
+
+```
+stack
+current node
+state enum
+visited flag
+```
+
+因为：
+
+> **Coroutine 自己的调用栈就是遍历状态的一部分。**
+
+可以对比：
+
+```text
+Closure Iterator
+      ↓
+显式保存需要的状态
+
+Coroutine Generator
+      ↓
+整个暂停的执行过程就是状态
+```
+
+---
+
+## Event-Driven Programming
+
+Coroutine 与事件驱动程序结合非常重要。
+
+例如 Linux 网络程序：
+
+```
+non-blocking socket
+        +
+      epoll
+```
+
+传统事件驱动模型通常是：
+
+```
+epoll_wait
+    ↓
+I/O ready
+    ↓
+callback
+```
+
+业务逻辑可能被拆成很多 callback。
+
+我们真正希望编写的是：
+
+```lua
+local request = socket_read(client_fd)
+
+local response = handle(request)
+
+socket_write(client_fd, response)
+```
+
+看起来仍然是：
+
+```
+read
+ ↓
+process
+ ↓
+write
+```
+
+Coroutine 可以把异步等待隐藏起来。
+
+概念上：
+
+```lua
+function socket_read(fd)
+    -- 尝试非阻塞 read
+
+    -- 如果得到 EAGAIN：
+    -- 1. 向事件循环注册 fd 的 EPOLLIN
+    -- 2. 保存当前 coroutine
+    -- 3. 暂停当前 coroutine
+
+    coroutine.yield()
+
+    -- fd readable 后，
+    -- event loop 会 resume 当前 coroutine
+
+    return real_read(fd)
+end
+```
+
+真正的控制过程是：
+
+```
+Coroutine
+
+socket_read(fd)
+      ↓
+read 返回 EAGAIN
+      ↓
+注册 EPOLLIN
+      ↓
+yield
+      │
+      │
+      ▼
+Event Loop
+
+epoll_wait()
+      ↓
+处理其他 fd
+      ↓
+fd readable
+      ↓
+找到正在等待该 fd 的 coroutine
+      ↓
+resume(co)
+      │
+      ▼
+Coroutine
+
+从 yield 后继续
+      ↓
+read(fd)
+      ↓
+返回数据
+```
+
+所以必须注意：
+
+> `yield` **本身并不会自动等待 socket，也不会自动调用** `epoll` **。**
+
+真正完成调度的是：
+
+```
+event loop / coroutine scheduler
+```
+
+它需要维护类似：
+
+```
+fd → waiting coroutine
+```
+
+的关系。
+
+---
+
+## Coroutine 与 epoll 的职责
+
+可以这样理解：
+
+```
+epoll
+    ↓
+解决：
+“哪个 fd 已经 ready？”
+
+Coroutine
+    ↓
+解决：
+“等待这个 fd 的业务逻辑如何暂停，
+并在 ready 后从原位置继续？”
+
+Scheduler
+    ↓
+负责：
+把 epoll event 和对应 coroutine 连接起来
+```
+
+因此：
+
+```
+epoll
+      +
+coroutine
+      +
+scheduler
+      ↓
+异步底层 + 同步风格业务代码
+```
+
+这是 coroutine 在网络编程中非常重要的用途。
+
+---
+
+## Coroutine 适合什么，不适合什么？
+
+Coroutine 特别适合：
+
+```
+I/O 等待
+网络程序
+generator
+producer-consumer
+复杂 iterator
+事件驱动程序
+异步工作流
+状态机
+```
+
+但不应该把：
+
+```
+coroutine
+```
+
+理解成：
+
+```
+多核并行工具
+```
+
+例如一个 coroutine：
+
+```
+local co = coroutine.create(function()
+    expensive_cpu_task()
+end)
+```
+
+如果 `expensive_cpu_task()` 持续计算很久而不 `yield`：
+
+```
+其他 coroutine 一样无法运行
+```
+
+因此：
+
+> Coroutine 的主要价值是**管理控制流和并发任务**，而不是提供 CPU 并行能力。
 
 ---

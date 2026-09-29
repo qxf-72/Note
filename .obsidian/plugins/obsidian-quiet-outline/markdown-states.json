@@ -98,15 +98,15 @@
     "expandedKeys": []
   },
   "编程语言/Golang/Go语言圣经.md": {
-    "scroll": 3.1144032231083623,
+    "scroll": 0,
     "cursor": {
       "from": {
-        "line": 23,
-        "ch": 3
+        "line": 2,
+        "ch": 9
       },
       "to": {
-        "line": 23,
-        "ch": 3
+        "line": 2,
+        "ch": 9
       }
     },
     "expandedKeys": []
@@ -385,7 +385,7 @@
     "expandedKeys": []
   },
   "计算机基础/计算机网络/计算机网络.md": {
-    "scroll": 49.08064614572832,
+    "scroll": 0,
     "cursor": {
       "from": {
         "line": 0,
@@ -719,7 +719,7 @@
     "expandedKeys": []
   },
   "开发技能/并发编程/C++并发编程实战.md": {
-    "scroll": 39.13636363636363,
+    "scroll": 109.53177627979086,
     "cursor": {
       "from": {
         "line": 131,
@@ -949,14 +949,14 @@
     "expandedKeys": []
   },
   "编程语言/lua/Lua程序设计.md": {
-    "scroll": 1799.806949013158,
+    "scroll": 2077.4017954611218,
     "cursor": {
       "from": {
-        "line": 2100,
+        "line": 2098,
         "ch": 0
       },
       "to": {
-        "line": 2100,
+        "line": 2098,
         "ch": 0
       }
     },
@@ -1063,7 +1063,125 @@
     "expandedKeys": []
   },
   "开发技能/框架/skynet.md": {
-    "scroll": 354.7523074679905,
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "编程语言/Lua/Lua程序设计.md": {
+    "scroll": 2795.871400122549,
+    "cursor": {
+      "from": {
+        "line": 2820,
+        "ch": 52
+      },
+      "to": {
+        "line": 2820,
+        "ch": 52
+      }
+    },
+    "expandedKeys": [
+      "item-2-56"
+    ]
+  },
+  "开发技能/框架/skynet基础.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 22
+      },
+      "to": {
+        "line": 0,
+        "ch": 22
+      }
+    },
+    "expandedKeys": [
+      "item-2-0"
+    ]
+  },
+  "开发技能/框架/skynet 基础.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 22
+      },
+      "to": {
+        "line": 0,
+        "ch": 102
+      }
+    },
+    "expandedKeys": [
+      "item-2-0"
+    ]
+  },
+  "开发技能/调试工具/GDB入门.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 22
+      },
+      "to": {
+        "line": 0,
+        "ch": 102
+      }
+    },
+    "expandedKeys": []
+  },
+  "开发技能/框架/Skynet基础.md": {
+    "scroll": 171.88394639756945,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 14
+      },
+      "to": {
+        "line": 0,
+        "ch": 3
+      }
+    },
+    "expandedKeys": []
+  },
+  "开发技能/Unix/UNIX环境高级编程.md": {
+    "scroll": 1243.2612964527027,
+    "cursor": {
+      "from": {
+        "line": 2,
+        "ch": 3
+      },
+      "to": {
+        "line": 2,
+        "ch": 3
+      }
+    },
+    "expandedKeys": []
+  },
+  "开发技能/Unix/Ubuntu 使用记录.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "开发技能/数据库/未命名.md": {
+    "scroll": 92.52314453125,
     "cursor": {
       "from": {
         "line": 0,
