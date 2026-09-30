@@ -2,7 +2,7 @@
 
 Skynet 可以理解为一个基于 Actor 思想的服务器框架：
 
-**把业务拆成许多 Service，每个 Service 主要通过消息进行通信；底层使用多个 Worker 线程并行调度不同 Service，同时保证同一个 Service 的 callback 不会被多个线程并发执行。**
+**用一个较小的多线程消息调度核心，把业务拆成许多通过消息通信的 Service；框架保证同一个 Service 的消息处理串行化，而不同 Service 可以被多个 Worker 并行调度，再利用 Lua coroutine 把异步消息流程包装成容易编写的顺序业务代码。**
 
 > Actor 模型是一种**并发编程模型**。核心思想是把系统拆分成许多相对独立的 Actor，每个 Actor 管理自己的状态，通过**消息传递**进行通信，而不是让多个执行单元直接操作同一份共享状态。
 > 
@@ -10,14 +10,7 @@ Skynet 可以理解为一个基于 Actor 思想的服务器框架：
 > 
 > 这种模型可以把大量共享状态和锁竞争转化为消息传递问题，因此比较适合高并发和分布式系统。
 
-需要注意：
-
-**Actor 模型强调逻辑上的状态隔离，并不意味着 Skynet 中的 Service 具有 OS 进程级别的内存隔离。**
-
-Skynet 中的 Service 默认运行在同一个进程、同一个地址空间中。
-
-> 
-> **用一个较小的多线程消息调度核心，把业务拆成许多通过消息通信的 Service；框架保证同一个 Service 的消息处理串行化，而不同 Service 可以被多个 Worker 并行调度，再利用 Lua coroutine 把异步消息流程包装成容易编写的顺序业务代码。**
+**Actor 模型强调逻辑上的状态隔离，并不意味着 Skynet 中的 Service 具有 OS 进程级别的内存隔离。** Skynet 中的 Service 默认运行在同一个进程、同一个地址空间中。
 
 ---
 
@@ -77,6 +70,9 @@ Service
 
 而 RPC、数据编码、业务协议、跨机器通信等能力，可以建立在这个消息机制之上。
 
+
+> RPC 全称 **Remote Procedure Call，远程过程调用**。RPC 是一种“如何向远程服务发请求并获得结果”的通信抽象。RPC 框架会把通信细节包装起来，使其看起来像是函数调用。
+
 ---
 
 ## 多线程 + Service
@@ -123,9 +119,7 @@ Lua State
 
 ### Lua State
 
-`Lua State` 可以理解为一套相对独立的 Lua 虚拟机运行环境。
-
-它维护 Lua 程序运行所需要的大量状态，例如：
+`Lua State` 可以理解为一套相对独立的 Lua 虚拟机运行环境。它维护 Lua 程序运行所需要的大量状态，例如：
 - Lua 栈
 - 全局变量
 - registry
@@ -168,7 +162,7 @@ size_t size
 
 但是这样需要非常小心地管理：
 
-```
+```text
 数据生命周期
 所有权
 什么时候释放
@@ -177,7 +171,7 @@ size_t size
 
 因此 Skynet 默认采用更安全的方案。普通情况下可以粗略理解为：
 
-```
+```text
 发送方数据
     ↓
 skynet_send
@@ -193,7 +187,7 @@ Skynet free
 
 Skynet 也提供 `PTYPE_TAG_DONTCOPY`：
 
-```
+```text
 PTYPE_TAG_DONTCOPY
         ↓
 不复制数据
@@ -220,7 +214,7 @@ struct skynet_message {
 
 这里主要包含：
 
-```
+```text
 source
   │
   └── 谁发送的
@@ -266,7 +260,7 @@ A ─────message────→ B
 
 例如：
 
-```
+```text
 Service A                     Service B
 
 request
@@ -304,9 +298,7 @@ session = 100
 
 就知道这个响应属于之前的哪个请求。
 
-因此：
-
-**session 本质上解决的是异步消息环境中的请求—响应匹配问题。**
+因此： **session 本质上解决的是异步消息环境中的请求—响应匹配问题。**
 
 ---
 
@@ -316,11 +308,9 @@ session = 100
 
 > **当前消息使用哪一组通信协议。**
 
-而不仅仅是普通意义上的“消息类别”。
+而不仅仅是普通意义上的“消息类别”。不同消息可能使用：
 
-例如不同消息可能使用：
-
-```
+```text
 TEXT
 RESPONSE
 CLIENT
@@ -351,17 +341,9 @@ Service / Protocol B
 另一种编码方式
 ```
 
-底层利用：
+底层利用 type 区分使用哪种协议进行处理。
 
-```
-type
-```
-
-区分使用哪种协议进行处理。
-
-这体现了 Skynet 的一个重要设计思想：
-
-**底层提供机制，但尽量不强制上层采用统一策略。**
+这体现了 Skynet 的一个重要设计思想：**底层提供机制，但尽量不强制上层采用统一策略。**
 
 ---
 
@@ -1101,15 +1083,6 @@ Skynet 中可能同时存在大量 Service，但真正执行 Service 代码的 W
 多核 CPU
 ```
 
-例如：
-
-```
-10000 个 Service
-
-       ↓ 调度
-
-8 个 Worker Thread
-```
 
 如果某个 Service 直接执行阻塞式网络 IO：
 
@@ -1671,7 +1644,7 @@ bootstrap = "snlua bootstrap"
 
 > **承载 Lua Service 的底层 C Service。**
 
-Lua Service 本身最终运行在 Lua VM / Lua State 中，而 `snlua` 负责创建这个 Lua 环境并加载对应的 Lua 文件。
+Lua Service 本身最终运行在 Lua VM / Lua State 中，而 **`snlua` 负责创建这个 Lua 环境并加载对应的 Lua 文件**。
 
 可以粗略理解为：
 
@@ -2202,10 +2175,160 @@ bootstrap 完成初始化
 
 <br/>
 
+# [Config](https://github.com/cloudwu/skynet/wiki/Config)
+
+这篇 **Config** 主要讲的是：**Skynet 的配置文件怎么写，以及各个配置项分别控制什么。**
+
+
+## Config 本质上是一段 Lua 代码
+
+
+启动 skynet 的命令：
+
+```bash
+./skynet config
+```
+
+这里的 config 并不是简单的配置文件，而是一段 Lua 代码，所以使用 Lua 的变量和字符串拼接，而不只是简单的静态键值对。
+
+
+---
+
+## Config 最重要的机制：env
+
+
+Skynet 启动时会读取它自己需要的配置项。暂时没有直接使用的配置项，会以**字符串形式**保存在 Skynet 内部的：env。
+
+Lua Service 可以通过：
+
+```lua
+skynet.getenv("xxx")
+```
+
+读取。
+
+例如配置：
+
+```
+mysql_host = "127.0.0.1"
+mysql_port = 3306
+```
+
+业务 Service 可以：
+
+```
+local skynet = require "skynet"
+
+local host = skynet.getenv("mysql_host")
+```
+
+---
+
+<br/>
+
+
+<br/>
+
+
+
+
 # [LuaAPI](https://github.com/cloudwu/skynet/wiki/LuaAPI)
 
+这部分讲述一个 Lua Service 如何启动、如何找到其他 Service、如何收发消息、如何 RPC、如何使用 coroutine/定时器，以及如何退出和调试。
+
+## Lua Service 到底是什么？
+
+Skynet 本身使用 C 编写，理论上 Service 可以直接使用 C 实现。Skynet 提供了一个 C Service——snlua：
+
+```text
+snlua
+  ↓
+创建 Lua VM / Lua State
+  ↓
+加载某个 .lua 文件
+  ↓
+形成 Lua Service
+```
+
+Lua Service 中通常第一行就是：
+
+```lua
+local skynet = require "skynet"
+```
+
+这里的 `skynet` 模块**不能脱离 Skynet 单独用普通 Lua 解释器运行**，因为每个 Skynet Service 都依赖底层的 `skynet_context`。
 
 
+每个 skynet 服务，最重要的职责就是处理别的服务发送过来的消息，以及向别的服务发送消息。每条 skynet 消息由五个元素构成：
+- session：一个非负整数，使用 0 这个特殊号码代表一条消息不需要回应。
+- source：每个服务由一个 32 位整数标识，新的启动的服务不会使用已用过的地址。
+- type：消息类别。最常用的消息类别“lua”，广泛用于 skynet 服务间通讯。
+- message：消息都 C 指针，在 Lua 层看来是一个 lightuserdata。
+- size：消息长度。
+
+---
+
+## 服务地址
+
+每个服务都有一个 32 bit 的数字地址，这个地址的高 8 bit 表明了它所属的节点。
+
+- `skynet.self()` 用于获得服务自己的地址。
+- `skynet.harbor()` 用于获得服务所属的节点。
+- `skynet.address(address)` 用于把一个地址数字转换为一个可用于阅读的字符串。
+- `skynet.register(name)` 可以为自己注册一个别名。（别名必须在 16 个字符以内）
+- `skynet.name(name, address)` 为一个地址命名。`skynet.name(name, skynet.self())` 和 `skynet.register(name)` 功能等价。
+
+
+**本地名字**：以 `.` 开头，只在当前 Skynet Node 中有效。
+- `skynet.localname()`：查询地址。
+
+**全局名字**：以普通字母开头。
+
+
+---
+
+## 消息分发和回应
+
+注册消息处理函数：
+
+```lua
+local CMD = {}
+
+function CMD.hello(name)
+    print("hello", name)
+end
+
+skynet.dispatch("lua", function(session, source, cmd, ...)
+    local f = assert(CMD[cmd])
+    f(...)
+end)
+```
+
+当其他 Service 可以发送：
+
+```lua
+skynet.send(addr, "lua", "hello", "xiaofeng")
+```
+
+**每收到一条消息，Skynet Lua 层会用一个独立 coroutine 来处理**。
+
+
+
+---
+
+
+## 消息的序列化
+
+
+---
+
+
+## 消息推送和远程调用
+
+
+---
+
+## 服务的启动和退出
 
 
 
