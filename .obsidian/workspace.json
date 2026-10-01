@@ -4,44 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "ad6ebae9bc1d6367",
+        "id": "b4ce88ef63bb761f",
         "type": "tabs",
         "children": [
           {
-            "id": "9ae13f3b7328d529",
+            "id": "0e93de2b59f4ca43",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发技能/框架/Skynet基础.md",
+                "file": "开发技能/数据库/Redis入门.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Skynet基础"
-            },
-            "group": "e33576d6da536737"
-          }
-        ]
-      },
-      {
-        "id": "8c9721fb93515867",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "501b3b9882498e14",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "开发技能/框架/Skynet基础.md",
-                "mode": "source",
-                "source": true
-              },
-              "icon": "lucide-file",
-              "title": "Skynet基础"
-            },
-            "group": "e33576d6da536737"
+              "title": "Redis入门"
+            }
           }
         ]
       }
@@ -102,8 +80,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 331.5,
-    "collapsed": true
+    "width": 331.5
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -252,34 +229,34 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "501b3b9882498e14",
+  "active": "47429757a8453eb8",
   "lastOpenFiles": [
+    "编程语言/Lua/Lua程序设计.md",
+    "开发技能/数据库/Redis入门.md",
+    "开发技能/框架/Skynet入门.md",
+    "开发技能/数据库/MongoDB入门.md",
+    "开发技能/Unix/Ubuntu 使用记录.md",
+    "开发技能/Unix/Git入门.md",
+    "开发技能/Unix/鸟哥的Linux私房菜.md",
     "其他/机器人操作系统.md",
     "开发技能/Unix/Vim入门.md",
     "开发技能/调试工具/Valgrind入门.md",
     "开发技能/调试工具/GDB入门.md",
     "README.md",
-    "开发技能/框架/Skynet基础.md",
-    "开发技能/数据库/MongoDB入门.md",
     "开发技能/构建工具/CMake入门.md",
     "计算机基础/计算机网络/计算机网络.md",
     "计算机基础/操作系统原理/王道 操作系统.md",
     "开发技能/并发编程/Linux多线程服务端编程.md",
     "开发技能/构建工具/跟我一起写Makefile.md",
-    "未命名.md",
     "开发技能/并发编程/C++并发编程实战.md",
-    "开发技能/Unix/Ubuntu 使用记录.md",
     "开发技能/Unix/UNIX环境高级编程.md",
     "编程语言/Golang/Go语言圣经.md",
-    "编程语言/Lua/Lua程序设计.md",
     "编程语言/C++/候捷C++面向对象高级编程.md",
     "编程语言/C++/C++ Primer.md",
     "编程语言/C++/Effective C++.md",
     "编程语言/C++/C++面试.md",
     "编程语言/C++/Effective Modern C++.md",
     "计算机基础/操作系统原理/操作系统导论.md",
-    "计算机基础/计算机组成原理/汇编语言.md",
-    "计算机基础/计算机组成原理/计算机组成原理.md",
     "开发技能/框架",
     "编程语言/Lua",
     "482743F2FD33B7CE58A9F431F7FC20D3 1.png",

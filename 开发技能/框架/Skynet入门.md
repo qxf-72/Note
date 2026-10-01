@@ -2234,11 +2234,13 @@ local host = skynet.getenv("mysql_host")
 
 # [LuaAPI](https://github.com/cloudwu/skynet/wiki/LuaAPI)
 
-这部分讲述一个 Lua Service 如何启动、如何找到其他 Service、如何收发消息、如何 RPC、如何使用 coroutine/定时器，以及如何退出和调试。
+这一部分主要讲述：**一个 Lua Service 如何启动、如何定位其他 Service、如何收发消息和进行 RPC、如何使用 coroutine 和定时器，以及如何退出和调试。**
+
+---
 
 ## Lua Service 到底是什么？
 
-Skynet 本身使用 C 编写，理论上 Service 可以直接使用 C 实现。Skynet 提供了一个 C Service——snlua：
+Skynet 框架本身主要使用 C 编写，Service 也可以直接使用 C 实现。Skynet 提供了一个 C Service —— `snlua`：
 
 ```text
 snlua
@@ -2256,40 +2258,140 @@ Lua Service 中通常第一行就是：
 local skynet = require "skynet"
 ```
 
-这里的 `skynet` 模块**不能脱离 Skynet 单独用普通 Lua 解释器运行**，因为每个 Skynet Service 都依赖底层的 `skynet_context`。
+这里的 `skynet` 模块**不能脱离 Skynet，直接使用普通 Lua 解释器运行**，因为每个 Skynet Service 都依赖底层的 `skynet_context` C 对象，该对象由 `snlua` 注入 Lua VM。
 
+每个 Skynet Service 最重要的职责就是：
 
-每个 skynet 服务，最重要的职责就是处理别的服务发送过来的消息，以及向别的服务发送消息。每条 skynet 消息由五个元素构成：
-- session：一个非负整数，使用 0 这个特殊号码代表一条消息不需要回应。
-- source：每个服务由一个 32 位整数标识，新的启动的服务不会使用已用过的地址。
-- type：消息类别。最常用的消息类别“lua”，广泛用于 skynet 服务间通讯。
-- message：消息都 C 指针，在 Lua 层看来是一个 lightuserdata。
-- size：消息长度。
+```
+接收其他 Service 的消息
+        ↓
+处理消息
+        ↓
+向其他 Service 发送消息
+```
 
----
+一条 Skynet 消息主要由五个元素构成：
 
-## 服务地址
+- `session`：请求—响应匹配标识，由请求方生成并由 Skynet 管理。按惯例，`session = 0` 表示这条消息不需要回应。
+    
+- `source`：消息来源 Service 的地址。每个 Service 使用一个 32 bit 整数标识。Service 退出后，新 Service 通常不会立即复用这个地址，除非地址空间发生回绕。
+    
+- `type`：消息类别。一个 Service 最多可以接收 256 种消息类别，不同类别可以使用不同的编码方式。最常用的是 `"lua"`。
+    
+- `message`：底层消息数据的 C 指针，在 Lua 层表现为 `lightuserdata`。
+    
+- `size`：消息数据长度。
+    
 
-每个服务都有一个 32 bit 的数字地址，这个地址的高 8 bit 表明了它所属的节点。
-
-- `skynet.self()` 用于获得服务自己的地址。
-- `skynet.harbor()` 用于获得服务所属的节点。
-- `skynet.address(address)` 用于把一个地址数字转换为一个可用于阅读的字符串。
-- `skynet.register(name)` 可以为自己注册一个别名。（别名必须在 16 个字符以内）
-- `skynet.name(name, address)` 为一个地址命名。`skynet.name(name, skynet.self())` 和 `skynet.register(name)` 功能等价。
-
-
-**本地名字**：以 `.` 开头，只在当前 Skynet Node 中有效。
-- `skynet.localname()`：查询地址。
-
-**全局名字**：以普通字母开头。
-
+通常业务代码不需要直接操作 `message + size`，因为协议的 `unpack` 会把底层数据转换成 Lua 对象。
 
 ---
 
-## 消息分发和回应
+## Service 地址
 
-注册消息处理函数：
+每个 Service 都有一个 32 bit 数字地址。在 LuaAPI 描述的旧式 Harbor 多节点模型中：
+
+```text
+┌──────────┬──────────────────────┐
+│ 高 8 bit │      低 24 bit      │
+│ 节点编号 │   Service Handle     │
+└──────────┴──────────────────────┘
+```
+
+常用 API：
+
+```lua
+skynet.self()
+```
+
+获得当前 Service 自己的地址。
+
+```lua
+skynet.harbor()
+```
+
+获得当前 Service 所属的节点编号。
+
+```lua
+skynet.address(address)
+```
+
+把数字地址转换成方便阅读的字符串形式。
+
+### Service 名字
+
+以下 API 属于 `skynet.manager` 扩展接口，使用前需要：
+
+```lua
+require "skynet.manager"
+```
+
+给当前 Service 注册名字：
+
+```lua
+skynet.register(name)
+```
+
+名字不能超过 16 个字符。
+
+给指定 Service 地址命名：
+
+```lua
+skynet.name(name, address)
+```
+
+因此：
+
+```lua
+skynet.name(name, skynet.self())
+```
+
+与：
+
+```lua
+skynet.register(name)
+```
+
+功能基本等价。
+
+名字分为两种:
+
+**本地名字**以 `.` 开头：
+
+```
+.database
+.launcher
+```
+
+只在当前 Skynet Node 内有效。
+
+可以通过：
+
+```
+skynet.localname(".database")
+```
+
+查询对应地址。
+
+`skynet.localname(name)` 是一个**非阻塞 API**。
+
+**全局名字**以普通字母开头，在旧 Harbor 多节点模型中可以用于跨节点通信。不过不建议过度依赖全局名字。通常更推荐在业务层交换并保存 Service 的数字地址。
+
+---
+
+## 消息协议与分发
+
+### `skynet.dispatch`
+
+注册某种消息类型的处理函数：
+
+```lua
+skynet.dispatch(type, function(session, source, ...)
+    ...
+end)
+```
+
+最常见的是 `"lua"`：
 
 ```lua
 local CMD = {}
@@ -2304,31 +2406,1167 @@ skynet.dispatch("lua", function(session, source, cmd, ...)
 end)
 ```
 
-当其他 Service 可以发送：
+其他 Service 可以发送：
 
 ```lua
 skynet.send(addr, "lua", "hello", "xiaofeng")
 ```
 
-**每收到一条消息，Skynet Lua 层会用一个独立 coroutine 来处理**。
+然后接收方执行：
 
+```text
+"hello"
+   ↓
+CMD["hello"]
+   ↓
+CMD.hello("xiaofeng")
+```
 
+这种 `CMD[cmd]` 写法只是 Skynet 中非常常见的惯例，并不是框架强制规定。
+
+### 消息协议
+
+Skynet 还允许通过：
+
+```lua
+skynet.register_protocol {
+    ...
+}
+```
+
+注册新的消息协议。
+
+每种协议最重要的是提供：
+
+```text
+pack
+  ↓
+Lua 数据 → 消息数据
+
+unpack
+  ↓
+消息数据 → Lua 数据
+```
+
+通常业务开发直接使用 Skynet 已经注册好的 `"lua"` 协议即可。
 
 ---
 
+## 每条消息由独立 coroutine 处理
+
+每收到一条消息，Skynet Lua 层都会使用一个独立 coroutine 处理：
+
+```text
+Message A → Coroutine A
+
+Message B → Coroutine B
+
+Message C → Coroutine C
+```
+
+但是同一个 Lua Service 中：
+
+```text
+Coroutine A
+Coroutine B
+Coroutine C
+```
+
+**不会真正多线程并行运行。**
+
+同一个 Lua State 在任意时刻只有一条 coroutine 真正在执行。
+
+不过当 Coroutine A 调用了可能阻塞的 Skynet API：
+
+```text
+Coroutine A
+    ↓
+skynet.call()
+    ↓
+yield
+
+Coroutine B
+    ↓
+开始处理另一条消息
+```
+
+Service 就可能发生**业务逻辑重入**。
+
+因此：
+
+> Lua Service 通常不需要考虑传统意义上的线程数据竞争，但必须注意 coroutine yield 后发生的逻辑并发问题。
+
+---
+
+## 消息的回应
+
+如果其他 Service 使用：
+
+```lua
+skynet.call(...)
+```
+
+请求当前 Service，当前 Service 通常需要发送回应。
+
+可以使用：
+
+```lua
+skynet.ret(skynet.pack(result))
+```
+
+过程可以理解为：
+
+```text
+当前 request
+
+session + source
+      │
+      ▼
+skynet.ret(...)
+      │
+      ▼
+自动使用当前 session
+      │
+      ▼
+发送 RESPONSE 给 source
+```
+
+常见写法：
+
+```lua
+skynet.dispatch("lua", function(session, source, cmd, ...)
+    local f = assert(CMD[cmd])
+
+    skynet.ret(
+        skynet.pack(f(...))
+    )
+end)
+```
+
+需要注意：
+
+**对于同一个消息处理 coroutine，** `**skynet.ret**` **只能调用一次。**
+
+如果暂时不能立即回应，可以使用：
+
+```lua
+local response = skynet.response()
+```
+
+保存一个回应闭包。
+
+以后：
+
+```lua
+response(true, result)
+```
+
+发送正常响应。
+
+也可以：
+
+```lua
+response(false)
+```
+
+通知调用方该请求失败。
+
+因此：
+
+```text
+skynet.ret
+   ↓
+当前 coroutine 立即回应
+
+
+skynet.response
+   ↓
+保存回应能力
+   ↓
+未来在其他 coroutine 中回应
+```
+
+`skynet.ret` 和 `skynet.response` 都是**非阻塞 API**。
+
+如果收到 `session ~= 0` 的请求，但明确不准备回应，可以使用：
+
+```lua
+skynet.ignoreret()
+```
+
+告诉框架忽略这次响应，否则 Skynet 可能记录未响应请求的日志。
+
+---
 
 ## 消息的序列化
 
+Skynet 的 `"lua"` 协议默认使用：
+
+```lua
+skynet.pack(...)
+skynet.unpack(...)
+```
+
+序列化 Lua 数据。
+
+例如：
+
+```lua
+local msg, size = skynet.pack({
+    name = "Felix",
+    level = 10,
+})
+```
+
+返回：
+
+```text
+lightuserdata + size
+```
+
+也就是一块连续的底层内存及其长度。
+
+反序列化：
+
+```lua
+local data = skynet.unpack(msg, size)
+```
+
+如果不是直接把数据交给 Skynet 消息框架，而只是希望序列化成 Lua 字符串，可以使用：
+
+```lua
+local data = skynet.packstring(...)
+```
+
+区别可以简单理解为：
+
+```text
+skynet.pack
+    ↓
+lightuserdata + size
+
+
+skynet.packstring
+    ↓
+Lua string
+```
+
+`skynet.unpack` 两种形式都可以处理。
+
+默认序列化支持：
+
+```text
+string
+boolean
+number
+lightuserdata
+table
+```
+
+但对带复杂 metatable / metamethod 的 Lua 对象支持有限。
+
+需要注意：
+
+**并不是所有 Service 间通信都必须使用** `skynet.pack` **。**
+
+Skynet 的消息协议可以自定义，只是 `"lua"` 协议通常使用 `pack/unpack`。
+
+---
+
+## 消息推送与 RPC
+
+### `skynet.send`
+
+```lua
+skynet.send(address, "lua", ...)
+```
+
+用于发送一条消息，但**不等待回应**。
+
+```
+Service A
+    │
+    │ send
+    ▼
+Service B
+
+
+Service A
+继续执行
+```
+
+因此它是：
+
+```
+异步
+单向
+非阻塞
+```
+
+而且 `send` 本身不会产生 yield，所以当前 coroutine 在 `send` 调用期间不会因为这个 API 发生重入。
+
+
+
+### `skynet.call`
+
+需要等待对方返回结果时：
+
+```lua
+local result = skynet.call(address, "lua", ...)
+```
+
+过程类似：
+
+```text
+Service A
+
+生成 session
+     ↓
+发送 request
+     ↓
+当前 coroutine yield
+     ↓
+
+Service B
+     ↓
+处理请求
+     ↓
+response
+
+Service A
+     ↓
+根据 session 找回 coroutine
+     ↓
+resume
+```
+
+因此从业务代码来看非常像RPC
+
+但要特别注意：
+
+`skynet.call` **阻塞的是当前 coroutine，而不是整个 Service，更不是 Worker Thread。**
+
+等待响应时，当前 Service 仍然可以处理其他消息。
+
+所以：
+
+```lua
+local old = state
+
+local result = skynet.call(...)
+
+-- coroutine 恢复到这里
+```
+
+恢复以后：
+
+```text
+state
+```
+
+可能已经被其他 coroutine 修改。
+
+还有一个重要限制：
+
+> `skynet.call` **本身没有内建超时机制。**
+
+如果对方一直不回应，当前 coroutine 就会一直等待，需要业务层自己实现超时控制。
+
+### 常用消息 API
+
+|API|是否等待结果|当前 coroutine|
+|---|---|---|
+| `skynet.send` |否|继续运行|
+| `skynet.call` |是|yield|
+| `skynet.ret` |返回结果|不阻塞|
+| `skynet.response` |延迟返回|不阻塞|
+
+可以简单理解为：
+
+```text
+send
+  ≈
+单向消息
+
+
+call
+  ≈
+RPC 调用
+
+
+ret / response
+  ≈
+RPC 返回
+```
+
+---
+
+## Service 的启动和退出
+
+### `skynet.start`
+
+每个 Lua Service 都必须注册启动函数：
+
+```lua
+skynet.start(function()
+    ...
+end)
+```
+
+Lua 文件顶层代码仍然会先执行：
+
+```lua
+local skynet = require "skynet"
+
+-- 顶层代码先执行
+
+skynet.start(function()
+    -- Service 正式初始化
+end)
+```
+
+但是：
+
+**不要在** `**skynet.start**` **外部调用 Skynet 的阻塞 API。**
+
+因为此时框架还无法正确唤醒被挂起的 coroutine。
+
+
+### `skynet.init`
+
+如果某个 Lua 库需要在 `start` 之前执行初始化逻辑，可以：
+
+```lua
+skynet.init(function()
+    ...
+end)
+```
+
+它尤其适合库代码注册初始化任务。
+
+
+### `skynet.newservice`
+
+创建新的 Lua Service：
+
+```lua
+local addr = skynet.newservice("foobar")
+```
+
+Skynet 会寻找：
+
+```text
+foobar.lua
+```
+
+并创建一个新的 Lua Service。
+
+它是一个**阻塞 API**：
+
+```
+Service A
+
+newservice("foobar")
+       ↓
+创建 foobar Service
+       ↓
+执行 foobar 的 start
+       ↓
+start 返回
+       ↓
+newservice 返回地址
+```
+
+所以不要在新 Service 的 `start` 中写：
+
+```lua
+while true do
+    ...
+end
+```
+
+否则 `newservice` 永远不会返回。
+
+如果 Service 初始化失败，`newservice` 会抛出异常。
+
+另外需要注意：
+
+```lua
+skynet.newservice("foo", arg1, arg2)
+```
+
+这些启动参数底层实际上是通过**字符串拼接和拆分**传递的，因此不适合传递复杂 Lua 对象。
+
+更推荐：
+
+```lua
+local foo = skynet.newservice("foo")
+
+skynet.call(foo, "lua", "start", complex_config)
+```
+
+也就是：
+
+```text
+先创建 Service
+      ↓
+获得地址
+      ↓
+再通过消息进行正式初始化
+```
+
+---
+
+## UniqueService
+
+同一个 Lua 文件可以启动多次：
+
+```text
+foo.lua
+  ↓
+Service A
+
+foo.lua
+  ↓
+Service B
+```
+
+两个 Service 地址不同。
+
+如果希望同名 Service 在一个 Skynet Node 中只存在一个实例，可以使用：
+
+```lua
+local addr = skynet.uniqueservice("foobar")
+```
+
+和 `newservice` 不同：
+
+> 同一个名字的 Service 在同一个 Skynet Node 中只会启动一次。
+
+如果该 Service：
+
+```text
+已经启动
+或
+正在启动
+```
+
+后续调用：
+
+```lua
+skynet.uniqueservice("foobar")
+```
+
+都会得到第一次创建的那个 Service 地址。
+
+`uniqueservice` 使用**惰性初始化**：
+
+```
+第一次调用
+    ↓
+真正创建 Service
+```
+
+如果明确知道某个 UniqueService 应该已经存在，可以通过：
+
+```lua
+skynet.queryservice("foobar")
+```
+
+查询它。
+
+如果还没有启动，`queryservice` 会等待它启动。
+
+---
+
+## Service 退出
+
+当前 Service 主动退出：
+
+```lua
+skynet.exit()
+```
+
+调用以后：
+
+```text
+当前 Service
+   ↓
+停止运行
+```
+
+而且当前 Service 中仍处于等待状态的 coroutine 也会被中断。
+
+因此调用 `skynet.exit()` 时要注意尚未完成的 RPC。
+
+还可以通过：
+
+```lua
+skynet.kill(address)
+```
+
+强制关闭其他 Service。
+
+但**不推荐这样做**。
+
+更合理的方式是：
+
+```text
+Service A
+   │
+   │ 发送 exit 消息
+   ▼
+Service B
+   │
+   ├── 保存状态
+   ├── 清理资源
+   └── skynet.exit()
+```
+
+让 Service 自己完成有序退出。
+
+---
+
+## 时间与 coroutine
+
+Skynet 内部时钟精度为：
+
+```text
+1 / 100 秒
+=
+10 ms
+```
+
+### 时间 API
+
+`skynet.now()`
+
+返回 Skynet 节点内部时钟值，单位是 `1/100 s`。
+
+这个数值本身不表示真实 UTC 时间，主要用于：
+
+```
+两次 now() 的差值
+        ↓
+计算经过时间
+```
+
+
+`skynet.starttime()`
+
+返回 Skynet Node 进程启动时的 UTC 时间，单位为秒。
+
+
+`skynet.time()`
+
+返回当前 UTC 时间，单位为秒，精度约为小数点后两位。
+
+近似：
+
+```
+skynet.now() / 100 + skynet.starttime()
+```
+
+
+`skynet.hpc()`
+
+提供高精度计时，适合性能分析，返回纳秒级的 64 位计数值。
+
+
+## `skynet.sleep`
+
+```lua
+skynet.sleep(ti)
+```
+
+将当前 coroutine 挂起 `ti` 个时间单位。
+
+例如：
+
+```lua
+skynet.sleep(100)
+```
+
+表示大约：
+
+```text
+1 秒
+```
+
+过程：
+
+```text
+当前 coroutine
+       ↓
+注册 timer
+       ↓
+yield
+       ↓
+Worker 执行其他任务
+       ↓
+timer 到期
+       ↓
+resume
+```
+
+注意：
+
+> **sleep 的只是当前 coroutine，不是整个 Service。**
+
+另外，`sleep` 也可能被：
+
+```lua
+skynet.wakeup(...)
+```
+
+提前唤醒。
+
+这种情况下它会返回：
+
+```text
+"BREAK"
+```
+
+---
+
+## `skynet.timeout`
+
+如果希望：
+
+> 一段时间后执行某个函数，但当前 coroutine 不等待。
+
+可以：
+
+```lua
+skynet.timeout(100, function()
+    print("1 second later")
+end)
+```
+
+过程：
+
+```text
+当前 coroutine
+     │
+timeout()
+     │
+     └──────────────→ 继续执行
+
+
+1 秒以后
+     ↓
+新的 coroutine
+     ↓
+执行 callback
+```
+
+所以：
+
+```text
+sleep
+  ↓
+当前 coroutine 等待
+
+
+timeout
+  ↓
+当前 coroutine 不等待
+未来启动 coroutine 执行函数
+```
+
+---
+
+## `skynet.fork`
+
+创建一个新的 Lua coroutine：
+
+```lua
+skynet.fork(function()
+    ...
+end)
+```
+
+从功能上类似：
+
+```lua
+skynet.timeout(0, function()
+    ...
+end)
+```
+
+但 `fork` 不需要向框架注册 timer，因此更加高效。
+
+注意：
+
+```text
+skynet.fork
+≠
+pthread_create
+```
+
+它创建的是：
+
+```text
+Lua coroutine
+```
+
+而不是 OS Thread。
+
+---
+
+## `skynet.wait / skynet.wakeup`
+
+挂起当前 coroutine：
+
+```lua
+skynet.wait(token)
+```
+
+另一个 coroutine 可以：
+
+```lua
+skynet.wakeup(token)
+```
+
+将它唤醒。
+
+过程：
+
+```text
+Coroutine A
+
+wait(token)
+    ↓
+yield
+
+
+Coroutine B
+
+wakeup(token)
+    ↓
+
+
+Coroutine A
+    ↓
+resume
+```
+
+`token` 必须能够唯一标识等待者；默认可以使用当前 coroutine。
+
+`wakeup` 也可以唤醒通过 `skynet.sleep` 挂起的 coroutine。
+
+---
+
+## `skynet.yield`
+
+如果需要主动交出执行权：
+
+```lua
+skynet.yield()
+```
+
+相当于：
+
+```lua
+skynet.sleep(0)
+```
+
+适合：
+
+```text
+长时间计算
+    ↓
+中间没有阻塞 API
+    ↓
+主动 yield
+    ↓
+让其他任务获得执行机会
+```
+
+---
+
+## 日志与消息跟踪
+
+业务 Service 一般使用：
+
+```lua
+skynet.error("hello skynet")
+```
+
+写入 Skynet 日志。
+
+相比：
+
+```lua
+print(...)
+```
+
+它可以统一交给 Skynet 的 logger Service 管理。
+
+### `skynet.trace`
+
+```lua
+skynet.trace()
+```
+
+可以开启当前消息处理流程的调用链跟踪。
+
+例如：
+
+```
+Service A
+    ↓ call
+Service B
+    ↓ call
+Service C
+```
+
+这些消息可以通过同一个 trace tag 联系起来，对于排查复杂 RPC 调用链很有帮助。
+
+---
+
+## `skynet.manager`
+
+有一些偏底层、普通业务 Service 很少使用的 API，被放在：
+
+```lua
+require "skynet.manager"
+```
+
+中。
+
+包括：
+
+```text
+skynet.launch
+skynet.kill
+skynet.abort
+skynet.register
+skynet.name
+skynet.forward_type
+skynet.filter
+skynet.monitor
+```
+
+这些 API 更多用于：
+
+```
+Skynet 基础设施
+Service 管理
+消息转发
+系统监控
+```
+
+普通业务开发阶段不需要重点掌握。
 
 ---
 
 
-## 消息推送和远程调用
+<br/>
+
+
+<br/>
+
+# [Coroutine](https://github.com/cloudwu/skynet/wiki/Coroutine)
+
+这部分主要讲述在 Skynet Service 里，为什么不能随便使用 Lua 原生 `coroutine.create/resume/yield`，以及如果真的需要“自己再套一层 coroutine”，应该怎么做。
+
+## 使用 C++理解 Service
+
+可以把一个 Lua Service 想成：
+
+```text
+一个 Service
+   │
+   ├── 一个 Lua State
+   │
+   └── 很多个 coroutine
+           │
+           ├── 处理消息 A
+           ├── 处理消息 B
+           └── skynet.fork(...)
+```
+
+这些 coroutine 类似于用户态任务，而不是 std::thread/pthread，真正的线程调度在 Skynet 底层。
+
+---
+
+## 为何不能直接使用 Lua 原生 coroutine？
+
+```lua
+coroutine.create()
+coroutine.resume()
+coroutine.yield()
+```
+
+**不要和 skynet 的阻塞 API 混用**。因为 skynet 本身就是靠 `coroutine.yield` 来实现阻塞 API 的。
+
+当前 `skynet.lua` 的实现正是维护 `session_id_coroutine` 映射，在 `call` 时挂起，Response 到来后再恢复对应 coroutine。
+
+这时候如果套一个原生 coroutine，如下：
+
+```lua
+local co = coroutine.create(function()
+    local r = skynet.call(db, "lua", "query")
+    print(r)
+end)
+
+coroutine.resume(co)
+```
+
+实际调用栈为：
+
+```text
+Skynet 管理的 coroutine A
+        │
+        │ coroutine.resume
+        ▼
+   你创建的 coroutine B
+        │
+        │ skynet.call
+        ▼
+coroutine.yield("SUSPEND")
+```
+
+这会把 skynet 调度器内部的控制消息截胡到自己创建的 coroutine 里面，所以会得到不可预期的返回值，并且打算 skynet 自己的处理流程。
+
+---
+
+## skynet.coroutine
+
+有时候需要实现一个库，确实需要用到 coroutine，可以使用 skynet 封装过后的 coroutine 接口：
+
+```lua
+local coroutine = require("skynet.coroutine")
+```
+
+`skynet.coroutine` 的 API 基本与 Lua 原生 coroutine 一致。但内部多做了一层：**它知道什么 yield 是你的，什么 yield 是 Skynet 框架自己的。**
+
+**`skynet.coroutine` 最核心的作用：转发 Skynet 的 yield**。
+
+skynet.coroutine 相较于原生 Lua coroutine 新增的 API：
+
+```lua
+coroutine.thread(co)
+```
+
+用于查询这个嵌套 coroutine 最终属于哪个 skynet coroutine。
+
+例如：
+
+```text
+Skynet Message
+      ↓
+Coroutine A      ← Skynet 管理的根 coroutine
+      │
+      ▼
+Coroutine B      ← skynet.coroutine.create
+      │
+      ▼
+Coroutine C      ← skynet.coroutine.create
+```
+
+虽然执行到了 C：
+
+```text
+C
+ ↓
+B
+ ↓
+A
+```
+
+但是对于 Skynet 来说，它真正管理的是：
+
+```text
+A
+```
+
+该 API 还有第二个返回值：
+
+```lua
+local thread, main = coroutine.thread(co)
+```
+
+如果 co 是通过 skynet.coroutine 创建并间接驱动的，main 返回 false，否则返回 true。
+
+---
+
+
+<br/>
+
+
+<br/>
+
+
+# [CriticalSection](https://github.com/cloudwu/skynet/wiki/CriticalSection)
+
+该部分主要讲解：同一个 Service 虽然不会被多个线程同时执行，但不同 coroutine 会在 `skynet.call / sleep / wait` 这些 yield 点交错执行，所以仍然可能出现“逻辑竞态”。`skynet.queue` 就是用来保护这种临界区的
+
+## skynet.queue
+
+为了避免 coroutine 因为 yield 而交错执行造成的逻辑竞态，skynet 提供了：
+
+```lua
+local queue = require "skynet.queue"
+local cs = queue()
+```
+
+假设：
+
+```lua
+function CMD.foobar()
+    cs(func1)
+end
+
+function CMD.foo()
+    cs(func2)
+end
+```
+
+queue 可以保证 func 1 和 func 2 不会相互插入执行，即使他们中途可能因为 yield 被挂起。
 
 
 ---
 
-## 服务的启动和退出
+
+## 锁住的是代码区域
+
+例如：
+
+```lua
+function CMD.foobar()
+    print("step1")
+
+    cs(function()
+        print("step2")
+        skynet.call(...)
+        print("step3")
+    end)
+
+    print("step4")
+end
+```
+
+只有被 cs 括起来的部分属于临界区。所以 queue 锁住的不是整个 service ，而是代码区域。
+
+
+---
+
+
+
+<br/>
+
+
+<br/>
+
+# [Socket](https://github.com/cloudwu/skynet/wiki/Socket)
+
+
+该部分主要内容：Skynet 底层继续使用异步、非阻塞的网络模型，但在 Lua 业务层利用 coroutine，把异步 IO 包装成看起来像阻塞式 `read()` 的顺序代码。
+
+## socket api
+
 
 
 

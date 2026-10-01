@@ -20,5 +20,6 @@
   "blue-topaz-theme@@background-image-settings-switch": false,
   "blue-topaz-theme@@background-image-settings-markdown-page-options": "background-image-settings-markdown-page-sea-and-sky",
   "Blue-Topaz-Codebox-Highlight@@code-line-number": false,
-  "Blue-Topaz-Codebox-Highlight@@whole-code-wrap": false
+  "Blue-Topaz-Codebox-Highlight@@whole-code-wrap": false,
+  "Blue-Topaz-Codebox-Highlight@@text-color-code@@light": "#0A0A0A"
 }
