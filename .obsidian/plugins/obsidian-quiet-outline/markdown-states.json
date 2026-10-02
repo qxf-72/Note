@@ -1077,7 +1077,7 @@
     "expandedKeys": []
   },
   "编程语言/Lua/Lua程序设计.md": {
-    "scroll": 1129.9926215277778,
+    "scroll": 1963.9253731343283,
     "cursor": {
       "from": {
         "line": 1056,
@@ -1260,18 +1260,22 @@
     "expandedKeys": []
   },
   "开发技能/数据库/Redis入门.md": {
-    "scroll": 0,
+    "scroll": 465.5357142857143,
     "cursor": {
       "from": {
-        "line": 175,
+        "line": 626,
         "ch": 0
       },
       "to": {
-        "line": 175,
+        "line": 626,
         "ch": 0
       }
     },
-    "expandedKeys": []
+    "expandedKeys": [
+      "item-1-2",
+      "item-1-17",
+      "item-1-9"
+    ]
   },
   "开发技能/Unix/鸟哥的Linux私房菜.md": {
     "scroll": 448.1261085304054,
@@ -1302,7 +1306,7 @@
     "expandedKeys": []
   },
   "开发技能/数据库/MongoDB入门.md": {
-    "scroll": 0,
+    "scroll": 3523.097502531829,
     "cursor": {
       "from": {
         "line": 0,
@@ -1316,17 +1320,19 @@
     "expandedKeys": []
   },
   "开发技能/框架/Skynet入门.md": {
-    "scroll": 1024.7110041595563,
+    "scroll": 3523.097502531829,
     "cursor": {
       "from": {
-        "line": 0,
+        "line": 3597,
         "ch": 0
       },
       "to": {
-        "line": 0,
+        "line": 3597,
         "ch": 0
       }
     },
-    "expandedKeys": []
+    "expandedKeys": [
+      "item-1-82"
+    ]
   }
 }

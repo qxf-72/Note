@@ -6,6 +6,7 @@
       {
         "id": "b4ce88ef63bb761f",
         "type": "tabs",
+        "dimension": 56.0792349726776,
         "children": [
           {
             "id": "0e93de2b59f4ca43",
@@ -13,13 +14,36 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发技能/数据库/Redis入门.md",
+                "file": "开发技能/数据库/MongoDB入门.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Redis入门"
-            }
+              "title": "MongoDB入门"
+            },
+            "group": "7ce0d2311ffb44d4"
+          }
+        ]
+      },
+      {
+        "id": "b40165499a61b1dd",
+        "type": "tabs",
+        "dimension": 43.9207650273224,
+        "children": [
+          {
+            "id": "d68ca3f6447aab2d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "开发技能/数据库/MongoDB入门.md",
+                "mode": "source",
+                "source": true
+              },
+              "icon": "lucide-file",
+              "title": "MongoDB入门"
+            },
+            "group": "7ce0d2311ffb44d4"
           }
         ]
       }
@@ -80,7 +104,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 331.5
+    "width": 331.5,
+    "collapsed": true
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -229,12 +254,12 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "47429757a8453eb8",
+  "active": "d68ca3f6447aab2d",
   "lastOpenFiles": [
-    "编程语言/Lua/Lua程序设计.md",
-    "开发技能/数据库/Redis入门.md",
     "开发技能/框架/Skynet入门.md",
     "开发技能/数据库/MongoDB入门.md",
+    "编程语言/Lua/Lua程序设计.md",
+    "开发技能/数据库/Redis入门.md",
     "开发技能/Unix/Ubuntu 使用记录.md",
     "开发技能/Unix/Git入门.md",
     "开发技能/Unix/鸟哥的Linux私房菜.md",
