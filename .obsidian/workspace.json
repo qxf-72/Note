@@ -4,31 +4,9 @@
     "type": "split",
     "children": [
       {
-        "id": "b4ce88ef63bb761f",
-        "type": "tabs",
-        "dimension": 56.0792349726776,
-        "children": [
-          {
-            "id": "0e93de2b59f4ca43",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "开发技能/数据库/MongoDB入门.md",
-                "mode": "preview",
-                "source": true
-              },
-              "icon": "lucide-file",
-              "title": "MongoDB入门"
-            },
-            "group": "7ce0d2311ffb44d4"
-          }
-        ]
-      },
-      {
         "id": "b40165499a61b1dd",
         "type": "tabs",
-        "dimension": 43.9207650273224,
+        "dimension": 62.909836065573764,
         "children": [
           {
             "id": "d68ca3f6447aab2d",
@@ -36,14 +14,36 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发技能/数据库/MongoDB入门.md",
+                "file": "开发技能/框架/Skynet入门.md",
+                "mode": "preview",
+                "source": true
+              },
+              "icon": "lucide-file",
+              "title": "Skynet入门"
+            },
+            "group": "d0158d146cfaa16c"
+          }
+        ]
+      },
+      {
+        "id": "66b6b589f93365d7",
+        "type": "tabs",
+        "dimension": 37.09016393442623,
+        "children": [
+          {
+            "id": "3df7843971c52b6e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "开发技能/框架/Skynet入门.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "MongoDB入门"
+              "title": "Skynet入门"
             },
-            "group": "7ce0d2311ffb44d4"
+            "group": "d0158d146cfaa16c"
           }
         ]
       }
@@ -104,7 +104,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 331.5,
+    "width": 256.8333435058594,
     "collapsed": true
   },
   "right": {
@@ -254,10 +254,12 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "d68ca3f6447aab2d",
+  "active": "3df7843971c52b6e",
   "lastOpenFiles": [
-    "开发技能/框架/Skynet入门.md",
     "开发技能/数据库/MongoDB入门.md",
+    "开发技能/框架/Skynet入门.md",
+    "计算机基础/计算机组成原理/汇编语言.md",
+    "编程语言/C++/Effective C++.md",
     "编程语言/Lua/Lua程序设计.md",
     "开发技能/数据库/Redis入门.md",
     "开发技能/Unix/Ubuntu 使用记录.md",
@@ -278,10 +280,8 @@
     "编程语言/Golang/Go语言圣经.md",
     "编程语言/C++/候捷C++面向对象高级编程.md",
     "编程语言/C++/C++ Primer.md",
-    "编程语言/C++/Effective C++.md",
     "编程语言/C++/C++面试.md",
     "编程语言/C++/Effective Modern C++.md",
-    "计算机基础/操作系统原理/操作系统导论.md",
     "开发技能/框架",
     "编程语言/Lua",
     "482743F2FD33B7CE58A9F431F7FC20D3 1.png",

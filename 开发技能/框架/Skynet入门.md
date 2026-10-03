@@ -2272,14 +2272,10 @@ local skynet = require "skynet"
 
 一条 Skynet 消息主要由五个元素构成：
 
-- `session`：请求—响应匹配标识，由请求方生成并由 Skynet 管理。按惯例，`session = 0` 表示这条消息不需要回应。
-    
+- `session`：请求—响应匹配标识，由请求方生成并由 Skynet 管理。按惯例，**`session = 0` 表示这条消息不需要回应**。
 - `source`：消息来源 Service 的地址。每个 Service 使用一个 32 bit 整数标识。Service 退出后，新 Service 通常不会立即复用这个地址，除非地址空间发生回绕。
-    
 - `type`：消息类别。一个 Service 最多可以接收 256 种消息类别，不同类别可以使用不同的编码方式。最常用的是 `"lua"`。
-    
 - `message`：底层消息数据的 C 指针，在 Lua 层表现为 `lightuserdata`。
-    
 - `size`：消息数据长度。
     
 
@@ -2545,7 +2541,7 @@ end)
 
 需要注意：
 
-**对于同一个消息处理 coroutine，** `**skynet.ret**` **只能调用一次。**
+**对于同一个消息处理 coroutine，** `skynet.ret` **只能调用一次。**
 
 如果暂时不能立即回应，可以使用：
 
@@ -2827,7 +2823,7 @@ end)
 
 但是：
 
-**不要在** `**skynet.start**` **外部调用 Skynet 的阻塞 API。**
+**不要在** `skynet.start` **外部调用 Skynet 的阻塞 API。**
 
 因为此时框架还无法正确唤醒被挂起的 coroutine。
 
@@ -3615,7 +3611,596 @@ return skynet.queue
 
 该部分主要内容：Skynet 底层继续使用异步、非阻塞的网络模型，但在 Lua 业务层利用 coroutine，把异步 IO 包装成看起来像阻塞式 `read()` 的顺序代码。
 
-## socket api
+## Skynet Socket 整体结构
+
+底层 socket 线程收到网络时间之后，不会直接调用 Lua 函数，而是把结果包装成 `PTYPE_SOCKET` 消息，然后发送给对应的 Service。
+
+```text
+       Linux Socket
+            │
+            ▼
+    Skynet Socket Thread
+（底层异步网络事件处理）
+            │
+            │ PTYPE_SOCKET
+            ▼
+       Lua Service
+            │
+      skynet.socket
+            │
+    ┌───────┴────────┐
+    │                │
+coroutine A      coroutine B
+socket.read      处理其他业务
+```
+
+当前 `socket.lua` 的实现就是在收到 `SKYNET_SOCKET_TYPE_DATA` 后把数据压入缓冲区，并检查等待的读取条件；满足后唤醒等待 coroutine。**只会阻塞 coroutine，不会阻塞线程**。
+
+
+和 POSIX 的区别是，skynet 可以利用 coroutine 来保持缓冲区等状态：
+
+```text
+你以前：
+
+EPOLLIN
+ ↓
+自己维护状态机
+
+
+Skynet：
+
+PTYPE_SOCKET
+ ↓
+框架维护 buffer + coroutine
+ ↓
+恢复原来的执行位置
+```
+
+---
+
+## 客户端
+
+
+```lua
+local socket = require "skynet.socket"
+
+local id = socket.open("127.0.0.1", 8888)
+```
+
+对应 POSIX 接口中的：
+
+```cpp
+socket();
+connect();
+```
+
+`socket.open(address, port)` 会阻塞**当前 coroutine** 直到连接过程完成。
+
+ `id` 是 **Skynet socket id**，不是当 Linux 原始 fd。它是 Skynet 网络层用来标识 socket 的句柄，而且**这个 id 在整个 Skynet Node 中是可见的**。
+
+
+---
+
+## 服务器端
+
+```lua
+local listen_id = socket.listen("0.0.0.0", 8888)
+
+socket.start(listen_id, function(id, addr)
+    -- 新连接
+end)
+```
+
+accept 回调获得的新 socket **不会马上开始把数据发给当前 Service**。必须再调用 `socket.start(new_id)`。因为 Skynet 的结构是：
+
+```text
+Gate Service
+      ↓
+accept
+      ↓
+拿到 socket id
+      ↓
+把 id 发给 Agent Service
+      ↓
+Agent socket.start(id)
+```
+
+也就是转移所有权，谁调用 `socket.start(id)` 就拥有这个 listen_id 的所有权。**哪个 Service 调用了 `socket.start(id)`，Skynet 就把相应的网络消息转发到哪个 Service**。
+
+如果一个 service 需要放弃所有权，清楚这个 service 中关于这个 socket 的状态：
+
+```lua
+socket.abandon(id)
+```
+
+
+<br/>
+
+
+读取消息的 api：
+
+```lua
+local data = socket.read(id, sz)
+```
+
+表示恰好读取 sz 个字节。如果缓冲区没有 sz 个字节数据会挂起当前 coroutine，知道有足够数据之后再唤醒 coroutine。
+
+
+如果不传长度参数：返回当前可以获得的尽可能多的数据，如果一个字节也没有，依然会将 coroutine 挂起等待。
+
+
+Skynet 的 API 本身就是按“一个等待读取者”设计的。所以**不要多个 coroutine 同时读一个 socket**。
+
+<br/>
+
+
+```lua
+local line = socket.readline(id)
+```
+
+默认分隔符为 `\n`，也可以指定分隔符，其返回 buffer 中分隔符前面的部分，**不包含分隔符**。
+
+
+<br/>
+
+```lua
+socket.readall(id)
+```
+
+**一直读，直到连接断开，然后把所有数据返回**。如果是只一个长连接，可以会长时间阻塞不返回。
+
+
+<br/>
+
+```lua
+socket.block(id)
+```
+
+挂起 coroutine，直到 socket 有数据可读，或者连接关闭。功能类似于 POSIX 中的：
+
+```cpp
+epoll_wait()
+```
+
+
+<br/>
+
+```lua
+socket.write(id, data)
+```
+
+这个 api 不会阻塞协程**：`write` 是把字符串加入正常写队列，由框架在 socket 可写时发送**。
+
+
+```lua
+socket.lwrite(id, data)
+```
+
+这是 low priority 的写操作，skynet 内部有：
+
+```text
+normal write queue
+low priority write queue
+```
+
+只有在排空 normal write queue 之后才会发送 low priority write queue 的数据。
+
+
+跟 read 操作不同的是，多个 service 可以向同一个 socket 写，skynet 保证**单次 `write` 的字符串不会被拆开后夹入另一个 write 的数据**。
+
+
+<br/>
+
+
+```lua
+socket.warning(id, function(id, size)
+    ...
+end)
+```
+
+监控积压量，当**写缓冲区**数据积压量超过 size KiB 是会产生 warning。
+
+<br/>
+
+```lua
+socket.close(id)
+```
+
+推荐的清理方式，可能 yield，因为如果有其他 coroutine 在读，会等操作结束之后再 close。
+
+```text
+close
+ ↓
+优雅地协调当前读取流程
+ ↓
+清理 socket
+```
+
+---
+
+## UDP
+
+skynet udp 使用 callback 来处理数据，收到 udp 数据包时直接调用 callback：
+
+```lua
+local id = socket.udp(function(data,from)
+	...
+end,"0.0.0.0",8000)
+```
+
+```lua
+socket.udp_address(from)
+```
+
+将来源地址转换成 IP+port。
+
+---
+
+
+## 域名查询
+
+```lua
+socket.open("example.com,80)
+```
+
+底层直接调用：
+
+```cpp
+getaddrinfo()
+```
+
+**可能阻塞整个 socket 线程**。
+
+所以推荐的 DNS 查询方式：
+
+```lua
+local dns = require ("skynet.dns")
+dns.server()
+local ip = dns.resolve("example.com")
+```
+
+---
+
+
+<br/>
+
+
+<br/>
+
+# [GateServer](https://github.com/cloudwu/skynet/wiki/GateServer)
+
+**Gate 是游戏服务器的接入层，负责管理客户端连接、把 TCP 字节流切成完整数据包，再转发给真正处理业务的 Service。** Skynet 提供通用模板 `lualib/snax/gateserver.lua`，而 `service/gate.lua` 是基于这个模板写好的一个完整 Gate。
+
+
+## `snax.gateserver`
+
+
+`snax.gateserver` 对应 `lualib/snax/gateserver.lua`，是一个**框架模板**。
+
+`service/gate.lua` 是使用 `gateserver.lua` 写出来的一个具体 Gate Service。
+
+```text
+gateserver.lua
+    │
+    │ 通用框架
+    ▼
+ gate.lua
+    │
+    │ 一个实际 Gate 实现
+    ▼
+游戏服务器
+```
+
+gateserver 的最简单使用：
+
+```lua
+local gateserver = require "snax.gateserver"
+
+local handler = {}
+
+-- 定义各种 callback
+
+gateserver.start(handler)
+```
+
+`gateserver.start` 默认自己调用 `skynet.start()`，所以不需要写：
+
+```lua
+skynet.start(function()
+	...
+end)
+```
+
+其中 `handle` 可以理解为 C++中的：
+
+```cpp
+class GateHandler{
+public:
+	void onConnect(...);
+	void onMessage(...);
+	void onDisconnect(...);
+	...
+
+};
+```
+
+GateServer 框架负责发现事件，自己利用框架写的 gateservice 需要定义事件发生后怎么处理。
+
+
+```text
+PTYPE_SOCKET
+     ↓
+gateserver.lua
+     ↓
+netpack/filter
+     ↓
+识别事件
+     │
+     ├── connect    → handler.connect
+     ├── packet     → handler.message
+     ├── close      → handler.disconnect
+     ├── error      → handler.error
+     └── warning    → handler.warning
+```
+
+---
+
+## `handler.connect`
+
+客户端简历 TCP 连接之后，GateServer 收到 accept 事件之后：
+
+```lua
+handler.connect(fd,addr)
+```
+
+
+**但是 connect 后客户端不能立即发送数据**，因为建立连接之后，需要进行创建 Agent 等工作，需要显式调用：
+
+```lua
+gateserver.openclient(fd)
+```
+
+`gate.lua` 中的调用链条：
+
+```text
+Client connect
+      ↓
+Gate handler.connect
+      ↓
+通知 Watchdog
+      ↓
+Watchdog 创建 Agent
+      ↓
+Agent 初始化
+      ↓
+Agent → Gate : forward(fd)
+      ↓
+Gate 记录：
+fd → agent
+      ↓
+gateserver.openclient(fd)
+      ↓
+现在正式接收客户端 packet
+````
+
+
+---
+
+## `handler.message`
+
+
+```lua
+handler.message(...)
+```
+
+收到的不是一次 TCP `recv` 的结果，而是 GateServer 使用 netpack 完成粘包、半包处理之后得到的**一条完整的应用层 packet**。
+
+当完整数据包被切出来后才调用 `handler.message(fd, msg, sz)`。`msg` 是 C 内存指针，`sz` 是长度。
+
+
+GateServer 使用的分包协议：
+
+```text
+┌────────────────┬──────────────────────┐
+│ 2 bytes length │       payload        │
+└────────────────┴──────────────────────┘
+```
+
+为了性能，`handler.message` 收到的是 `msg+sz`，而不是 `string`，如果立即转化成 Lua string 会做一次内存复制：
+
+```text
+C buffer
+   ↓ copy
+Lua string
+```
+
+如果需要 Lua 自己处理：
+
+```lua
+local str = netpack.tostring(msg,sz)
+```
+
+```text
+C buffer
+   ↓
+拷贝到 Lua string
+   ↓
+释放原来的 C buffer
+```
+
+但是官方仓库 gate.lua 使用的是另一个函数：
+
+```lua
+skynet.send(watchdog, "lua", "socket", "data", fd, skynet.tostring(msg, sz))
+skynet.trash(msg,sz)
+```
+
+<br/>
+
+当前 `gate.lua` 注册：
+
+```lua
+skynet.register_protocol {
+    name = "client",
+    id = skynet.PTYPE_CLIENT,
+}
+```
+
+而 Agent 也注册：
+
+```lua
+skynet.register_protocol {
+    name = "client",
+    id = skynet.PTYPE_CLIENT,
+
+    unpack = ...,
+    dispatch = ...
+}
+````
+
+所以：
+
+```text
+Gate
+ ↓
+redirect(..., "client", ...)
+ ↓
+Agent
+ ↓
+PTYPE_CLIENT dispatcher
+````
+
+```text
+外部客户端 TCP packet
+       ↓
+Skynet 内部 PTYPE_CLIENT 消息
+       ↓
+Agent
+```
+
+---
+
+## `handler.command`
+
+**Lua 协议消息会进入 `handler.command`**，而它的返回值会经过 `skynet.pack/ret` 返回调用方。
+
+
+所以 Gate 实际上有两套输入：
+
+```text
+                  Gate
+
+客户端世界             Skynet 世界
+    │                     │
+ TCP packet           Lua message
+    │                     │
+    ▼                     ▼
+message()             command()
+```
+
+---
+
+## `nodelay`
+
+```lua
+local addr,port = skynet.call(watchdog, "lua", "start", {
+		port = 8888,
+		maxclient = max_client,
+		nodelay = true,
+	})
+```
+
+配置
+
+```lua
+nodelay = true
+```
+
+会给客户端 socket 设置：
+
+```text
+TCP_NODELAY
+```
+
+也就是**关闭 Nagle 算法，因为游戏服务器经常有大量的 `小包+低延迟要求` ** 。
+
+---
+
+
+## `GateServer` vs `skynet.socket`
+
+
+`skynet.socket` 是 coroutine 风格的 socket API。而 `GateServer` ：
+
+```text
+直接接管 PTYPE_SOCKET
++
+socketdriver
++
+netpack
+```
+
+**`snax.gateserver` 模板不能在同一个 Service 中和 `skynet.socket` 一起使用**，因为它已经接管了 socket 类消息。
+
+因为一个 Server 需要一个明确的 dispatcher，如果混用会导致两套机制同时抢同一个 Service 的 Socket 消息。
+
+---
+
+
+<br/>
+
+
+<br/>
+
+
+# [DebugConsole](https://github.com/cloudwu/skynet/wiki/DebugConsole)
+
+
+`DebugConsole` 可以理解为 skynet 自带的运行时运维/诊断终端。
+
+DebugConsole ≈ ps + top + pstack + netstat + 一部分 gdb + Skynet 自己的 Service/消息诊断工具。
+
+
+list：列出当前所有 Service。
+
+```text
+Service 地址
++
+Service 类型
++
+启动参数
+```
+
+
+stat：统计所有 service 的运行情况。
+
+```text
+消息队列长度
+挂起请求数量
+已经处理的消息数量
+CPU 时间（profile=true 时）
+```
+
+
+task：显示指定 service 所有当前被挂起的请求以及它们的调用栈。
+
+
+ping：测试 service 能否正常相应。
+
+
+signal：如果 service 陷入死循环，卡住了整个线程，以至于无法回复task、ping 命令。signal 可以打断正在执行的 Lua 字节码，并抛出错误显示调用栈，专门用于排查 endless loop。
+
+mem：让所有 service 报告自己的 Lua VM 内存占用。
+
+gc：执行一次完整的 GC 之后再报告内存。
+
+
+netstat：展示 skynet 管理的网络连接。
+
+info：查看某个 service 的信息，适合在stat 全局扫描之后使用 info 查看指定 service 的具体信息。
+
+
+logon/logoff：需要 config 中配置 logpath，捕获 skynet message 到指定文件，直到 logoff 停止。
 
 
 
