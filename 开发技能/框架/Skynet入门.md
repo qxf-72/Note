@@ -4124,10 +4124,19 @@ TCP_NODELAY
 
 也就是**关闭 Nagle 算法，因为游戏服务器经常有大量的 `小包+低延迟要求` ** 。
 
+
+> Nagle 算法是 TCP 中用来**减少大量“小数据包”发送**的一种算法。
+> 
+> 它解决的问题是：如果应用程序频繁调用 `send()`，每次只发送几个字节，TCP 可能产生很多“小包”。
+> 
+> Nagle 算法的核心思想可以概括成：
+> 
+> **如果之前发送的数据还没有收到 ACK，就先把后续的小数据攒起来，不要立即发送。**
+
 ---
 
 
-## `GateServer` vs `skynet.socket`
+## `GateServer` 和 `skynet.socket`
 
 
 `skynet.socket` 是 coroutine 风格的 socket API。而 `GateServer` ：
