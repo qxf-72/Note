@@ -389,13 +389,9 @@ BSON
 - **Null** 表示字段存在，但其值明确为 `null`；**字段值为** `**null**` **与字段不存在是两个不同的概念**。
     
 - **ObjectId** 长度为 12 字节，由以下部分组成：
-    
     - 4 字节：Unix 时间戳，单位为秒。
-        
     - 5 字节：随机值。
-        
     - 3 字节：递增计数器。
-        
     
     ObjectId 中包含创建时的时间戳，因此可以通过 `ObjectId.getTimestamp()` 获取其对应的时间。
     
@@ -413,6 +409,410 @@ BSON
 
 # CRUD
 
+主要使用 `mongod` 和 `mongosh` 实践 MongoDB 的 CRUD 操作。
+
+首先运行 MongoDB 服务端：
+
+```
+mongod
+```
+
+然后使用 MongoDB Shell 客户端连接：
+
+```
+mongosh
+```
+
+MongoDB 的 CRUD 主要围绕 **Document 和 Query Filter** 展开。
+
+对于查询、更新和删除操作，可以将其理解为：
+
+```
+Filter + Operation
+```
+
+例如：
+
+```
+find(filter, projection)
+
+updateOne(filter, update, options)
+
+updateMany(filter, update, options)
+
+replaceOne(filter, replacement, options)
+
+deleteOne(filter, options)
+
+deleteMany(filter, options)
+```
+
+其中：
+
+- `filter`：决定操作哪些 Document，可以类比 SQL 的 `WHERE`。
+- `update`：决定如何修改 Document，可以类比 SQL 的 `SET`。
+- `projection`：决定查询结果返回哪些字段，可以类比 SQL 中 `SELECT` 后指定的字段。
+- 查询、更新、删除使用相同的 Query Filter 语法。
+
+---
+
+## Create
+
+主要使用：
+
+```
+insertOne()
+insertMany()
+```
+
+### 插入一个 Document
+
+```
+db.players.insertOne({
+    _id: 10001,
+    name: "Felix",
+    gold: 1000
+})
+```
+
+### 插入多个 Document
+
+```
+db.players.insertMany([
+    {
+        _id: 10001,
+        name: "Felix",
+        gold: 1000
+    },
+    {
+        _id: 10002,
+        name: "Alice",
+        gold: 2000
+    }
+])
+```
+
+如果插入的 Document 没有 `_id`，MongoDB 会为其补充 `_id`；通常由客户端驱动生成 `ObjectId`，如果客户端没有生成，则 `mongod` 也会补充。
+
+---
+
+## Read
+
+主要使用：
+
+```
+find()
+```
+
+### 查询所有 Document
+
+```
+db.players.find()
+```
+
+不指定 Filter 时，会匹配 Collection 中的所有 Document。
+
+`find()` 实际返回的是一个 **Cursor（游标）**，而不是一次性返回所有 Document。`mongosh` 会自动迭代 Cursor 并显示结果。
+
+### 条件查询
+
+```
+db.players.find({
+    gold: { $gte: 1000 }
+})
+```
+
+表示查找：
+
+```
+gold >= 1000
+```
+
+Query Filter 可以进一步使用：
+
+```
+Query Filter
+    │
+    ├── 字段匹配
+    ├── 比较操作符
+    ├── 逻辑操作符
+    ├── 数组条件
+    ├── 嵌套 Document
+    └── ...
+```
+
+### Projection
+
+`find()` 还可以指定 `projection`，控制查询结果中返回哪些字段：
+
+```
+db.players.find(
+    { gold: { $gte: 1000 } },
+    { name: 1, gold: 1 }
+)
+```
+
+这里：
+
+```
+Filter
+    ↓
+决定返回哪些 Document
+
+Projection
+    ↓
+决定这些 Document 返回哪些字段
+```
+
+---
+
+## Update
+
+主要有 3 个更新 API：
+
+```
+updateOne()
+updateMany()
+replaceOne()
+```
+
+### updateOne()
+
+```
+db.players.updateOne(
+    { _id: 10001 },
+    { $inc: { gold: 100 } }
+)
+```
+
+`filter` 决定目标 Document，`update` 决定如何修改。
+
+`updateOne()` **最多更新一个**符合条件的 Document；即使有多个 Document 满足 Filter，也只更新其中一个。
+
+常见的 `update` 形式是使用 Update Operators，例如：
+
+```
+{
+    $set: { gold: 2000 },
+    $inc: { level: 1 }
+}
+```
+
+MongoDB 也支持使用 Aggregation Pipeline 作为 `update`，用于更加复杂的更新逻辑；当前阶段暂时不深入。
+
+### updateMany()
+
+```
+db.players.updateMany(
+    { level: 10 },
+    { $inc: { gold: 100 } }
+)
+```
+
+会更新所有符合 Filter 的 Document。
+
+如果 Filter 是：
+
+```
+{}
+```
+
+则会匹配所有 Document：
+
+```
+db.players.updateMany(
+    {},
+    { $inc: { gold: 100 } }
+)
+```
+
+即所有玩家的金币都增加 100。
+
+需要注意，`updateMany()` 虽然可以修改多个 Document，但**整个操作并不是跨多个 Document 的原子操作**；MongoDB 只保证每个单独 Document 的写操作具有原子性。
+
+### replaceOne()
+
+```
+db.players.replaceOne(
+    { _id: 10001 },
+    {
+        _id: 10001,
+        name: "Felix",
+        gold: 2000
+    }
+)
+```
+
+`updateOne()` / `updateMany()` 通常使用更新操作符修改 Document 中的部分字段，而 `replaceOne()` 则使用新的 Document **整体替换**原来的 Document。
+
+`replaceOne()` 可以使替换后的 Document 具有不同的字段结构，但不应该简单理解为“修改了 Collection 的 Schema”。
+
+---
+
+## Delete
+
+主要使用：
+
+```
+deleteOne()
+deleteMany()
+```
+
+### 删除一个 Document
+
+```
+db.players.deleteOne({
+    _id: 10001
+})
+```
+
+`deleteOne()` 最多删除一个符合条件的 Document。
+
+### 删除多个 Document
+
+```
+db.players.deleteMany({
+    level: { $lt: 10 }
+})
+```
+
+会删除所有：
+
+```
+level < 10
+```
+
+的 Document。
+
+如果：
+
+```
+db.players.deleteMany({})
+```
+
+则会匹配并删除 Collection 中的所有 Document，因此生产环境中需要特别谨慎。
+
+---
+
+## 批量写入
+
+**Bulk Write（批量写入）**允许在一次批量操作中执行多个写操作，并且可以混合不同类型的操作：
+
+```
+一次 Bulk Write
+    │
+    ├── insert
+    ├── update
+    ├── update
+    ├── delete
+    └── insert
+```
+
+主要使用：
+
+```
+db.players.bulkWrite()
+```
+
+支持：
+
+```
+insertOne
+updateOne
+updateMany
+replaceOne
+deleteOne
+deleteMany
+```
+
+适合需要批量执行多个插入、更新、删除操作的场景。
+
+---
+
+## 写操作结果
+
+MongoDB 的更新操作会返回操作结果，其中几个重要字段是：
+
+```
+matchedCount
+modifiedCount
+upsertedId
+```
+
+例如：
+
+```
+db.players.updateOne(
+    { _id: 10001 },
+    { $inc: { gold: 100 } }
+)
+```
+
+可能返回：
+
+```
+{
+    acknowledged: true,
+    matchedCount: 1,
+    modifiedCount: 1
+}
+```
+
+其中：
+
+- `matchedCount`：Filter 匹配到多少个 Document。
+- `modifiedCount`：实际发生修改的 Document 数量。
+- `upsertedId`：如果使用 `upsert: true` 并且最终插入了新 Document，则记录新 Document 的 `_id`。
+    
+
+对于你的游戏业务尤其要注意：
+
+```
+matchedCount
+    ↓
+条件是否满足、目标 Document 是否存在
+
+modifiedCount
+    ↓
+Document 是否真的发生了修改
+```
+
+---
+
+## Query Filter
+
+常用 Query Filter：
+
+|类型|内容|
+|---|---|
+|等值| `{ level: 10 }` |
+|比较| `$gt`、`$gte`、`$lt`、`$lte`、`$ne` |
+|集合| `$in`、`$nin` |
+|逻辑|多字段隐式 AND、`$and`、`$or`、`$not`、`$nor` |
+|嵌套字段| `"profile.region"` 点号写法|
+|字段判断| `$exists`、`$type` |
+
+其中多个字段直接写在同一个 Filter 中时，默认是逻辑 AND。
+
+---
+
+## Update Operators
+
+常用 Update Operators：
+
+|操作符|用途|
+|---|---|
+| `$set` |设置或新增字段|
+| `$unset` |删除字段|
+| `$inc` |将数值字段加上指定值；正数增加，负数减少|
+| `$push` |向数组追加元素，允许重复|
+| `$addToSet` |仅当元素不存在时加入数组|
+| `$pull` |删除数组中所有匹配条件的元素|
+
+
+---
+
+## Options
 
 
 

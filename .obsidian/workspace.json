@@ -197,13 +197,23 @@
               "icon": "git-pull-request",
               "title": "Source Control"
             }
+          },
+          {
+            "id": "0d697b0c9fd548b7",
+            "type": "leaf",
+            "state": {
+              "type": "quiet-outline",
+              "state": {},
+              "icon": "lines-of-text",
+              "title": "Quiet Outline"
+            }
           }
         ],
         "currentTab": 7
       }
     ],
     "direction": "horizontal",
-    "width": 474.5
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
