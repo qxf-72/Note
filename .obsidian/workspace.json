@@ -4,46 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "b40165499a61b1dd",
+        "id": "f2f1e07593396753",
         "type": "tabs",
-        "dimension": 62.909836065573764,
         "children": [
           {
-            "id": "d68ca3f6447aab2d",
+            "id": "437642bda35a1b21",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发技能/框架/Skynet入门.md",
-                "mode": "preview",
-                "source": true
-              },
-              "icon": "lucide-file",
-              "title": "Skynet入门"
-            },
-            "group": "d0158d146cfaa16c"
-          }
-        ]
-      },
-      {
-        "id": "66b6b589f93365d7",
-        "type": "tabs",
-        "dimension": 37.09016393442623,
-        "children": [
-          {
-            "id": "3df7843971c52b6e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "开发技能/框架/Skynet入门.md",
+                "file": "开发技能/数据库/MongoDB入门.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Skynet入门"
-            },
-            "group": "d0158d146cfaa16c"
+              "title": "MongoDB入门"
+            }
           }
         ]
       }
@@ -169,7 +145,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "编程语言/lua/Lua程序设计.md",
+                "file": "开发技能/数据库/MongoDB入门.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -184,8 +160,8 @@
             "state": {
               "type": "advanced-tables-toolbar",
               "state": {},
-              "icon": "spreadsheet",
-              "title": "Advanced Tables"
+              "icon": "lucide-ghost",
+              "title": "advanced-tables-toolbar"
             }
           },
           {
@@ -203,23 +179,13 @@
             }
           },
           {
-            "id": "47429757a8453eb8",
-            "type": "leaf",
-            "state": {
-              "type": "quiet-outline",
-              "state": {},
-              "icon": "lines-of-text",
-              "title": "Quiet Outline"
-            }
-          },
-          {
             "id": "8d357f7ea7f34598",
             "type": "leaf",
             "state": {
               "type": "calendar",
               "state": {},
-              "icon": "calendar-with-checkmark",
-              "title": "Calendar"
+              "icon": "lucide-ghost",
+              "title": "calendar"
             }
           },
           {
@@ -233,11 +199,11 @@
             }
           }
         ],
-        "currentTab": 8
+        "currentTab": 7
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 474.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -254,10 +220,12 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "3df7843971c52b6e",
+  "active": "437642bda35a1b21",
   "lastOpenFiles": [
+    "开发技能/数据库/MySQL是怎样运行的.md",
     "开发技能/数据库/MongoDB入门.md",
     "开发技能/框架/Skynet入门.md",
+    "编程语言/lua/Lua程序设计.md",
     "计算机基础/计算机组成原理/汇编语言.md",
     "编程语言/C++/Effective C++.md",
     "编程语言/Lua/Lua程序设计.md",
@@ -280,8 +248,6 @@
     "编程语言/Golang/Go语言圣经.md",
     "编程语言/C++/候捷C++面向对象高级编程.md",
     "编程语言/C++/C++ Primer.md",
-    "编程语言/C++/C++面试.md",
-    "编程语言/C++/Effective Modern C++.md",
     "开发技能/框架",
     "编程语言/Lua",
     "482743F2FD33B7CE58A9F431F7FC20D3 1.png",

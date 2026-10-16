@@ -18,6 +18,13 @@
   "auto_scroll_into_view": true,
   "vimlize_canvas": true,
   "canvas_sort_by": "area",
+  "shown_node_types": [
+    "file",
+    "group",
+    "text",
+    "link"
+  ],
+  "heading_truncate_length": 20,
   "patch_color": true,
   "primary_color_light": "#18a058",
   "primary_color_dark": "#63e2b7",
@@ -38,5 +45,11 @@
   "h3_color": "#000000",
   "h4_color": "#000000",
   "h5_color": "#000000",
-  "h6_color": "#000000"
+  "h6_color": "#000000",
+  "h1_color_dark": "#000000",
+  "h2_color_dark": "#000000",
+  "h3_color_dark": "#000000",
+  "h4_color_dark": "#000000",
+  "h5_color_dark": "#000000",
+  "h6_color_dark": "#000000"
 }

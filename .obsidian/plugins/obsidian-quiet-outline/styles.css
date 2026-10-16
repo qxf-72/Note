@@ -5,7 +5,7 @@
 
 /* RTL language support */
 .quiet-outline .n-tree .n-tree-node-content :is(p, h1, h2, h3, h4, h5) {
-    unicode-bidi: var(--f4d4e7c4);
+    unicode-bidi: var(--v48a9e449);
 }
 
 /* ============ */
@@ -33,7 +33,7 @@
     .quiet-outline .level-5 .n-tree-node-indent:first-child,
     .quiet-outline .level-6 .n-tree-node-indent:first-child
 )::after {
-    border-right: var(--nav-indentation-guide-width) solid var(--v04832a3a);
+    border-right: var(--nav-indentation-guide-width) solid var(--v45de4ae4);
     /* border-right: 2px solid rgb(253, 139, 31, 0.6); */
 }
 :is(
@@ -42,7 +42,7 @@
     .quiet-outline .level-5 .n-tree-node-indent:nth-child(2),
     .quiet-outline .level-6 .n-tree-node-indent:nth-child(2)
 )::after {
-    border-right: var(--nav-indentation-guide-width) solid var(--v04832a38);
+    border-right: var(--nav-indentation-guide-width) solid var(--v45de4ae2);
     /* border-right: 2px solid rgb(255, 223, 0, 0.6); */
 }
 :is(
@@ -50,24 +50,30 @@
     .quiet-outline .level-5 .n-tree-node-indent:nth-child(3),
     .quiet-outline .level-6 .n-tree-node-indent:nth-child(3)
 )::after {
-    border-right: var(--nav-indentation-guide-width) solid var(--v04832a36);
+    border-right: var(--nav-indentation-guide-width) solid var(--v45de4ae0);
     /* border-right: 2px solid rgb(7, 235, 35, 0.6); */
 }
 :is(
     .quiet-outline .level-5 .n-tree-node-indent:nth-child(4),
     .quiet-outline .level-6 .n-tree-node-indent:nth-child(4)
 )::after {
-    border-right: var(--nav-indentation-guide-width) solid var(--v04832a34);
+    border-right: var(--nav-indentation-guide-width) solid var(--v45de4ade);
     /* border-right: 2px solid rgb(45, 143, 240, 0.6); */
 }
 .quiet-outline .level-6 .n-tree-node-indent:nth-child(5)::after {
-    border-right: var(--nav-indentation-guide-width) solid var(--v04832a32);
+    border-right: var(--nav-indentation-guide-width) solid var(--v45de4adc);
     /* border-right: 2px solid rgb(188, 1, 226, 0.6); */
 }
 
 /* located heading*/
-.n-tree-node.located p {
-    color: var(--v1c14051a);
+.quiet-outline .n-tree {
+    color: var(--nav-item-color);
+}
+.quiet-outline .n-tree-node-wrapper {
+    border-radius: var(--nav-item-radius);
+&:has(.n-tree-node.located) {
+        background-color: var(--nav-item-background-active);
+}
 }
 
 /* adjust indent */
@@ -78,7 +84,12 @@
 .quiet-outline .n-tree .n-tree-node .n-tree-node-content .n-tree-node-content__prefix {
     margin-right: 0;
 }
-.quiet-outline .n-tree .n-tree-node .n-tree-node-content .n-tree-node-content__prefix > *:last-child {
+.quiet-outline
+    .n-tree
+    .n-tree-node
+    .n-tree-node-content
+    .n-tree-node-content__prefix
+    > *:last-child {
     margin-right: 8px;
 }
 .n-tree-node-switcher__icon {
@@ -187,6 +198,15 @@
     min-height: 400px;
 }
 
+.quiet-outline-setting-group {
+    border-radius: var(--radius-m);
+    background-color: var(--background-secondary);
+}
+
+.quiet-outline-setting-group .setting-item:not(:first-child) {
+    padding-left: 32px;
+}
+
 .quiet-outline .n-tree {
     font-size: var(--custom-font-size);
     font-family: var(--custom-font-family);
@@ -195,6 +215,7 @@
 
 .quiet-outline .n-tree-node-wrapper {
     padding: 0px;
+    margin-bottom: var(--custom-line-gap);
 }
 
 .quiet-outline .n-tree-node.n-tree-node--selectable {
@@ -206,11 +227,19 @@
 .quiet-outline .n-tree-node .n-tree-node-content {
     line-height: var(--custom-line-height);
     min-height: 10px;
-    margin-bottom: var(--custom-line-gap);
+    /*margin-bottom: var(--custom-line-gap);*/
 }
 
 .quiet-outline .n-tree-node-content__text p {
     margin: 0;
+}
+
+.quiet-outline-heading-prefix-text {
+    opacity: 0.5;
+}
+
+.quiet-outline-heading-prefix-icon {
+    font-size: 1.2em;
 }
 
 /* ellipsis */
@@ -240,9 +269,7 @@
 }
 
 /* 悬浮时的背景颜色 */
-.quiet-outline
-    .n-tree.n-tree--block-line
-    .n-tree-node:not(.n-tree-node--disabled):hover {
+.quiet-outline .n-tree.n-tree--block-line .n-tree-node:not(.n-tree-node--disabled):hover {
     color: var(--nav-item-color-active);
     background-color: var(--nav-item-background-active);
     font-weight: var(--nav-item-weight-active);
@@ -270,13 +297,13 @@
 .quiet-outline .function-bar input[type="text"] {
     &:hover,
     &:focus {
-        background-color: transparent !important;
-        box-shadow: none !important;
-        border: none !important;
+        background-color: transparent;
+        box-shadow: none;
+        border: none;
     }
-    background-color: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
 }
 
 /* 图标大小 */
@@ -318,8 +345,26 @@
     color: var(--link-color);
 }
 
+.quiet-outline mark[data-highlight="red"] {
+    --highlight-background: var(--highlight-background-red);
+}
+.quiet-outline mark[data-highlight="orange"] {
+    --highlight-background: var(--highlight-background-orange);
+}
+.quiet-outline mark[data-highlight="yellow"] {
+    --highlight-background: var(--highlight-background-yellow);
+}
+.quiet-outline mark[data-highlight="green"] {
+    --highlight-background: var(--highlight-background-green);
+}
+.quiet-outline mark[data-highlight="blue"] {
+    --highlight-background: var(--highlight-background-blue);
+}
+.quiet-outline mark[data-highlight="purple"] {
+    --highlight-background: var(--highlight-background-purple);
+}
 .quiet-outline mark {
-    background-color: var(--text-highlight-bg);
+    background-color: var(--highlight-background);
     color: var(--text-normal);
 }
 
@@ -366,29 +411,14 @@
 }
 
 /* location */
-.n-tree-node.located {
-    font-weight: bold !important;
-    :is(a) {
-        font-weight: bold !important;
-    }
-}
-/* .n-tree-node code {
-    font-weight: 500 !important;
-  } */
-.n-tree-node.located code {
-    font-weight: 1000 !important;
-}
-.n-tree-node.located mjx-math {
-    font-weight: bold !important;
-}
 
 .n-tree.n-tree--block-line
+    .n-tree-node-wrapper
     .n-tree-node:not(.n-tree-node--disabled).n-tree-node--selected {
-    background-color: transparent !important;
+    background-color: transparent;
 }
 
-.n-tree.n-tree--block-line:focus
-    .n-tree-node:not(.n-tree-node--disabled).n-tree-node--selected {
+.n-tree.n-tree--block-line:focus .n-tree-node:not(.n-tree-node--disabled).n-tree-node--selected {
     box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
 }
 
