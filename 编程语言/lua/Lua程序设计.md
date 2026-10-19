@@ -15,17 +15,15 @@
 - `lua prog.lua`：执行 Lua 程序 `prog.lua`。
 - `lua -i prog.lua`：先执行 `prog.lua`，执行结束后进入交互模式。
 - `lua -e '代码'`：直接执行命令行中给出的 Lua 代码。
-    
 
-
-```
+```bash
 lua -e 'print("hello lua")'
 ```
 
 ---
 ## 加载 Lua 文件
 
-```
+```lua
 dofile("main.lua")
 ```
 
@@ -79,13 +77,13 @@ Lua 是动态类型语言，变量本身没有固定类型，**值具有类型**
 
 使用：
 
-```
+```lua
 type(value)
 ```
 
-可以得到值对应的类型名称，例如：
+可以得到值对应的类型名称字符串，例如：
 
-```
+```lua
 type(nil)        --> "nil"
 type(true)       --> "boolean"
 type(10)         --> "number"
@@ -94,7 +92,7 @@ type({})         --> "table"
 type(print)      --> "function"
 ```
 
---
+---
 
 ## 布尔值
 
@@ -114,6 +112,8 @@ nil
 ```
 
 > Lua 与 C/C++ 不同：`0` 在 Lua 中是真值。
+
+---
 
 ## `and` 和 `or`
 
@@ -150,12 +150,6 @@ x = x or 10
 
 ---
 
-<br/>
-
-
-<br/>
-
-
 # 数值
 
 ## Number 类型
@@ -178,7 +172,9 @@ type(x) == "number"
 ```
 10 == 10.0    --> true
 ```
+
 ---
+
 ## `math.type`
 
 可以使用：
@@ -202,7 +198,7 @@ math.type(10.0)    --> "float"
 5 / 2    --> 2.5
 ```
 
-即使两个操作数都是 integer，结果通常也是 float。
+**即使两个操作数都是 integer，结果也是 float。**
 
 ---
 ## Floor 除法 `//`
@@ -211,7 +207,7 @@ math.type(10.0)    --> "float"
 a // b
 ```
 
-执行 **floor division**，结果向负无穷取整。
+执行 **floor division**，结果**向负无穷取整**。
 
 例如：
 
@@ -219,14 +215,6 @@ a // b
 5 // 2      --> 2
 -5 // 2     --> -3
 ```
-
-注意：
-
-```
--2.5 向负无穷取整 = -3
-```
-
-而不是 `-2`。
 
 这与 C/C++ 的整数除法尤其需要区分：
 
@@ -267,14 +255,6 @@ x = 3.14159
 x - x % 0.01
 -- 约为 3.14
 ```
-
-类似地：
-
-```
-x - x % 0.001
-```
-
-是截取到 **0.001 的整数倍，即三位小数的粒度**，不是两位小数。
 
 注意：由于浮点数存在表示误差，不应该把这种写法理解成可靠的十进制定点数处理方案。
 
@@ -338,24 +318,17 @@ math.modf   → 整数部分向 0 截断，同时返回小数部分
 
 ---
 
-<br/>
-
-
-<br/>
 
 # 字符串
 
 ## 字符串常量
 
-- lua 中字符串是不可变值的，不可修改字符串中某个字符。
+- lua 中字符串是**不可变值**的，不可修改字符串中某个字符。
 - 使用 `#` 获取字符串长度。
 - 使用 `..` 连接字符串。
 - 使用 `u{  }` 声明 utf-8 字符。
 
 ---
-
-
-
 
 ## 多行字符串
 
@@ -450,15 +423,9 @@ string.sub(s,utf8.offset(s,-2))  -->"世界"
 ---
 
 
-<br/>
-
-
-<br/>
-
-
 # 表
 
-表是 lua 语言中唯一的数据结构。
+表是 lua 语言中**唯一的数据结构**。
 
 使用构造器表达式创建表：
 ```lua
@@ -467,8 +434,8 @@ a.x = 10
 print(a["x"])  --> 10
 ```
 
-
 **当使用一个表给另一个表赋值时，不会进行深拷贝**：
+
 ```lua
 a = {}
 b = a  -- a和b是同一张表
@@ -484,12 +451,13 @@ b = a  -- a和b是同一张表
 
 ## 表构造器
 
+- 使用初始化列表构造表时，**索引从 1 开始**。
 
-- 使用初始化列表构造表时，索引从 1 开始。
 ```lua
 numbers = {"1","2","3","4","5"}
 print(numbers[1]) --> 1 
 ```
+
 - 初始化记录式：
 ```lua
 a = {x=10,y=20}
@@ -499,6 +467,16 @@ a = {x=10,y=20}
 ```lua
 a = {["x"]=10, ["y"]=20}
 ```
+> 当希望使用变量的值作为键时，必须使用方括号：
+> ```lua
+> local x = "player_id"
+> local t = {
+>     x = 10,       -- 键是字符串 "x"
+>     [x] = 20      -- 键是字符串 "player_id"
+> }
+> ```
+> 另外当键不是合法的 Lua 标识符，需要使用方括号，这在 skynet 的 mongodb 接口中很常用。
+
 
 ---
 
@@ -555,20 +533,15 @@ end
 
 `table.remove()`：删除指定位置元素，然后剩余元素向前填充空洞，不指定位置默认序列最后一个元素。
 
-`table.move(a,f,e,t)`：将表 a 中 f 到 e 的元素移动到 t 上面。
+`table.move(a,f,e,t)`：将表 a 中 f 到 e 的元素移动到表 t 上面。
 
 
 ---
 
 
-<br/>
-
-
-<br/>
-
 # 函数
 
-当输入参数个数和函数定义时的参数数量不一致时，lua 会抛弃多余参数，或者将不足的参数设置为 nil。
+**当输入参数个数和函数定义时的参数数量不一致时，lua 会抛弃多余参数，或者将不足的参数设置为 nil。**
 
 ## 多返回值
 
@@ -667,12 +640,6 @@ print(table.unpack(a))
 ---
 
 
-<br/>
-
-
-<br/>
-
-
 # 闭包
 
 
@@ -703,15 +670,7 @@ end
 ---
 
 
-
-<br/>
-
-
-<br/>
-
 # 编译、执行和错误
-
-
 
 ## 编译
 
@@ -725,7 +684,7 @@ function dofile(filename)
 end
 ```
 
-其中 `loadfile` 编译代码，然后将编译之后的代码段作为一个函数返回，**不运行代码**。
+其中 `loadfile` 编译代码，然后将编译之后的代码段**作为一个函数**返回，**不运行代码**。
 
 函数 `load` 和 `loadfile` 类似，不过是从字符串或者函数中读取代码段。
 
@@ -762,7 +721,6 @@ lua 语言会在运行代码之前，对源代码进行预编译。
 ## 错误处理
 
 
-
 在 lua 中处理错误，使用 `pcall` 函数：将需要处理错误的代码封装成一个函数，然后作为参数传递给 `pcall`。
 
 `pcall` 会运行第一个参数（即函数），无论函数是否引发错误其都不会引发错误。
@@ -777,17 +735,30 @@ end
 print(pcall(func))  -- true 1 2 3
 ```
 
+`xpcall` 可以视作 `pcall` 的升级版，其可以指定在发生错误之后的处理函数：
+
+```lua
+local function on_error(err)
+    return debug.traceback(tostring(err), 2)
+end
+
+local ok, result = xpcall(function()
+    return do_something()
+end, on_error)
+
+if not ok then
+    print(result)
+end
+```
+
+其中 `debug.traceback(msg,level)`：获取调用栈，用于定位错误发生的位置，以及函数是如何一步步调用到出错位置的。
+- msg 是附加在调用栈信息前面的错误 信息。
+- level 是指定从调用栈的哪一层开始记录，默认是 1，也就是debug.traceback 所在的那一层，一般设置为 2（略过错误处理辅助函数）。
+
+
 ---
 
-
-<br/>
-
-
-<br/>
-
-
 # 模块和包
-
 
 ## `require` 到底干了什么？
 
@@ -868,7 +839,6 @@ print(path)
 
 ---
 
-
 ## 模块和包的区别？
 
 一个包可以组织多个相关的模块。
@@ -888,7 +858,6 @@ return M
 
 
 ---
-
 
 ## `require` 完整执行流程
 
@@ -926,15 +895,7 @@ local M = require("net.http")
                                 return
 ```
 
-
-
 ---
-
-
-<br/>
-
-
-<br/>
 
 
 # 迭代器
@@ -954,7 +915,7 @@ function values(t)
 end
 ```
 
-其中 values 是迭代器工厂，只运行一次，返回值函数才是迭代器函数，每访问一次元素就运行一次。
+其中 values 是迭代器工厂，只运行一次，返回值的那个函数才是迭代器函数，每访问一次元素就运行一次。
 
 迭代器函数使用方式：
 
@@ -989,7 +950,7 @@ end
 
 ## 无状态迭代器
 
-迭代器函数本身闭包中不保持状态，状态由泛型 for 保存。例如 ipairs：
+迭代器函数本身闭包中不保持状态，**状态由泛型 for 保存**。例如 ipairs：
 
 ```lua
 local function iter(t, i)
@@ -1047,12 +1008,6 @@ iterator(state, control)           │
 ```
 
 ---
-
-
-<br/>
-
-
-<br/>
 
 # 元表和元方法
 
@@ -1176,13 +1131,6 @@ mt.__metatable = "protected"
 ---
 
 
-
-
-<br/>
-
-
-<br/>
-
 # 垃圾回收
 
 Lua 使用垃圾回收器自动管理大部分 Lua 对象的内存。
@@ -1205,13 +1153,9 @@ GC 判断对象是否应该回收的核心依据是：
 
 ## GC 并不能完全避免“内存泄漏”
 
-GC 只能判断：
+GC 只能判断：这个对象还能不能访问到？
 
-> 这个对象还能不能访问到？
-
-它无法判断：
-
-> 这个对象从业务逻辑上还有没有意义？
+它无法判断：这个对象从业务逻辑上还有没有意义？
 
 例如：
 
@@ -1224,24 +1168,11 @@ while true do
 end
 ```
 
-即使以前创建的对象业务上已经没有任何用途：
+即使以前创建的对象业务上已经没有任何用途，由于 `cache` 始终强引用这些对象，GC 会认为它们仍然存活，因此不会回收。
 
-```
-cache
-  ├── obj1
-  ├── obj2
-  ├── obj3
-  └── ...
-```
-
-由于 `cache` 始终强引用这些对象，GC 会认为它们仍然存活，因此不会回收。
-
-所以：
-
-> **Lua 有 GC，但仍然可能发生逻辑上的内存泄漏。**
+所以， **Lua 有 GC，但仍然可能发生逻辑上的内存泄漏。**
 
 常见原因包括：
-
 - 全局 table 不断增长。
 - cache 永远不删除旧对象。
 - 回调、监听器长期保存对象引用。
@@ -1257,17 +1188,11 @@ cache
 strong reference
 ```
 
-即强引用。
-
 只要存在强引用，对象就不会因为 GC 而被回收。
 
-有些场景中，我们希望：
+有些场景中，我们希望，可以通过这个 table 找到对象，但这个 table 本身不应该决定对象是否继续存活。
 
-> 可以通过这个 table 找到对象，但这个 table 本身不应该决定对象是否继续存活。
-
-这时可以使用：
-
-**weak table（弱表）**
+这时可以使用：**weak table（弱表）**
 
 Lua 通过元表中的：
 
@@ -1288,7 +1213,7 @@ __mode = "kv"    key 和 value 都是 weak
 
 例如：
 
-```
+```lua
 local cache = {}
 
 setmetatable(cache, {
@@ -1304,7 +1229,7 @@ cache[1] = obj
 
 此时：
 
-```
+```text
 obj ─────────────→ object
                      ↑
 cache[1] - - - - - -┘
@@ -1315,22 +1240,18 @@ cache[1] - - - - - -┘
 
 执行：
 
-```
+```lua
 obj = nil
 ```
 
 之后：
 
-```
+```text
 cache[1] - - - → object
           weak
 ```
 
 如果没有其他强引用，对象就可以被 GC 回收。
-
-也就是说：
-
-> weak table 可以引用对象，但这种引用本身不会保证对象继续存活。
 
 ### Weak Value 特别适合 Cache
 
@@ -1372,20 +1293,11 @@ cache[name] - - - - -┘
 
 对象仍然存活。
 
-当业务代码不再引用 image：
-
-```
-cache[name] - - - → image
-               weak
-```
-
-cache 不会阻止 GC 回收它。
+当业务代码不再引用 image，cache 不会阻止 GC 回收它。
 
 因此 weak-value cache 很适合：
 
 > **有缓存就复用，没有缓存就重新计算或加载。**
-
-这样可以避免 cache 自己成为所有缓存对象永久存活的原因。
 
 ---
 
@@ -1393,7 +1305,7 @@ cache 不会阻止 GC 回收它。
 
 也可以让 table 的 key 成为弱引用：
 
-```
+```lua
 local attrs = {}
 
 setmetatable(attrs, {
@@ -1414,9 +1326,7 @@ attrs[obj] = {
 attrs[obj]
 ```
 
-理解成：
-
-> 给 `obj` 保存额外的 metadata。
+理解成， **给 `obj` 保存额外的 metadata**。
 
 关系类似：
 
@@ -1435,21 +1345,9 @@ strong reference ───→ obj
 
 那么记录继续存在。
 
-当程序其他地方彻底不再引用 `obj` 后：
+当程序其他地方彻底不再引用 `obj` 后，weak key 不会阻止对象被 GC 回收。
 
-```
-obj = nil
-```
-
-weak key 不会阻止对象被 GC 回收。
-
-`obj` 被回收后：
-
-```
-attrs
-```
-
-中对应的 key-value 记录也会消失。
+`obj` 被回收后，attrs 中对应的 key-value 记录也会消失。
 
 因此 weak key 很适合：
 
@@ -1457,13 +1355,13 @@ attrs
 
 例如，对象由别的模块创建，不方便直接修改：
 
-```
+```lua
 local socket = get_socket()
 ```
 
 可以：
 
-```
+```lua
 local socket_info = {}
 
 setmetatable(socket_info, {
@@ -1477,7 +1375,7 @@ socket_info[socket] = {
 
 当 `socket` 在其他地方不再被引用并被 GC 后，对应的：
 
-```
+```lua
 socket_info[socket]
 ```
 
@@ -1499,7 +1397,7 @@ Lua/C 对象关联
 
 可以简单记成：
 
-```
+```text
 weak value
     ↓
 “value 不应该因为 cache 而继续活着”
@@ -1515,7 +1413,7 @@ object metadata / object association
 
 具体工程中也可以使用：
 
-```
+```lua
 __mode = "kv"
 ```
 
@@ -1525,11 +1423,9 @@ __mode = "kv"
 
 ## Weak Table 的特殊情况
 
-并不是 Lua 中的所有值都会因为出现在 weak table 中而“消失”。
+并不是 Lua 中的所有值都会因为出现在 weak table 中而“消失”。例如：
 
-例如：
-
-```
+```text
 number
 boolean
 light userdata
@@ -1544,11 +1440,11 @@ Lua string 虽然由垃圾回收器管理，但 Lua 对 weak table 中的 string
 
 可以粗略理解为：
 
-> string 是值语义的对象，没有程序能够观察到的独立对象身份，因此 Lua 不会像处理 table、closure、thread、userdata 那样，因为它只存在于 weak table 中就删除对应项。
+> **string 是值语义的对象**，没有程序能够观察到的独立对象身份，因此 Lua 不会像处理 table、closure、thread、userdata 那样，因为它只存在于 weak table 中就删除对应项。
 
 因此测试 weak table 时，更适合使用：
 
-```
+```text
 table
 closure
 thread
@@ -1563,13 +1459,13 @@ full userdata
 
 当：
 
-```
+```lua
 __mode = "k"
 ```
 
 即：
 
-```
+```text
 weak key
 strong value
 ```
@@ -1596,7 +1492,7 @@ key = nil
 
 引用关系为：
 
-```
+```text
           weak
 t - - - - - - → key
 │                ▲
@@ -1607,7 +1503,7 @@ t - - - - - - → key
 
 也就是说：
 
-```
+```text
 t --weak--> key
 
 t --strong--> value
@@ -1617,19 +1513,13 @@ value --strong--> key
 
 如果按照普通强引用规则：
 
-```
+```text
 t → value → key
 ```
 
 那么 `key` 会一直保持存活。
 
-这样：
-
-```
-weak key
-```
-
-就失去了意义。
+这样 weak key 就失去了意义。
 
 因此 ephemeron table 有特殊规则：
 
@@ -1639,33 +1529,13 @@ weak key
 
 > 如果 key 只能通过与它关联的 value 反过来找到，那么这个 value 不能靠这种关系把 key “救活”。
 
-因此在上面的例子中，如果没有其他外部强引用：
-
-```
-key
-```
-
-最终仍然可以被回收，同时这一整条 key-value 记录也会被删除。
-
-可以简单记成：
-
-```
-metadata[key] = value
-
-即使：
-value → key
-
-也不能让已经没有外部引用的 key
-因为自己的 metadata 而永远存活。
-```
-
 ---
 
 ## Finalizer
 
 Lua 可以通过：
 
-```
+```lua
 __gc
 ```
 
@@ -1673,13 +1543,11 @@ __gc
 
 finalizer 的主要用途通常不是释放普通 Lua 内存，因为普通 Lua 对象的内存本来就由 GC 管理。
 
-它更适合负责清理：
-
-> **Lua GC 本身并不了解的外部资源。**
+它更适合负责清理：**Lua GC 本身并不了解的外部资源。**
 
 例如：
 
-```
+```text
 FILE*
 socket fd
 数据库连接
@@ -1690,7 +1558,7 @@ OS handle
 
 例如：
 
-```
+```lua
 local mt = {
     __gc = function(obj)
         -- 清理外部资源
@@ -1706,27 +1574,23 @@ local obj = setmetatable({}, mt)
 
 不要简单理解为：
 
-```
+```text
 __gc == C++ destructor
 ```
 
 C++ RAII：
 
-```
+```cpp
 {
     Foo foo;
 }
 ```
 
-自动存储期对象离开作用域时：
-
-```
-立即、确定地调用析构函数
-```
+自动存储期对象离开作用域时：立即、确定地调用析构函数
 
 类似：
 
-```
+```cpp
 {
     std::unique_ptr<Foo> foo;
 }
@@ -1736,7 +1600,7 @@ RAII owner 离开作用域，也会确定性释放资源。
 
 Lua：
 
-```
+```lua
 do
     local obj = ...
 end
@@ -1746,33 +1610,11 @@ end
 
 > `obj` 对对象的引用消失了。
 
-如果对象因此变成不可达，它什么时候执行：
-
-```
-__gc
-```
-
-仍然取决于：
-
-```
-GC 什么时候真正运行
-```
-
-所以：
-
-```
-C++ RAII / destructor
-        ↓
-确定性资源释放
-
-Lua __gc
-        ↓
-非确定性的 finalization
-```
+如果对象因此变成不可达，它什么时候执行：`__gc`， 仍然取决于：GC 什么时候真正运行。
 
 因此对于：
 
-```
+```text
 socket
 文件
 数据库连接
@@ -1781,7 +1623,7 @@ socket
 
 等资源，最好仍然提供显式的：
 
-```
+```lua
 obj:close()
 ```
 
@@ -1791,15 +1633,12 @@ obj:close()
 
 ### `__gc` 的一个注意点
 
-如果希望某个对象被注册为需要 finalization 的对象，通常应该在给对象设置元表之前就准备好：
+如果希望某个对象被注册为需要 finalization 的对象，通常应该在给对象设置元表之前就准备好 `__gc` 。
 
-```
-__gc
-```
 
 例如：
 
-```
+```lua
 local mt = {
     __gc = function(obj)
         ...
@@ -1811,7 +1650,7 @@ local obj = setmetatable({}, mt)
 
 不要依赖这种方式：
 
-```
+```lua
 local mt = {}
 
 local obj = setmetatable({}, mt)
@@ -1829,7 +1668,7 @@ end
 
 Lua 提供：
 
-```
+```lua
 collectgarbage(option [, arg])
 ```
 
@@ -1838,7 +1677,7 @@ collectgarbage(option [, arg])
 
 ### `"collect"`
 
-```
+```lua
 collectgarbage("collect")
 ```
 
@@ -1858,29 +1697,16 @@ collectgarbage("collect")
 
 ### `"count"`
 
-```
+```lua
 local mem = collectgarbage("count")
 ```
 
-返回 Lua 当前使用内存的大致大小，单位为：
-
-```
-KB
-```
-
-例如：
-
-```
-print(collectgarbage("count"))
-```
-
-可以用于观察程序的大致 Lua 内存变化。
-
+返回 Lua 当前使用内存的大致大小，单位为：KB。
 
 
 ### `"stop"`
 
-```
+```lua
 collectgarbage("stop")
 ```
 
@@ -1889,7 +1715,7 @@ collectgarbage("stop")
 
 ### `"restart"`
 
-```
+```lua
 collectgarbage("restart")
 ```
 
@@ -1897,7 +1723,7 @@ collectgarbage("restart")
 
 ### `"step"`
 
-```
+```lua
 collectgarbage("step")
 ```
 
@@ -1905,7 +1731,7 @@ collectgarbage("step")
 
 也可以给出一个参数：
 
-```
+```lua
 collectgarbage("step", n)
 ```
 
@@ -1917,7 +1743,7 @@ collectgarbage("step", n)
 
 最简单的垃圾回收方式可以想象成：
 
-```
+```text
 程序运行
 程序运行
 程序运行
@@ -1933,7 +1759,7 @@ collectgarbage("step", n)
 
 Lua 5.3 使用增量式 GC，将垃圾回收工作拆成多个步骤：
 
-```
+```text
 程序运行一点
      ↓
 GC 做一点
@@ -1947,7 +1773,7 @@ GC 再做一点
 
 主要是在两个目标之间权衡：
 
-```
+```text
 GC 总体 CPU 开销
         ↕
 单次 GC 停顿时间
@@ -1959,13 +1785,13 @@ GC 总体 CPU 开销
 
 调用形式：
 
-```
+```lua
 collectgarbage("setpause", value)
 ```
 
 例如：
 
-```
+```lua
 collectgarbage("setpause", 200)
 ```
 
@@ -1975,7 +1801,7 @@ collectgarbage("setpause", 200)
 
 可以粗略理解为：
 
-```
+```text
 pause 大
     ↓
 下一轮 GC 开始得更晚
@@ -1991,11 +1817,7 @@ pause 小
 GC 更积极
 ```
 
-Lua 5.3 的默认值通常是：
-
-```
-200
-```
+Lua 5.3 的默认值通常是：200。
 
 它大致意味着内存增长到上一轮 GC 结束时的约两倍时，开始下一轮 GC。
 
@@ -2005,13 +1827,13 @@ Lua 5.3 的默认值通常是：
 
 调用形式：
 
-```
+```lua
 collectgarbage("setstepmul", value)
 ```
 
 例如：
 
-```
+```lua
 collectgarbage("setstepmul", 200)
 ```
 
@@ -2021,7 +1843,7 @@ collectgarbage("setstepmul", 200)
 
 可以粗略理解为：
 
-```
+```text
 stepmul 大
     ↓
 GC 每次工作更多
@@ -2037,7 +1859,7 @@ GC 每次工作较少
 
 因此可以这样记：
 
-```
+```text
 pause
     → 什么时候开始下一轮 GC
 
@@ -2051,7 +1873,7 @@ step multiplier
 
 在某些对延迟非常敏感的短时间段，可以暂时停止 GC：
 
-```
+```lua
 collectgarbage("stop")
 
 -- 延迟非常敏感的一小段代码
@@ -2061,19 +1883,17 @@ collectgarbage("restart")
 
 也可以在相对空闲的时候主动执行：
 
-```
+```lua
 collectgarbage("step")
 ```
 
 把一部分 GC 工作放在较合适的时间执行。
 
-但一般情况下：
-
-> **优先使用 Lua 默认的 GC 参数。**
+但一般情况下： **优先使用 Lua 默认的 GC 参数。**
 
 只有实际测量发现：
 
-```
+```text
 GC pause 过大
 内存占用过高
 延迟出现明显抖动
@@ -2090,15 +1910,19 @@ Optimize second.
 
 ---
 
-
-<br/>
-
-
-<br/>
-
 # 协程
 
-**Lua 协程（coroutine）可以理解为一种能够暂停，并在之后从暂停位置继续执行的执行流。**
+Lua 协程（coroutine）可以理解为一种能够暂停，并在之后从暂停位置继续执行的**执行流**。
+
+|对比维度|Lua 协程|操作系统线程|
+|---|---|---|
+|谁管理调度|Lua 程序或框架的协程调度器|操作系统调度器|
+|如何切换|通常由协程主动让出执行权|通常由操作系统进行抢占式调度|
+|切换时机|例如调用 `coroutine.yield()`|可以发生在任意适当的调度时机|
+|能否并行执行代码|同一执行线程上的协程不能同时执行 Lua 代码|多个线程可以在多核 CPU 上并行运行|
+|执行状态|有独立的协程执行状态和调用栈|有独立的线程执行状态和栈|
+|共享数据|同一个 Lua State 中的协程共享该状态中的数据|同一进程中的线程通常共享进程内存|
+
 
 一个 coroutine 会保存自己的：
 
@@ -2155,11 +1979,7 @@ Lua 中：
 type(coroutine.create(function() end))
 ```
 
-返回：
-
-```
-"thread"
-```
+返回："thread"
 
 但这里的 `thread` 是 **Lua coroutine 对象**，并不是操作系统线程或 `pthread`。
 
@@ -2189,9 +2009,7 @@ Lua Coroutine
 单个 Lua state 中通常一次只运行一个 coroutine
 ```
 
-所以：
-
-> **Coroutine 提供并发控制流，但本身不提供 CPU 并行。**
+所以： **Coroutine 提供并发控制流，但本身不提供 CPU 并行。**
 
 如果某个 coroutine 长时间运行而不 `yield`：
 
@@ -2218,15 +2036,7 @@ local co = coroutine.create(function(...)
 end)
 ```
 
-`create` 只是创建协程：
-
-```
-create
-  ↓
-suspended
-```
-
-并不会立即执行其中的函数。
+`create` 只是创建协程，并不会立即执行其中的函数。
 
 
 ### `coroutine.resume`
@@ -2276,33 +2086,24 @@ end)
 
 第一次：
 
-```
+```lua
 coroutine.resume(co)
 ```
 
-输出：
+输出：A
 
-```
-A
-```
 
-此时 coroutine 暂停在：
+此时 coroutine 暂停在：coroutine.yield()
 
-```
-coroutine.yield()
-```
 
 再次：
 
-```
+```lua
 coroutine.resume(co)
 ```
 
-从 `yield` 后继续执行：
+从 `yield` 后继续执行，输出：B
 
-```
-B
-```
 
 ---
 
@@ -2361,13 +2162,13 @@ local ok, value = coroutine.resume(co)
 
 成功：
 
-```
+```lua
 true, ...
 ```
 
 失败：
 
-```
+```lua
 false, error
 ```
 
@@ -2397,17 +2198,13 @@ coroutine.status(co)
 主要有：
 
 ```text
-suspended
-    尚未启动，或者已经 yield
+suspended：尚未启动，或者已经 yield（暂停了，需要别人来恢复）
 
-running
-    当前正在运行
+running：当前正在运行
 
-normal
-    自己暂时没有运行，但它 resume 的另一个 coroutine 正在运行
+normal：己暂时没有运行，但它 resume 的另一个 coroutine 正在运行（启动了另一个协程，等待其交回执行权）
 
-dead
-    已经正常结束，或者因为错误终止
+dead：已经正常结束，或者因为错误终止
 ```
 
 `dead` coroutine 不能再次成功 `resume`。
@@ -2433,7 +2230,7 @@ print(f())    -- 30
 
 可以理解为：
 
-```
+```text
 coroutine.create + coroutine.resume
               ↓
 包装成普通函数调用形式
@@ -2682,34 +2479,18 @@ for value in inorder(root) do
 end
 ```
 
-这里最大的好处是：
-
-> 遍历代码仍然可以按照正常递归逻辑编写。
+这里最大的好处是： 遍历代码仍然可以按照正常递归逻辑编写。
 
 不需要手动维护：
 
-```
+```text
 stack
 current node
 state enum
 visited flag
 ```
 
-因为：
-
-> **Coroutine 自己的调用栈就是遍历状态的一部分。**
-
-可以对比：
-
-```text
-Closure Iterator
-      ↓
-显式保存需要的状态
-
-Coroutine Generator
-      ↓
-整个暂停的执行过程就是状态
-```
+因为： **Coroutine 自己的调用栈就是遍历状态的一部分。**
 
 ---
 
@@ -2719,7 +2500,7 @@ Coroutine 与事件驱动程序结合非常重要。
 
 例如 Linux 网络程序：
 
-```
+```text
 non-blocking socket
         +
       epoll
@@ -2727,7 +2508,7 @@ non-blocking socket
 
 传统事件驱动模型通常是：
 
-```
+```text
 epoll_wait
     ↓
 I/O ready
@@ -2749,7 +2530,7 @@ socket_write(client_fd, response)
 
 看起来仍然是：
 
-```
+```text
 read
  ↓
 process
@@ -2781,7 +2562,7 @@ end
 
 真正的控制过程是：
 
-```
+```text
 Coroutine
 
 socket_read(fd)
@@ -2816,19 +2597,17 @@ read(fd)
 返回数据
 ```
 
-所以必须注意：
-
-> `yield` **本身并不会自动等待 socket，也不会自动调用** `epoll` **。**
+所以必须注意： `yield` **本身并不会自动等待 socket，也不会自动调用** `epoll` **。**
 
 真正完成调度的是：
 
-```
+```text
 event loop / coroutine scheduler
 ```
 
 它需要维护类似：
 
-```
+```text
 fd → waiting coroutine
 ```
 
@@ -2840,7 +2619,7 @@ fd → waiting coroutine
 
 可以这样理解：
 
-```
+```text
 epoll
     ↓
 解决：
@@ -2878,7 +2657,7 @@ scheduler
 
 Coroutine 特别适合：
 
-```
+```text
 I/O 等待
 网络程序
 generator
@@ -2889,17 +2668,7 @@ producer-consumer
 状态机
 ```
 
-但不应该把：
-
-```
-coroutine
-```
-
-理解成：
-
-```
-多核并行工具
-```
+但不应该把 coroutine 理解成 多核并行工具。
 
 例如一个 coroutine：
 
@@ -2909,14 +2678,9 @@ local co = coroutine.create(function()
 end)
 ```
 
-如果 `expensive_cpu_task()` 持续计算很久而不 `yield`：
+如果 `expensive_cpu_task()` 持续计算很久而不 `yield`，其他 coroutine 一样无法运行。
 
-```
-其他 coroutine 一样无法运行
-```
 
-因此：
-
-> Coroutine 的主要价值是**管理控制流和并发任务**，而不是提供 CPU 并行能力。
+因此： Coroutine 的主要价值是**管理控制流和并发任务**，而不是提供 CPU 并行能力。
 
 ---

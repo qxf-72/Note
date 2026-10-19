@@ -4,22 +4,44 @@
     "type": "split",
     "children": [
       {
-        "id": "f2f1e07593396753",
+        "id": "8608d94dc83e95c3",
         "type": "tabs",
         "children": [
           {
-            "id": "437642bda35a1b21",
+            "id": "91b4bb7dd0d723ea",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发技能/数据库/MongoDB入门.md",
+                "file": "PLAN.md",
+                "mode": "preview",
+                "source": true
+              },
+              "icon": "lucide-file",
+              "title": "PLAN"
+            },
+            "group": "7feb8592c2b352ab"
+          }
+        ]
+      },
+      {
+        "id": "c697d525a59474ee",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1b066cfe577ec3d6",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "PLAN.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "MongoDB入门"
-            }
+              "title": "PLAN"
+            },
+            "group": "7feb8592c2b352ab"
           }
         ]
       }
@@ -80,8 +102,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 256.8333435058594,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -145,7 +166,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "开发技能/数据库/MongoDB入门.md",
+                "file": "PLAN.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -230,16 +251,18 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "437642bda35a1b21",
+  "active": "91b4bb7dd0d723ea",
   "lastOpenFiles": [
-    "开发技能/数据库/MySQL是怎样运行的.md",
-    "开发技能/数据库/MongoDB入门.md",
-    "开发技能/框架/Skynet入门.md",
     "编程语言/lua/Lua程序设计.md",
+    "开发技能/框架/Skynet入门.md",
+    "开发技能/数据库/MongoDB入门.md",
+    "PLAN.md",
+    "开发技能/数据库/Redis入门.md",
+    "开发技能/数据库/SQL必知必会.md",
+    "开发技能/数据库/MySQL是怎样运行的.md",
     "计算机基础/计算机组成原理/汇编语言.md",
     "编程语言/C++/Effective C++.md",
     "编程语言/Lua/Lua程序设计.md",
-    "开发技能/数据库/Redis入门.md",
     "开发技能/Unix/Ubuntu 使用记录.md",
     "开发技能/Unix/Git入门.md",
     "开发技能/Unix/鸟哥的Linux私房菜.md",
@@ -256,8 +279,6 @@
     "开发技能/并发编程/C++并发编程实战.md",
     "开发技能/Unix/UNIX环境高级编程.md",
     "编程语言/Golang/Go语言圣经.md",
-    "编程语言/C++/候捷C++面向对象高级编程.md",
-    "编程语言/C++/C++ Primer.md",
     "开发技能/框架",
     "编程语言/Lua",
     "482743F2FD33B7CE58A9F431F7FC20D3 1.png",

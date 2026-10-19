@@ -4,7 +4,7 @@ Skynet 可以理解为一个基于 Actor 思想的服务器框架：
 
 **用一个较小的多线程消息调度核心，把业务拆成许多通过消息通信的 Service；框架保证同一个 Service 的消息处理串行化，而不同 Service 可以被多个 Worker 并行调度，再利用 Lua coroutine 把异步消息流程包装成容易编写的顺序业务代码。**
 
-> Actor 模型是一种**并发编程模型**。核心思想是把系统拆分成许多相对独立的 Actor，每个 Actor 管理自己的状态，通过**消息传递**进行通信，而不是让多个执行单元直接操作同一份共享状态。
+> Actor 模型是一种**并发编程模型**。核心思想是把系统拆分成许多相对独立的 Actor，每个 Actor 管理自己的状态，通过**消息传递**进行通信。
 > 
 > 一个 Actor 通常负责接收消息、处理消息、修改自己的内部状态，以及向其他 Actor 发送消息。
 > 
@@ -107,9 +107,7 @@ Skynet 最初可以考虑使用：
 
 **Service 和 Lua State 不是同一个概念。**
 
-Skynet Service 可以使用 C 编写，也可以使用 Lua 编写。
-
-对于 Lua Service，可以粗略理解为：
+Skynet Service 可以使用 C 编写，也可以使用 Lua 编写。对于 Lua Service，可以粗略理解为：
 
 ```
 Lua Service
@@ -158,9 +156,7 @@ void* data
 size_t size
 ```
 
-接收方可以直接访问这块内存，从而实现零拷贝。
-
-但是这样需要非常小心地管理：
+接收方可以直接访问这块内存，从而实现零拷贝。但是这样需要非常小心地管理：
 
 ```text
 数据生命周期
@@ -215,22 +211,16 @@ struct skynet_message {
 这里主要包含：
 
 ```text
-source
-  │
-  └── 谁发送的
+source：谁发送的
 
-session
-  │
-  └── 请求/响应匹配
+session： 请求/响应匹配
 
-data + sz
-  │
-  └── 消息内容
+data + sz：消息内容
 ```
 
 此外还有一个非常重要的概念：
 
-```
+```text
 type
 ```
 
@@ -240,25 +230,7 @@ type
 
 ## session
 
-Skynet 核心提供的是：
-
-```
-单向消息
-```
-
-也就是：
-
-```
-A ─────message────→ B
-```
-
-但是业务中经常需要：
-
-```
-请求 → 响应
-```
-
-例如：
+Skynet 核心提供的是：单向消息。但是业务中经常需要对发来的消息进行响应，例如：
 
 ```text
 Service A                     Service B
@@ -274,29 +246,7 @@ session = 100
    <──────────────────────────
 ```
 
-A 发出请求时获得一个 session：
-
-```
-session = 100
-```
-
-然后记录：
-
-```
-session 100
-    ↓
-对应哪个请求
-```
-
-B 处理完成以后，把相同的 session 带回来。
-
-于是 A 收到：
-
-```
-session = 100
-```
-
-就知道这个响应属于之前的哪个请求。
+A 发出请求时获得一个 session，然后记录 session 对应哪个请求。B 处理完成以后，把相同的 session 带回来。于是 A 收到 session 后，就知道这个响应属于之前的哪个请求。
 
 因此： **session 本质上解决的是异步消息环境中的请求—响应匹配问题。**
 
@@ -304,9 +254,7 @@ session = 100
 
 ## type
 
-`type` 更准确地说表示：
-
-> **当前消息使用哪一组通信协议。**
+`type` 更准确地说表示： **当前消息使用哪一组通信协议。**
 
 而不仅仅是普通意义上的“消息类别”。不同消息可能使用：
 
@@ -319,19 +267,9 @@ MULTICAST
 ...
 ```
 
-不同协议可以有不同的数据编码和处理方式。
+**不同协议可以有不同的数据编码和处理方式**。于是可以：
 
-这样就没有必要规定：
-
-```
-整个 Skynet
-      ↓
-只能使用一种统一消息编码格式
-```
-
-而是可以：
-
-```
+```text
 Service / Protocol A
         ↓
 某种编码方式
@@ -353,7 +291,7 @@ Skynet 使用了**两级消息队列**。
 
 ### 第一级：Service 私有消息队列
 
-```
+```text
 Service A → Queue A
 
 Service B → Queue B
@@ -365,21 +303,18 @@ Service C → Queue C
 
 发送消息：
 
-```
+```text
 send → Service B
 ```
 
-实际上就是把消息加入：
+实际上就是把消息加入 Queue B 。
 
-```
-Queue B
-```
 
 ### 第二级：Global Queue
 
 Skynet 还有一个全局消息队列：
 
-```
+```text
 Global Queue
 
 ┌─────────┐
@@ -389,13 +324,11 @@ Global Queue
 └─────────┘
 ```
 
-里面存放的是：
-
-**当前有消息需要处理的 Service Queue。**
+里面存放的是：**当前有消息需要处理的 Service 的 私有Queue。**
 
 Worker Thread：
 
-```
+```text
           Global Queue
                │
       ┌────────┼────────┐
@@ -405,7 +338,7 @@ Worker Thread：
 
 Worker 从 Global Queue 中取出一个 Service Queue，然后：
 
-```
+```text
 取一个 Service Queue
         ↓
 取出一条消息
@@ -419,7 +352,7 @@ Worker 从 Global Queue 中取出一个 Service Queue，然后：
 
 如果 Service 的消息队列已经为空：
 
-```
+```text
 Queue Empty
     ↓
 不再放回 Global Queue
@@ -429,48 +362,11 @@ Queue Empty
 
 ### 最关键的线程安全保证
 
-同一个 Service 的消息队列被一个 Worker 处理时：
+同一个 Service 的消息队列被一个 Worker 处理时，其他 Worker 不会同时获得 Service A 的消息队列。因此不会出现同一个 service 被多个线程同时执行的情况。
 
-```
-Worker 1
-   ↓
-Service A
-```
+Skynet 实现的是：
 
-其他 Worker 不会同时获得 Service A 的消息队列。
-
-因此不会出现：
-
-```
-Worker 1 ──→ Service A callback
-Worker 2 ──→ Service A callback
-```
-
-同时执行的情况。
-
-所以：
-
-```
-同一个 Service
-      ↓
-消息串行执行
-```
-
-而：
-
-```
-Service A ← Worker 1
-
-Service B ← Worker 2
-
-Service C ← Worker 3
-```
-
-又可以并行执行。
-
-因此 Skynet 实现的是：
-
-```
+```text
 Service 内部串行
 +
 Service 之间并行
@@ -486,19 +382,7 @@ Service 之间并行
 
 ## Lua coroutine 的作用
 
-Lua coroutine 可以把底层：
-
-```
-异步消息
-```
-
-包装成上层看起来类似：
-
-```
-同步函数调用
-```
-
-例如：
+Lua coroutine 可以把底层 异步消息，包装成上层看起来类似 同步函数调用。例如：
 
 ```lua
 local result = skynet.call(service, "lua", "query")
@@ -507,7 +391,7 @@ print(result)
 
 代码看起来像：
 
-```
+```text
 调用
  ↓
 等待
@@ -517,7 +401,7 @@ print(result)
 
 但底层实际类似：
 
-```
+```text
 Coroutine A
 
 发送 request
@@ -536,7 +420,7 @@ callback 返回
 
 后来：
 
-```
+```text
 response
 session = 123
       ↓
@@ -547,23 +431,7 @@ session = 123
 resume
 ```
 
-于是 Lua 代码就可以继续：
-
-```
-print(result)
-```
-
-因此可以总结成：
-
-```
-异步消息系统
-      +
-Lua Coroutine
-      =
-类似同步代码的编程体验
-```
-
-这个思想非常重要。
+于是 Lua 代码就可以继续执行。
 
 coroutine 并没有把异步 IO 变成真正的同步阻塞 IO，而只是让**异步状态机更容易用顺序代码表达**。
 
@@ -573,35 +441,21 @@ coroutine 并没有把异步 IO 变成真正的同步阻塞 IO，而只是让**�
 
 Skynet 内部使用的是：
 
-```
+```text
 Message
 ```
 
 但外部客户端使用的是：
 
-```
+```text
 TCP byte stream
 ```
 
-因此需要一个组件把：
+因此需要一个组件把：TCP 和 Skynet Message 连接起来。
 
-```
-TCP
- ↓
-Skynet Message
-```
+这个组件就是：Gate。大致为：
 
-连接起来。
-
-这个组件就是：
-
-```
-Gate
-```
-
-大致为：
-
-```
+```text
 Game Client
      │
      │ TCP
@@ -618,7 +472,7 @@ Game Client
 
 Gate 主要负责：
 
-```
+```text
 监听 TCP 端口
         ↓
 accept 连接
@@ -632,25 +486,17 @@ accept 连接
 交给其他 Service
 ```
 
-Gate 自己尽量不处理具体业务逻辑。
-
-业务逻辑可以交给 Lua Service。
+Gate 自己尽量不处理具体业务逻辑。业务逻辑可以交给 Lua Service。
 
 文章当时还设计了：
 
-```
+```text
 watchdog
 agent
 broker
 ```
 
-等不同的数据转发方式。
-
-需要注意的是，在文章描述的设计中：
-
-**Gate 主要负责读取外部连接，并不负责向客户端回写数据。**
-
-发送数据由其他专门的 Service 完成。
+等不同的数据转发方式。需要注意的是，在文章描述的设计中：**Gate 主要负责读取外部连接，并不负责向客户端回写数据。** 发送数据由其他专门的 Service 完成。
 
 ---
 
@@ -658,7 +504,7 @@ broker
 
 Gate 解决的是：
 
-```
+```text
 外部客户端
     ↓
 Skynet
@@ -666,7 +512,7 @@ Skynet
 
 而 Connection 主要解决：
 
-```
+```text
 Skynet
     ↓
 外部服务
@@ -674,7 +520,7 @@ Skynet
 
 例如：
 
-```
+```text
 Skynet
    │
    ├── Redis
@@ -682,17 +528,9 @@ Skynet
    └── 其他 TCP 服务
 ```
 
-Connection 使用：
+Connection 使用 epoll 监听外部 fd 的可读事件。收到数据以后：
 
-```
-epoll
-```
-
-监听外部 fd 的可读事件。
-
-收到数据以后：
-
-```
+```text
 socket readable
        ↓
 Connection
@@ -702,17 +540,11 @@ Skynet message
 目标 Service
 ```
 
-这样 Service 就不需要：
-
-```
-阻塞 recv()
-```
-
-等待外部服务返回数据。
+这样 Service 就不需要阻塞 recv() 等待外部服务返回数据。
 
 这是非常重要的，因为：
 
-```
+```text
 Worker Thread
       ↓
 阻塞 IO
@@ -730,7 +562,7 @@ Worker Thread
 
 虽然 Skynet 的核心设计围绕：
 
-```
+```text
 单进程
 +
 多线程
@@ -742,7 +574,7 @@ Service
 
 Service 地址是 32 bit：
 
-```
+```text
 ┌──────────┬──────────────────────┐
 │ 高 8 bit │      低 24 bit      │
 │ Harbor ID│   Service Handle     │
@@ -751,7 +583,7 @@ Service 地址是 32 bit：
 
 因此可以根据 Service 地址判断：
 
-```
+```text
 目标 Service
     │
     ├── 当前节点 → 本地消息
@@ -761,13 +593,13 @@ Service 地址是 32 bit：
 
 如果：
 
-```
+```text
 Service A → Service B
 ```
 
 而 B 位于其他 Skynet 节点：
 
-```
+```text
 A
  ↓
 Local Harbor
@@ -779,15 +611,8 @@ Remote Harbor
 B
 ```
 
-Harbor 负责不同 Skynet 节点之间的数据转发。
+Harbor 负责不同 Skynet 节点之间的数据转发。这样业务 Service 使用消息接口时，不需要过度关心：目标 Service 到底在本机，还是远程机器
 
-这样业务 Service 使用消息接口时，不需要过度关心：
-
-```
-目标 Service
-到底在本机
-还是远程机器
-```
 
 ---
 
@@ -795,7 +620,7 @@ Harbor 负责不同 Skynet 节点之间的数据转发。
 
 数字 handle：
 
-```
+```text
 :01000042
 ```
 
@@ -803,7 +628,7 @@ Harbor 负责不同 Skynet 节点之间的数据转发。
 
 因此 Skynet 支持给 Service 起名字，例如：
 
-```
+```text
 login
 database
 chat
@@ -811,7 +636,7 @@ chat
 
 跨 Skynet 节点时，还需要解决：
 
-```
+```text
 service name
       ↓
 在哪个节点？
@@ -821,75 +646,37 @@ service name
 
 于是文章中引入了：
 
-```
+```text
 Master
 ```
 
 Master 用于同步：
 
-```
+```text
 全局 Service 名字
 +
 Skynet 节点地址
 ```
 
-可以粗略理解成一个全局的：
-
-```
-name → address
-```
-
-管理服务。
+可以粗略理解成一个全局的 name → address 管理服务。
 
 ---
 
 ## 组播
 
-游戏服务器中经常存在：
+游戏服务器中经常存在一条消息发送给很多 Service 的情况，如果每次都复制完整消息。会造成额外开销。因此组播消息采用：
 
-```
-一条消息
-   ↓
-发送给很多 Service
-```
-
-例如：
-
-```
-Player A
-   │
-   ├── Player B
-   ├── Player C
-   ├── Player D
-   └── Player E
-```
-
-如果每次都复制完整消息：
-
-```
-copy
-copy
-copy
-copy
-```
-
-会造成额外开销。
-
-因此组播消息采用：
-
-```
+```text
 Message
    +
 reference count
 ```
 
-让多个接收方共享同一个消息数据。
-
-但是 Skynet 没有让普通单播消息也全部使用引用计数。
+让多个接收方共享同一个消息数据。但是 Skynet 没有让普通单播消息也全部使用引用计数。
 
 原因是：
 
-```
+```text
 不用组播的人
       ↓
 不应该承担引用计数的额外成本
@@ -940,12 +727,6 @@ reference count
 ```
 
 ---
-
-
-<br/>
-
-
-<br/>
 
 # [Quickstart ](https://github.com/cloudwu/skynet/wiki/GettingStarted)
 
@@ -1003,23 +784,11 @@ Service 调度
 数据库写回
 ```
 
-游戏中的玩家、场景、副本等通常存在大量需要长期维护的上下文状态。
+游戏中的玩家、场景、副本等通常存在大量需要长期维护的上下文状态。如果每次业务操作都依赖数据库读取和写入，数据库很容易成为性能瓶颈。
 
-如果每次业务操作都依赖数据库读取和写入，数据库很容易成为性能瓶颈。
+因此 Skynet 更倾向于：Service = 业务逻辑+ 内存中的业务状态。例如玩家上线时：
 
-因此 Skynet 更倾向于：
-
-```
-Service
-   =
-业务逻辑
-   +
-内存中的业务状态
-```
-
-例如玩家上线时：
-
-```
+```text
 数据库
   ↓
 加载玩家数据
@@ -1035,7 +804,7 @@ Player Service
 
 此时数据库更偏向于承担：
 
-```
+```text
 持久化
 备份
 故障恢复
@@ -1043,27 +812,6 @@ Player Service
 
 而不是每个业务操作都同步访问数据库。
 
-不过 Skynet **并不规定具体业务架构**。
-
-例如玩家系统既可以设计成：
-
-```
-Player 1 → Service 1
-Player 2 → Service 2
-Player 3 → Service 3
-```
-
-也可以设计成：
-
-```
-              Player Service
-                   │
-        ┌──────────┼──────────┐
-        ▼          ▼          ▼
-     Player 1   Player 2   Player 3
-```
-
-也就是说：
 
 **Skynet 提供 Service 和消息机制，但 Service 应该如何拆分，需要由具体业务决定。**
 
@@ -1075,7 +823,7 @@ Skynet 中可能同时存在大量 Service，但真正执行 Service 代码的 W
 
 可以粗略理解为：
 
-```
+```text
 大量 Service
     ↓
 少量 Worker Thread
@@ -1084,15 +832,9 @@ Skynet 中可能同时存在大量 Service，但真正执行 Service 代码的 W
 ```
 
 
-如果某个 Service 直接执行阻塞式网络 IO：
+如果某个 Service 直接执行阻塞式网络 IO，那么：
 
-```
-recv(fd, buf, size, 0);
-```
-
-那么：
-
-```
+```text
 Service A
    ↓
 recv()
@@ -1104,13 +846,11 @@ Worker Thread 也被阻塞
 
 此时受影响的不只是 Service A，因为这个 Worker Thread 暂时无法继续调度其他 Service。
 
-因此：
-
-**不要在 Skynet Service 中直接使用可能阻塞的系统网络 API，而应该使用 Skynet 提供的网络层。**
+因此：**不要在 Skynet Service 中直接使用可能阻塞的系统网络 API，而应该使用 Skynet 提供的网络层。**
 
 正确的思路更接近：
 
-```
+```text
 socket
   ↓
 Skynet 网络层
@@ -1130,18 +870,7 @@ IO ready
 
 ## 单个 Service 内可以有多个 coroutine
 
-一个 Service 内部可以同时存在多个 Lua coroutine：
-
-```
-同一个 Service
-   │
-   ├── coroutine A
-   ├── coroutine B
-   ├── coroutine C
-   └── coroutine D
-```
-
-例如：
+一个 Service 内部可以同时存在多个 Lua coroutine，例如：
 
 ```lua
 local result = skynet.call(service, "lua", "query")
@@ -1149,7 +878,7 @@ local result = skynet.call(service, "lua", "query")
 
 执行到 `skynet.call` 后，如果需要等待远程 Service 返回结果：
 
-```
+```text
 Coroutine A
     ↓
 发送 request
@@ -1157,27 +886,9 @@ Coroutine A
 yield
 ```
 
-此时只是：
+此时只是，Coroutine A 被挂起，并不是整个 Service 被阻塞，更不是Worker Thread 被阻塞。在等待期间，该 Service 仍然可以处理其他消息：
 
-```
-Coroutine A 被挂起
-```
-
-并不是：
-
-```
-整个 Service 被阻塞
-```
-
-更不是：
-
-```
-Worker Thread 被阻塞
-```
-
-在等待期间，该 Service 仍然可以处理其他消息：
-
-```
+```text
 Coroutine A
     ↓
 yield
@@ -1193,7 +904,7 @@ Coroutine C
 
 等到 A 等待的响应到达后：
 
-```
+```text
 response
    ↓
 根据 session 找到 Coroutine A
@@ -1203,73 +914,11 @@ resume
 
 A 再继续执行。
 
-因此：
-
-**Skynet Service 在一条业务流程挂起等待响应时，仍然可以处理其他消息。**
+因此：**Skynet Service 在一条业务流程挂起等待响应时，仍然可以处理其他消息。**
 
 ---
 
-## Service 内的 coroutine 是并发，不是并行
 
-这一点非常重要。
-
-同一个 Service 内虽然可以存在多个 coroutine：
-
-```
-Coroutine A
-Coroutine B
-Coroutine C
-```
-
-但它们不会同时在多个 CPU 核心上运行。
-
-而是：
-
-```
-Coroutine A
-   ↓ yield
-Coroutine B
-   ↓ yield
-Coroutine C
-   ↓ yield
-Coroutine A
-```
-
-所以同一个 Service 内属于：
-
-```
-协作式并发
-```
-
-而不是：
-
-```
-多线程并行
-```
-
-真正的多核并行发生在不同 Service 之间：
-
-```
-Worker 1 → Service A
-
-Worker 2 → Service B
-
-Worker 3 → Service C
-```
-
-因此可以总结为：
-
-```
-不同 Service 之间
-       ↓
-多线程并行
-
-同一个 Service 内
-       ↓
-coroutine 协作式并发
-```
-
----
 
 ## coroutine 的状态陷阱
 
@@ -1289,7 +938,7 @@ end
 
 执行过程可能是：
 
-```
+```text
 Coroutine A
 
 money = 100
@@ -1302,7 +951,7 @@ yield
 
 在 A 挂起期间，另一个 coroutine 可能执行：
 
-```
+```text
 Coroutine B
 
 money = 200
@@ -1310,7 +959,7 @@ money = 200
 
 之后 A 恢复：
 
-```
+```text
 Coroutine A
 
 old == 100
@@ -1319,76 +968,23 @@ money == 200
 
 但 A 仍然执行：
 
-```
+```text
 money = old + x
 ```
 
 于是可能覆盖 Coroutine B 已经做出的修改。
 
-所以必须记住：
-
-**一条 coroutine 挂起以后，Service 内部状态可能已经被其他 coroutine 修改。**
+所以必须记住：**一条 coroutine 挂起以后，Service 内部状态可能已经被其他 coroutine 修改。**
 
 因此在调用可能 `yield` 的 API 之后，例如：
 
-```
+```lua
 skynet.call(...)
 skynet.sleep(...)
 socket.read(...)
 ```
 
-恢复执行时，不能默认之前观察到的状态仍然成立。
-
-可以把一次 `yield` 粗略理解成：
-
-```
-这里允许其他业务逻辑插进来执行
-```
-
-因此恢复后往往需要重新检查共享状态。
-
----
-
-## `skynet.fork` 不是真正的 OS 线程
-
-Skynet 中有：
-
-```lua
-skynet.fork(function()
-    ...
-end)
-```
-
-这里虽然有时会使用“线程”这个词，但它实际上并不是：
-
-```
-pthread
-OS Thread
-```
-
-而是：
-
-```
-Lua coroutine
-```
-
-因此：
-
-```
-skynet.fork
-≠
-pthread_create
-```
-
-同一个 Service 内的多个 `skynet.fork`：
-
-```
-共享同一个 Lua State
-+
-协作式调度
-+
-不会真正并行执行
-```
+恢复执行时，不能默认之前观察到的状态仍然成立。恢复后往往需要重新检查共享状态。
 
 ---
 
@@ -1396,7 +992,7 @@ pthread_create
 
 Skynet 早期设计曾经追求一种很强的**位置透明性**：
 
-```
+```text
 Service A
    ↓
 send
@@ -1404,36 +1000,18 @@ send
 Service B
 ```
 
-业务层不需要关心：
+业务层不需要关心：Service B 在本机，还是在另一台机器？
 
-```
-Service B 在本机
-还是在另一台机器
-```
 
-也就是说，希望把：
+也就是说，希望把本地 Service 调用和远程 Service 调用，抽象成几乎完全相同的形式。
 
-```
-本地 Service 调用
-```
-
-和：
-
-```
-远程 Service 调用
-```
-
-抽象成几乎完全相同的形式。
-
-后来作者认为：
-
-**把本地消息和跨机器消息完全抽象成一样，并不是一个好的设计。**
+后来作者认为：**把本地消息和跨机器消息完全抽象成一样，并不是一个好的设计。**
 
 原因是两者本质上存在很大的可靠性差异。
 
 本地 Service：
 
-```
+```text
 同一个进程
    ↓
 通信成本低
@@ -1443,7 +1021,7 @@ Service B 在本机
 
 而跨机器通信需要面对：
 
-```
+```text
 网络断开
 机器宕机
 进程崩溃
@@ -1452,11 +1030,9 @@ Service B 在本机
 部分失败
 ```
 
-这些问题无法通过“位置透明”真正消除。
+这些问题无法通过“位置透明”真正消除。因此现代 Skynet 更推荐显式使用 Cluster 集群：
 
-因此现代 Skynet 更推荐显式使用 Cluster：
-
-```
+```text
 Skynet Instance A
        │
        │ cluster
@@ -1464,57 +1040,23 @@ Skynet Instance A
 Skynet Instance B
 ```
 
-把另一台机器上的 Skynet 实例视为：
+把另一台机器上的 Skynet 实例视为：外部服务，并显式处理网络通信可能出现的失败。
 
-```
-外部服务
-```
+因此：**虽然 Skynet 仍然支持多节点模式，但已经不推荐早期那种把本地调用和远程调用完全透明化的设计。**
 
-并显式处理网络通信可能出现的失败。
+> 在 Skynet 中，`cluster` 通常指集群通信机制，用于连接多个独立运行的 Skynet 节点，让它们能够相互调用 Service。
 
-因此：
-
-**虽然 Skynet 仍然支持多节点模式，但已经不推荐早期那种把本地调用和远程调用完全透明化的设计。**
 
 ---
 
 ## 核心理解
 
-这篇文章最重要的几个知识点可以总结成：
+概括为：
 
-```
-Skynet
-  │
-  ├── Service = 逻辑 + 状态
-  │
-  ├── Service 之间通过消息通信
-  │
-  ├── 不同 Service 可以多线程并行
-  │
-  ├── 同一 Service 内通过 coroutine 并发
-  │
-  ├── coroutine 并不真正并行
-  │
-  ├── yield 后内部状态可能已经变化
-  │
-  ├── 不应该阻塞 Worker Thread
-  │
-  └── 跨节点通信应显式面对网络的不可靠性
-```
-
-可以进一步概括为：
-
-**Skynet 用多线程调度大量 Service 来利用多核 CPU；每个 Service 内部再使用 Lua coroutine 组织异步业务流程。不同 Service 可以真正并行，而同一 Service 内的 coroutine 只是协作式并发。网络 IO、定时器和 Service 间调用都尽量通过异步消息机制完成，从而避免阻塞有限的 Worker Thread。**
+Skynet 用多线程调度大量 Service 来利用多核 CPU；每个 Service 内部再使用 Lua coroutine 组织异步业务流程。不同 Service 可以真正并行，而同一 Service 内的 coroutine 只是协作式并发。网络 IO、定时器和 Service 间调用都尽量通过异步消息机制完成，从而避免阻塞有限的 Worker Thread。
 
 
 ---
-
-
-<br/>
-
-
-<br/>
-
 
 # [Bootstrap](https://github.com/cloudwu/skynet/wiki/Bootstrap)
 
@@ -1525,7 +1067,7 @@ Skynet
 
 启动一个 Skynet 节点时，需要执行：
 
-```
+```bash
 ./skynet config
 ```
 
@@ -1533,7 +1075,7 @@ Skynet
 
 整个启动流程可以先粗略理解为：
 
-```
+```text
 ./skynet config
        ↓
 读取配置文件
@@ -1551,36 +1093,15 @@ Skynet 的一个运行进程可以称为一个 **Skynet Node**。
 
 ## 第一个 Service：logger
 
-Skynet 启动后，第一个创建的 Service 是：
-
-```
-logger
-```
-
-`logger` 用于处理 Skynet 中其他 Service 的日志输出。
-
-例如：
-
-```
-Service
-   │
-   │ skynet_error(...)
-   ▼
- logger
-   │
-   ├── stdout
-   └── log file
-```
+Skynet 启动后，第一个创建的 Service 是：logger，用于处理 Skynet 中其他 Service 的日志输出。
 
 配置文件中的：
 
-```
+```lua
 logger = ...
 ```
 
-可以指定日志文件。
-
-如果没有设置，则日志默认输出到标准输出。
+可以指定日志文件。如果没有设置，则日志默认输出到标准输出。
 
 ---
 
@@ -1588,43 +1109,29 @@ logger = ...
 
 第二个启动的 Service 由配置文件中的：
 
-```
+```lua
 bootstrap = ...
 ```
 
-决定。
+决定。默认类似：
 
-默认类似：
-
-```
+```lua
 bootstrap = "snlua bootstrap"
 ```
 
 这里可以拆成两个部分：
 
-```
-snlua
-  │
-  └── 要启动的底层 Service
+```text
+snlua： 要启动的底层 Service
 
-bootstrap
-  │
-  └── 传递给 snlua 的参数
+bootstrap：传递给 snlua 的参数
 ```
 
-因此：
-
-```
-bootstrap = "snlua bootstrap"
-```
-
-可以理解为：
-
-> 创建一个 `snlua` Service，并让它加载并执行 `bootstrap.lua`。
+因此可以理解为：创建一个 `snlua` Service，并让它加载并执行 `bootstrap.lua`。
 
 整体过程：
 
-```
+```text
 启动 snlua
     ↓
 创建 Lua State
@@ -1640,33 +1147,19 @@ bootstrap = "snlua bootstrap"
 
 ## snlua 是什么
 
-`snlua` 可以粗略理解为：
-
-> **承载 Lua Service 的底层 C Service。**
+`snlua` 可以粗略理解为： **承载 Lua Service 的底层 C Service。**
 
 Lua Service 本身最终运行在 Lua VM / Lua State 中，而 **`snlua` 负责创建这个 Lua 环境并加载对应的 Lua 文件**。
 
-可以粗略理解为：
-
-```
-Lua Service
-    ↓
-snlua
-    ↓
-Lua State
-    ↓
-xxx.lua
-```
-
 例如：
 
-```
+```lua
 skynet.newservice("foo")
 ```
 
 底层可以粗略理解为：
 
-```
+```text
 创建 snlua
     ↓
 创建 Lua State
@@ -1676,41 +1169,17 @@ skynet.newservice("foo")
 形成新的 Lua Service
 ```
 
-因此：
-
-```
-snlua bootstrap
-```
-
-本质上就是：
-
-```
-创建 Lua Service
-      ↓
-执行 bootstrap.lua
-```
+每个 Lua Service 本身就是一个由 `snlua` 实现的 Service 实例。`snlua` 是其底层实现类型。不过，`logger`、`harbor` 等服务可以由 C 层模块实现，不需要通过 `snlua` 来运行 Lua 脚本。
 
 ---
 
 ## bootstrap.lua 的作用
 
-`bootstrap.lua` 并不是用户业务代码，而是：
-
-> **Skynet 自身的系统启动 Service。**
+`bootstrap.lua` 并不是用户业务代码，而是： **Skynet 自身的系统启动 Service。**
 
 它负责把 Skynet 所需要的一系列基础 Service 启动起来。
 
-整个关系不是：
-
-```
-Skynet
-  ↓
-main.lua
-```
-
-而是：
-
-```
+```text
 Skynet C Core
       ↓
 logger
@@ -1730,85 +1199,48 @@ bootstrap.lua
 
 `bootstrap.lua` 会启动：
 
-```
+```lua
 skynet.launch("snlua", "launcher")
 ```
 
-然后注册名字：
-
-```
-.launcher
-```
-
-`launcher` 可以粗略理解为：
-
-> **负责创建和管理其他 Service 的基础 Service。**
+然后注册名字：`.launcher`，`launcher` 可以粗略理解为： **负责创建和管理其他 Service 的基础 Service。**
 
 以后使用：
 
-```
+```lua
 skynet.newservice(...)
 ```
 
-创建 Service 时，底层流程和 `launcher` 有密切关系。
-
-因此它需要在系统启动的早期阶段建立起来。
+创建 Service 时，底层流程和 `launcher` 有密切关系。因此它需要在系统启动的早期阶段建立起来。
 
 ---
 
 ## 单节点与多节点
 
-bootstrap 启动过程中还会根据配置判断当前 Skynet 是：
-
-```
-单节点
-```
-
-还是：
-
-```
-多节点
-```
+bootstrap 启动过程中还会根据配置判断当前 Skynet 是：单节点，还是多节点？
 
 ### 单节点模式
 
 如果：
 
-```
+```lua
 harbor = 0
 ```
 
-表示当前节点不需要使用旧的 Harbor 多节点通信机制。
-
-此时会使用：
-
-```
-cdummy
-```
-
-处理一些和全局名字相关的逻辑。
-
-可以简单记成：
-
-```
-单节点
-  ↓
-cdummy
-```
-
+表示当前节点不需要使用旧的 Harbor 多节点通信机制。此时会使用cdummy处理一些和全局名字相关的逻辑。
 
 ### 旧版多节点模式
 
 Skynet 早期多节点体系中使用：
 
-```
+```text
 cmaster
 cslave
 ```
 
 结构大致为：
 
-```
+```text
 Master Node
    │
    ├── cmaster
@@ -1822,17 +1254,15 @@ Slave Node
 
 它们负责节点之间：
 
-```
+```text
 通信
 消息转发
 全局名字同步
 ```
 
-不过现在 Skynet 已经不推荐这种强调“位置透明”的 Harbor 多节点模式。
+不过现在 Skynet 已经不推荐这种强调“位置透明”的 Harbor 多节点模式。现代 Skynet 更推荐：
 
-现代 Skynet 更推荐：
-
-```
+```text
 Skynet Instance A
        │
      cluster
@@ -1843,26 +1273,11 @@ Skynet Instance B
 
 显式处理不同 Skynet 实例之间的网络通信。
 
-因此学习 Bootstrap 时，对：
-
-```
-cmaster
-cslave
-cdummy
-harbor
-```
-
-理解其历史启动作用即可。
-
 ---
 
 ##  DataCenter
 
-在某些运行模式下，bootstrap 还会启动：
-
-```
-datacenterd
-```
+在某些运行模式下，bootstrap 还会启动：datacenterd
 
 并注册：
 
@@ -1870,9 +1285,7 @@ datacenterd
 DATACENTER
 ```
 
-DataCenter 可以粗略理解为：
-
-> Skynet 中用于保存和共享一些全局数据的 Service。
+DataCenter 可以粗略理解为： Skynet 中用于保存和共享一些全局数据的 Service。
 
 当前阶段知道：
 
@@ -1892,46 +1305,11 @@ DATACENTER
 
 随后 bootstrap 会启动：
 
-```
+```lua
 skynet.newservice("service_mgr")
 ```
 
-`service_mgr` 主要负责管理：
-
-```
-UniqueService
-```
-
-所谓 UniqueService，就是：
-
-> 确保某一种 Service 只被创建一次。
-
-例如：
-
-```
-第一次：
-
-uniqueservice("database")
-       ↓
-创建 database Service
-
-
-第二次：
-
-uniqueservice("database")
-       ↓
-发现已经存在
-       ↓
-直接返回已有 Service
-```
-
-因此可以理解为：
-
-```
-service_mgr
-     ↓
-管理唯一 Service
-```
+`service_mgr` 主要负责管理UniqueService。
 
 ---
 
@@ -1941,173 +1319,20 @@ service_mgr
 
 配置中的：
 
-```
+```lua
 bootstrap = "snlua bootstrap"
 ```
 
-指定的是：
+指定的是： **Skynet 框架自己的启动入口。**
 
-> **Skynet 框架自己的启动入口。**
+而真正决定： **用户业务从哪里开始运行** 的是：
 
-也就是：
-
-```
-bootstrap
-    ↓
-service/bootstrap.lua
-```
-
-而真正决定：
-
-> **用户业务从哪里开始运行**
-
-的是：
-
-```
+```lua
 start
 ```
 
-例如：
+如果没有显式设置 start，通常默认使用 main。
 
-```
-start = "main"
-```
-
-表示：
-
-```
-bootstrap.lua
-     ↓
-读取 start
-     ↓
-main
-     ↓
-创建 main Service
-     ↓
-执行 main.lua
-```
-
-如果没有显式设置：
-
-```
-start
-```
-
-通常默认使用：
-
-```
-main
-```
-
-因此要牢记：
-
-```
-bootstrap
-   │
-   └── Skynet 自己的启动入口
-
-
-start
-   │
-   └── 用户业务的启动入口
-```
-
----
-
-## 为什么推荐使用不同 config
-
-如果有多个测试程序或不同应用，不应该反复修改：
-
-```
-bootstrap.lua
-```
-
-而应该准备不同的配置文件。
-
-例如：
-
-```
-config.game
-config.test
-config.db
-```
-
-分别设置：
-
-```
--- config.game
-start = "game"
-
--- config.test
-start = "test"
-
--- config.db
-start = "database_test"
-```
-
-然后使用：
-
-```
-./skynet config.game
-```
-
-或者：
-
-```
-./skynet config.test
-```
-
-这样同一套 Skynet 可以启动不同的应用程序。
-
----
-
-## bootstrap 为什么最后会退出
-
-`bootstrap.lua` 的任务只是：
-
-> **把整个 Skynet 系统启动起来。**
-
-例如：
-
-```
-bootstrap
-   ↓
-启动 launcher
-   ↓
-启动节点相关 Service
-   ↓
-启动 DataCenter
-   ↓
-启动 service_mgr
-   ↓
-启动 main
-```
-
-完成这些工作后：
-
-```
-bootstrap
-```
-
-本身已经没有继续存在的必要。
-
-因此最后会调用：
-
-```
-skynet.exit()
-```
-
-即：
-
-```
-bootstrap
-   ↓
-完成系统初始化
-   ↓
-启动用户 Service
-   ↓
-退出
-```
 
 ---
 
@@ -2115,7 +1340,7 @@ bootstrap
 
 整个 Skynet 启动过程可以概括为：
 
-```
+```text
              ./skynet config
                     │
                     ▼
@@ -2170,11 +1395,6 @@ bootstrap 完成初始化
 ---
 
 
-<br/>
-
-
-<br/>
-
 # [Config](https://github.com/cloudwu/skynet/wiki/Config)
 
 这篇 **Config** 主要讲的是：**Skynet 的配置文件怎么写，以及各个配置项分别控制什么。**
@@ -2197,7 +1417,7 @@ bootstrap 完成初始化
 ## Config 最重要的机制：env
 
 
-Skynet 启动时会读取它自己需要的配置项。暂时没有直接使用的配置项，会以**字符串形式**保存在 Skynet 内部的：env。
+Skynet 启动时会读取它自己需要的配置项。暂时没有直接使用的配置项，会以**字符串形式**保存在 Skynet 内部的 env。
 
 Lua Service 可以通过：
 
@@ -2209,14 +1429,14 @@ skynet.getenv("xxx")
 
 例如配置：
 
-```
+```lua
 mysql_host = "127.0.0.1"
 mysql_port = 3306
 ```
 
 业务 Service 可以：
 
-```
+```lua
 local skynet = require "skynet"
 
 local host = skynet.getenv("mysql_host")
@@ -2224,19 +1444,11 @@ local host = skynet.getenv("mysql_host")
 
 ---
 
-<br/>
-
-
-<br/>
-
-
-
 
 # [LuaAPI](https://github.com/cloudwu/skynet/wiki/LuaAPI)
 
-这一部分主要讲述：**一个 Lua Service 如何启动、如何定位其他 Service、如何收发消息和进行 RPC、如何使用 coroutine 和定时器，以及如何退出和调试。**
+这一部分主要讲述**一个 Lua Service 如何启动、如何定位其他 Service、如何收发消息和进行 RPC、如何使用 coroutine 和定时器，以及如何退出和调试。**
 
----
 
 ## Lua Service 到底是什么？
 
@@ -2260,16 +1472,6 @@ local skynet = require "skynet"
 
 这里的 `skynet` 模块**不能脱离 Skynet，直接使用普通 Lua 解释器运行**，因为每个 Skynet Service 都依赖底层的 `skynet_context` C 对象，该对象由 `snlua` 注入 Lua VM。
 
-每个 Skynet Service 最重要的职责就是：
-
-```
-接收其他 Service 的消息
-        ↓
-处理消息
-        ↓
-向其他 Service 发送消息
-```
-
 一条 Skynet 消息主要由五个元素构成：
 
 - `session`：请求—响应匹配标识，由请求方生成并由 Skynet 管理。按惯例，**`session = 0` 表示这条消息不需要回应**。
@@ -2277,7 +1479,6 @@ local skynet = require "skynet"
 - `type`：消息类别。一个 Service 最多可以接收 256 种消息类别，不同类别可以使用不同的编码方式。最常用的是 `"lua"`。
 - `message`：底层消息数据的 C 指针，在 Lua 层表现为 `lightuserdata`。
 - `size`：消息数据长度。
-    
 
 通常业务代码不需要直接操作 `message + size`，因为协议的 `unpack` 会把底层数据转换成 Lua 对象。
 
@@ -2336,25 +1537,12 @@ skynet.register(name)
 skynet.name(name, address)
 ```
 
-因此：
-
-```lua
-skynet.name(name, skynet.self())
-```
-
-与：
-
-```lua
-skynet.register(name)
-```
-
-功能基本等价。
 
 名字分为两种:
 
 **本地名字**以 `.` 开头：
 
-```
+```text
 .database
 .launcher
 ```
@@ -2363,7 +1551,7 @@ skynet.register(name)
 
 可以通过：
 
-```
+```lua
 skynet.localname(".database")
 ```
 
@@ -2371,7 +1559,13 @@ skynet.localname(".database")
 
 `skynet.localname(name)` 是一个**非阻塞 API**。
 
+
 **全局名字**以普通字母开头，在旧 Harbor 多节点模型中可以用于跨节点通信。不过不建议过度依赖全局名字。通常更推荐在业务层交换并保存 Service 的数字地址。
+
+
+> *可以给指定服务注册一个本地名字，之后就可以通过注册的名字来和这个服务进行通信交互，避免了传地址的麻烦。*
+> 另外全局名字只在 harbor 不为 0 的情况才有意义，如果是 harbor 为 0，则使用 cluster.register 注册名字，而且这个名字而不是全局名字，需要指定 node 。
+
 
 ---
 
@@ -2430,9 +1624,7 @@ skynet.register_protocol {
 }
 ```
 
-注册新的消息协议。
-
-每种协议最重要的是提供：
+注册新的消息协议。 每种协议最重要的是提供：
 
 ```text
 pack
@@ -2460,19 +1652,7 @@ Message B → Coroutine B
 Message C → Coroutine C
 ```
 
-但是同一个 Lua Service 中：
-
-```text
-Coroutine A
-Coroutine B
-Coroutine C
-```
-
-**不会真正多线程并行运行。**
-
-同一个 Lua State 在任意时刻只有一条 coroutine 真正在执行。
-
-不过当 Coroutine A 调用了可能阻塞的 Skynet API：
+同一个 Lua State 在任意时刻只有一条 coroutine 真正在执行。不过当 Coroutine A 调用了可能阻塞的 Skynet API：
 
 ```text
 Coroutine A
@@ -2488,9 +1668,7 @@ Coroutine B
 
 Service 就可能发生**业务逻辑重入**。
 
-因此：
-
-> Lua Service 通常不需要考虑传统意义上的线程数据竞争，但必须注意 coroutine yield 后发生的逻辑并发问题。
+因此，Lua Service 通常不需要考虑传统意义上的线程数据竞争，但必须注意 coroutine yield 后发生的**逻辑并发问题**。
 
 ---
 
@@ -2502,29 +1680,10 @@ Service 就可能发生**业务逻辑重入**。
 skynet.call(...)
 ```
 
-请求当前 Service，当前 Service 通常需要发送回应。
-
-可以使用：
+请求当前 Service，当前 Service 通常需要发送回应。可以使用：
 
 ```lua
 skynet.ret(skynet.pack(result))
-```
-
-过程可以理解为：
-
-```text
-当前 request
-
-session + source
-      │
-      ▼
-skynet.ret(...)
-      │
-      ▼
-自动使用当前 session
-      │
-      ▼
-发送 RESPONSE 给 source
 ```
 
 常见写法：
@@ -2539,9 +1698,7 @@ skynet.dispatch("lua", function(session, source, cmd, ...)
 end)
 ```
 
-需要注意：
-
-**对于同一个消息处理 coroutine，** `skynet.ret` **只能调用一次。**
+需要注意：**对于同一个消息处理 coroutine，** `skynet.ret` **只能调用一次。**
 
 如果暂时不能立即回应，可以使用：
 
@@ -2549,17 +1706,13 @@ end)
 local response = skynet.response()
 ```
 
-保存一个回应闭包。
-
-以后：
+保存一个回应闭包。以后：
 
 ```lua
 response(true, result)
 ```
 
-发送正常响应。
-
-也可以：
+发送正常响应。也可以：
 
 ```lua
 response(false)
@@ -2567,20 +1720,6 @@ response(false)
 
 通知调用方该请求失败。
 
-因此：
-
-```text
-skynet.ret
-   ↓
-当前 coroutine 立即回应
-
-
-skynet.response
-   ↓
-保存回应能力
-   ↓
-未来在其他 coroutine 中回应
-```
 
 `skynet.ret` 和 `skynet.response` 都是**非阻塞 API**。
 
@@ -2603,9 +1742,7 @@ skynet.pack(...)
 skynet.unpack(...)
 ```
 
-序列化 Lua 数据。
-
-例如：
+序列化 Lua 数据。例如：
 
 ```lua
 local msg, size = skynet.pack({
@@ -2634,21 +1771,6 @@ local data = skynet.unpack(msg, size)
 local data = skynet.packstring(...)
 ```
 
-区别可以简单理解为：
-
-```text
-skynet.pack
-    ↓
-lightuserdata + size
-
-
-skynet.packstring
-    ↓
-Lua string
-```
-
-`skynet.unpack` 两种形式都可以处理。
-
 默认序列化支持：
 
 ```text
@@ -2661,11 +1783,7 @@ table
 
 但对带复杂 metatable / metamethod 的 Lua 对象支持有限。
 
-需要注意：
-
-**并不是所有 Service 间通信都必须使用** `skynet.pack` **。**
-
-Skynet 的消息协议可以自定义，只是 `"lua"` 协议通常使用 `pack/unpack`。
+需要注意：**并不是所有 Service 间通信都必须使用** `skynet.pack` **。**  Skynet 的消息协议可以自定义，只是 `"lua"` 协议通常使用 `pack/unpack`。
 
 ---
 
@@ -2679,29 +1797,8 @@ skynet.send(address, "lua", ...)
 
 用于发送一条消息，但**不等待回应**。
 
-```
-Service A
-    │
-    │ send
-    ▼
-Service B
 
-
-Service A
-继续执行
-```
-
-因此它是：
-
-```
-异步
-单向
-非阻塞
-```
-
-而且 `send` 本身不会产生 yield，所以当前 coroutine 在 `send` 调用期间不会因为这个 API 发生重入。
-
-
+因此它是：异步、单向、非阻塞。而且 `send` 本身不会产生 yield，所以当前 coroutine 在 `send` 调用期间不会因为这个 API 发生重入。
 
 ### `skynet.call`
 
@@ -2738,35 +1835,11 @@ resume
 
 因此从业务代码来看非常像RPC
 
-但要特别注意：
+但要特别注意：`skynet.call` **阻塞的是当前 coroutine，而不是整个 Service，更不是 Worker Thread。**
 
-`skynet.call` **阻塞的是当前 coroutine，而不是整个 Service，更不是 Worker Thread。**
+等待响应时，当前 Service 仍然可以处理其他消息。所以还是需要考虑逻辑并发问题。
 
-等待响应时，当前 Service 仍然可以处理其他消息。
-
-所以：
-
-```lua
-local old = state
-
-local result = skynet.call(...)
-
--- coroutine 恢复到这里
-```
-
-恢复以后：
-
-```text
-state
-```
-
-可能已经被其他 coroutine 修改。
-
-还有一个重要限制：
-
-> `skynet.call` **本身没有内建超时机制。**
-
-如果对方一直不回应，当前 coroutine 就会一直等待，需要业务层自己实现超时控制。
+还有一个重要限制：`skynet.call` **本身没有内建超时机制。** 如果对方一直不回应，当前 coroutine 就会一直等待，需要业务层自己实现超时控制。
 
 ### 常用消息 API
 
@@ -2776,24 +1849,6 @@ state
 | `skynet.call` |是|yield|
 | `skynet.ret` |返回结果|不阻塞|
 | `skynet.response` |延迟返回|不阻塞|
-
-可以简单理解为：
-
-```text
-send
-  ≈
-单向消息
-
-
-call
-  ≈
-RPC 调用
-
-
-ret / response
-  ≈
-RPC 返回
-```
 
 ---
 
@@ -2821,11 +1876,7 @@ skynet.start(function()
 end)
 ```
 
-但是：
-
-**不要在** `skynet.start` **外部调用 Skynet 的阻塞 API。**
-
-因为此时框架还无法正确唤醒被挂起的 coroutine。
+但是：**不要在** `skynet.start` **外部调用 Skynet 的阻塞 API。** 因为此时框架还无法正确唤醒被挂起的 coroutine。
 
 
 ### `skynet.init`
@@ -2843,37 +1894,7 @@ end)
 
 ### `skynet.newservice`
 
-创建新的 Lua Service：
-
-```lua
-local addr = skynet.newservice("foobar")
-```
-
-Skynet 会寻找：
-
-```text
-foobar.lua
-```
-
-并创建一个新的 Lua Service。
-
-它是一个**阻塞 API**：
-
-```
-Service A
-
-newservice("foobar")
-       ↓
-创建 foobar Service
-       ↓
-执行 foobar 的 start
-       ↓
-start 返回
-       ↓
-newservice 返回地址
-```
-
-所以不要在新 Service 的 `start` 中写：
+这是一个**阻塞 API**，所以不要在新 Service 的 `start` 中写：
 
 ```lua
 while true do
@@ -2901,16 +1922,6 @@ local foo = skynet.newservice("foo")
 skynet.call(foo, "lua", "start", complex_config)
 ```
 
-也就是：
-
-```text
-先创建 Service
-      ↓
-获得地址
-      ↓
-再通过消息进行正式初始化
-```
-
 ---
 
 ## UniqueService
@@ -2935,9 +1946,7 @@ Service B
 local addr = skynet.uniqueservice("foobar")
 ```
 
-和 `newservice` 不同：
-
-> 同一个名字的 Service 在同一个 Skynet Node 中只会启动一次。
+和 `newservice` 不同： 同一个名字的 Service 在同一个 Skynet Node 中只会启动一次。
 
 如果该 Service：
 
@@ -2955,13 +1964,6 @@ skynet.uniqueservice("foobar")
 
 都会得到第一次创建的那个 Service 地址。
 
-`uniqueservice` 使用**惰性初始化**：
-
-```
-第一次调用
-    ↓
-真正创建 Service
-```
 
 如果明确知道某个 UniqueService 应该已经存在，可以通过：
 
@@ -2969,9 +1971,7 @@ skynet.uniqueservice("foobar")
 skynet.queryservice("foobar")
 ```
 
-查询它。
-
-如果还没有启动，`queryservice` 会等待它启动。
+查询它。如果还没有启动，`queryservice` 会**等待**它启动。
 
 ---
 
@@ -3001,9 +2001,7 @@ skynet.exit()
 skynet.kill(address)
 ```
 
-强制关闭其他 Service。
-
-但**不推荐这样做**。
+强制关闭其他 Service。但**不推荐这样做**。
 
 更合理的方式是：
 
@@ -3075,49 +2073,13 @@ skynet.now() / 100 + skynet.starttime()
 skynet.sleep(ti)
 ```
 
-将当前 coroutine 挂起 `ti` 个时间单位。
-
-例如：
-
-```lua
-skynet.sleep(100)
-```
-
-表示大约：
-
-```text
-1 秒
-```
-
-过程：
-
-```text
-当前 coroutine
-       ↓
-注册 timer
-       ↓
-yield
-       ↓
-Worker 执行其他任务
-       ↓
-timer 到期
-       ↓
-resume
-```
-
-注意：
-
-> **sleep 的只是当前 coroutine，不是整个 Service。**
-
-另外，`sleep` 也可能被：
+将当前 coroutine 挂起 `ti` 个时间单位。`sleep` 可能被：
 
 ```lua
 skynet.wakeup(...)
 ```
 
-提前唤醒。
-
-这种情况下它会返回：
+**提前唤醒**。这种情况下它会返回：
 
 ```text
 "BREAK"
@@ -3127,9 +2089,7 @@ skynet.wakeup(...)
 
 ## `skynet.timeout`
 
-如果希望：
-
-> 一段时间后执行某个函数，但当前 coroutine 不等待。
+如果希望： 一段时间后执行某个函数，但当前 coroutine 不等待。
 
 可以：
 
@@ -3151,24 +2111,12 @@ timeout()
 
 1 秒以后
      ↓
-新的 coroutine
+新的 coroutine (需要注意：协程对象在调用timeout时就创建了)
      ↓
 执行 callback
 ```
 
-所以：
 
-```text
-sleep
-  ↓
-当前 coroutine 等待
-
-
-timeout
-  ↓
-当前 coroutine 不等待
-未来启动 coroutine 执行函数
-```
 
 ---
 
@@ -3192,22 +2140,6 @@ end)
 
 但 `fork` 不需要向框架注册 timer，因此更加高效。
 
-注意：
-
-```text
-skynet.fork
-≠
-pthread_create
-```
-
-它创建的是：
-
-```text
-Lua coroutine
-```
-
-而不是 OS Thread。
-
 ---
 
 ## `skynet.wait / skynet.wakeup`
@@ -3226,30 +2158,9 @@ skynet.wakeup(token)
 
 将它唤醒。
 
-过程：
+`token` 必须能够唯一标识等待者：可以使用协程对象作为 token `coroutine.running()`，其实不传参数时，默认也是使用这个作为 token。
 
-```text
-Coroutine A
-
-wait(token)
-    ↓
-yield
-
-
-Coroutine B
-
-wakeup(token)
-    ↓
-
-
-Coroutine A
-    ↓
-resume
-```
-
-`token` 必须能够唯一标识等待者；默认可以使用当前 coroutine。
-
-`wakeup` 也可以唤醒通过 `skynet.sleep` 挂起的 coroutine。
+`wakeup` 也可以唤醒通过 `skynet.sleep` 挂起的 coroutine。（正如前面所说的）
 
 ---
 
@@ -3291,13 +2202,6 @@ skynet.error("hello skynet")
 
 写入 Skynet 日志。
 
-相比：
-
-```lua
-print(...)
-```
-
-它可以统一交给 Skynet 的 logger Service 管理。
 
 ### `skynet.trace`
 
@@ -3346,22 +2250,14 @@ skynet.monitor
 
 这些 API 更多用于：
 
-```
+```text
 Skynet 基础设施
 Service 管理
 消息转发
 系统监控
 ```
 
-普通业务开发阶段不需要重点掌握。
-
 ---
-
-
-<br/>
-
-
-<br/>
 
 # [Coroutine](https://github.com/cloudwu/skynet/wiki/Coroutine)
 
@@ -3395,11 +2291,7 @@ coroutine.resume()
 coroutine.yield()
 ```
 
-**不要和 skynet 的阻塞 API 混用**。因为 skynet 本身就是靠 `coroutine.yield` 来实现阻塞 API 的。
-
-当前 `skynet.lua` 的实现正是维护 `session_id_coroutine` 映射，在 `call` 时挂起，Response 到来后再恢复对应 coroutine。
-
-这时候如果套一个原生 coroutine，如下：
+**不要和 skynet 的阻塞 API 混用**。因为 skynet 本身就是靠 `coroutine.yield` 来实现阻塞 API 的。当前 `skynet.lua` 的实现正是维护 `session_id_coroutine` 映射，在 `call` 时挂起，Response 到来后再恢复对应 coroutine。这时候如果套一个原生 coroutine，如下：
 
 ```lua
 local co = coroutine.create(function()
@@ -3489,15 +2381,9 @@ local thread, main = coroutine.thread(co)
 ---
 
 
-<br/>
-
-
-<br/>
-
-
 # [CriticalSection](https://github.com/cloudwu/skynet/wiki/CriticalSection)
 
-该部分主要讲解：同一个 Service 虽然不会被多个线程同时执行，但不同 coroutine 会在 `skynet.call / sleep / wait` 这些 yield 点交错执行，所以仍然可能出现“逻辑竞态”。`skynet.queue` 就是用来保护这种临界区的
+该部分主要讲解：同一个 Service 虽然不会被多个线程同时执行，但不同 coroutine 会在 `skynet.call / sleep / wait` 这些 yield 点交错执行，所以仍然可能出现“逻辑竞态”。`skynet.queue` 就是用来保护这种临界区的。
 
 ## skynet.queue
 
@@ -3600,12 +2486,6 @@ return skynet.queue
 ---
 
 
-
-<br/>
-
-
-<br/>
-
 # [Socket](https://github.com/cloudwu/skynet/wiki/Socket)
 
 
@@ -3613,7 +2493,7 @@ return skynet.queue
 
 ## Skynet Socket 整体结构
 
-底层 socket 线程收到网络时间之后，不会直接调用 Lua 函数，而是把结果包装成 `PTYPE_SOCKET` 消息，然后发送给对应的 Service。
+底层 socket 线程收到网络事件之后，不会直接调用 Lua 函数，而是把结果包装成 `PTYPE_SOCKET` 消息，然后发送给对应的 Service。
 
 ```text
        Linux Socket
@@ -3640,7 +2520,7 @@ socket.read      处理其他业务
 和 POSIX 的区别是，skynet 可以利用 coroutine 来保持缓冲区等状态：
 
 ```text
-你以前：
+以前：
 
 EPOLLIN
  ↓
@@ -3713,9 +2593,7 @@ Agent socket.start(id)
 socket.abandon(id)
 ```
 
-
-<br/>
-
+---
 
 读取消息的 api：
 
@@ -3723,7 +2601,7 @@ socket.abandon(id)
 local data = socket.read(id, sz)
 ```
 
-表示恰好读取 sz 个字节。如果缓冲区没有 sz 个字节数据会挂起当前 coroutine，知道有足够数据之后再唤醒 coroutine。
+表示恰好读取 sz 个字节。如果缓冲区没有 sz 个字节数据会挂起当前 coroutine，直到有足够数据之后再唤醒 coroutine。
 
 
 如果不传长度参数：返回当前可以获得的尽可能多的数据，如果一个字节也没有，依然会将 coroutine 挂起等待。
@@ -3731,7 +2609,7 @@ local data = socket.read(id, sz)
 
 Skynet 的 API 本身就是按“一个等待读取者”设计的。所以**不要多个 coroutine 同时读一个 socket**。
 
-<br/>
+---
 
 
 ```lua
@@ -3741,7 +2619,7 @@ local line = socket.readline(id)
 默认分隔符为 `\n`，也可以指定分隔符，其返回 buffer 中分隔符前面的部分，**不包含分隔符**。
 
 
-<br/>
+---
 
 ```lua
 socket.readall(id)
@@ -3749,27 +2627,24 @@ socket.readall(id)
 
 **一直读，直到连接断开，然后把所有数据返回**。如果是只一个长连接，可以会长时间阻塞不返回。
 
-
-<br/>
+---
 
 ```lua
 socket.block(id)
 ```
 
-挂起 coroutine，直到 socket 有数据可读，或者连接关闭。功能类似于 POSIX 中的：
+挂起 coroutine，直到 socket 有数据可读，或者连接关闭。功能类似于 POSIX 中的epoll_wait()。
 
-```cpp
-epoll_wait()
-```
+---
 
-
-<br/>
 
 ```lua
 socket.write(id, data)
 ```
 
 这个 api 不会阻塞协程**：`write` 是把字符串加入正常写队列，由框架在 socket 可写时发送**。
+
+---
 
 
 ```lua
@@ -3785,12 +2660,13 @@ low priority write queue
 
 只有在排空 normal write queue 之后才会发送 low priority write queue 的数据。
 
+---
 
 跟 read 操作不同的是，多个 service 可以向同一个 socket 写，skynet 保证**单次 `write` 的字符串不会被拆开后夹入另一个 write 的数据**。
 
 
-<br/>
 
+---
 
 ```lua
 socket.warning(id, function(id, size)
@@ -3800,7 +2676,7 @@ end)
 
 监控积压量，当**写缓冲区**数据积压量超过 size KiB 是会产生 warning。
 
-<br/>
+---
 
 ```lua
 socket.close(id)
@@ -3828,6 +2704,8 @@ local id = socket.udp(function(data,from)
 end,"0.0.0.0",8000)
 ```
 
+使用
+
 ```lua
 socket.udp_address(from)
 ```
@@ -3849,9 +2727,7 @@ socket.open("example.com,80)
 getaddrinfo()
 ```
 
-**可能阻塞整个 socket 线程**。
-
-所以推荐的 DNS 查询方式：
+**可能阻塞整个 socket 线程**。所以推荐的 DNS 查询方式：
 
 ```lua
 local dns = require ("skynet.dns")
@@ -3861,11 +2737,6 @@ local ip = dns.resolve("example.com")
 
 ---
 
-
-<br/>
-
-
-<br/>
 
 # [GateServer](https://github.com/cloudwu/skynet/wiki/GateServer)
 
@@ -3911,18 +2782,6 @@ skynet.start(function()
 end)
 ```
 
-其中 `handle` 可以理解为 C++中的：
-
-```cpp
-class GateHandler{
-public:
-	void onConnect(...);
-	void onMessage(...);
-	void onDisconnect(...);
-	...
-
-};
-```
 
 GateServer 框架负责发现事件，自己利用框架写的 gateservice 需要定义事件发生后怎么处理。
 
@@ -3947,42 +2806,27 @@ netpack/filter
 
 ## `handler.connect`
 
-客户端简历 TCP 连接之后，GateServer 收到 accept 事件之后：
+客户端建立 TCP 连接后，Gate Server 接受连接，并触发：
 
 ```lua
-handler.connect(fd,addr)
+handler.connect(fd, addr)
 ```
 
+此时，TCP 连接已经建立，但 Gate 尚未启动对该客户端 Socket 的读取。
 
-**但是 connect 后客户端不能立即发送数据**，因为建立连接之后，需要进行创建 Agent 等工作，需要显式调用：
+在默认的连接处理流程中，Gate 会通知 Watchdog 创建 Agent。待 Agent 创建完成后，Watchdog 通知 Gate 建立 `fd` 与 Agent 的对应关系，并调用：
 
 ```lua
 gateserver.openclient(fd)
 ```
 
-`gate.lua` 中的调用链条：
+该函数内部通过 `socketdriver.start(fd)` 启动 Socket 读取。
 
-```text
-Client connect
-      ↓
-Gate handler.connect
-      ↓
-通知 Watchdog
-      ↓
-Watchdog 创建 Agent
-      ↓
-Agent 初始化
-      ↓
-Agent → Gate : forward(fd)
-      ↓
-Gate 记录：
-fd → agent
-      ↓
-gateserver.openclient(fd)
-      ↓
-现在正式接收客户端 packet
-````
+需要注意，客户端在此期间仍然可以发送数据。这些数据通常会暂存在服务端操作系统的 TCP 接收缓冲区中，不会仅仅因为 Gate 尚未开始读取就立即丢失。待 Gate 启动读取后，暂存的数据便可以继续被处理；但内核缓冲区容量有限，不能无限期地不读取数据。
 
+**这样设计的主要目的是保证消息路由关系已经建立后，再开始正常处理客户端消息。** 在默认流程中，Gate 先获得 Agent 的地址，再启动读取，可以避免客户端消息进入正常转发流程时，Gate 尚未准备好对应的 Agent。
+
+补充：`gateserver.openclient(fd)` 主要负责启动 Socket 读取，并不是建立 TCP 连接。若业务需要在 Agent 创建之前处理登录或认证消息，也可以设计为先启动读取，并将消息转交给 Watchdog 处理。
 
 ---
 
@@ -4035,7 +2879,7 @@ skynet.send(watchdog, "lua", "socket", "data", fd, skynet.tostring(msg, sz))
 skynet.trash(msg,sz)
 ```
 
-<br/>
+
 
 当前 `gate.lua` 注册：
 
@@ -4156,12 +3000,6 @@ netpack
 ---
 
 
-<br/>
-
-
-<br/>
-
-
 # [DebugConsole](https://github.com/cloudwu/skynet/wiki/DebugConsole)
 
 
@@ -4211,7 +3049,350 @@ info：查看某个 service 的信息，适合在stat 全局扫描之后使用 i
 
 logon/logoff：需要 config 中配置 logpath，捕获 skynet message 到指定文件，直到 logoff 停止。
 
+---
 
 
+# MongoDB
+
+这部分主要是关于 skynet 框架封装的 MongoDB 的接口使用。至于 mongosh 的 CRUD ，见《MongoDB 入门》对应章节。
+
+|MongoDB Shell|Skynet Lua 驱动常见接口|
+|---|---|
+|`insertOne()`|`safe_insert()`|
+|`insertMany()`|`safe_batch_insert()`|
+|`find()`|`find()`|
+|查询单个文档|`findOne()`|
+|`updateOne()`|`safe_update(..., false, false)`|
+|`updateMany()`|`safe_update(..., false, true)`|
+|`replaceOne()`|`safe_update()` 传入替换文档|
+|`deleteOne()`|`safe_delete(filter, true)`|
+|`deleteMany()`|`safe_delete(filter, false)`|
+|`findAndModify()`|`findAndModify()`|
+
+## 建立连接
+
+
+```lua
+local skynet = require "skynet"
+local mongo = require "skynet.db.mongo"
+
+skynet.start(function()
+    local client = mongo.client({
+        host = "127.0.0.1",
+        port = 27017,
+    })
+
+    local db = client["mini_game"]
+    local players = db.players
+
+    -- 后续通过 players 操作玩家数据
+end)
+```
+
+其实还以指定登录的用户、身份认证机制，以后再补充。
+
+---
+
+## Create
+
+Lua table 是传递数据的载体，驱动会把 table 编码成 BSON，然后发给 MongoDB，所以对于 update operator 这些以 `$` 开头的不合法的 Lua 标识符，需要使用 `["  "]` 这样的写法。
+
+
+插入单条数据：
+
+```lua
+local ok, err, result = players:safe_insert({
+    _id = 10001,
+    name = "Felix",
+    gold = 1000,
+})
+```
+
+批量插入：
+
+```lua
+local ok, err, result = players:safe_batch_insert({
+    {
+        _id = 10001,
+        name = "Felix",
+        gold = 1000,
+    },
+    {
+        _id = 10002,
+        name = "Alice",
+        gold = 2000,
+    },
+})
+```
+
+`safe_batch_insert` 并不是事务。
+
+返回值：
+- ok：操作是否成功。
+- err：错误信息，成功时为 nil。
+- result：MongoDB 返回的原始命令结果。
+	- `result.ok` MongoDB 命令是否成功执行，通常 `1` 表示成功，即便写操作出错，但是命令成功执行了，也会返回 1 。
+	- `result.n` 此次插入命令插入的文档数量，成功插入一条时通常为 `1`
+
+
+---
+
+
+## Read
+
+查询当个 document：
+
+```lua
+local player = players:findOne(
+    {
+        _id = 10001,
+    },
+    {
+        name = 1,
+        gold = 1,
+        _id = 0,
+    }
+)
+
+if player == nil then
+    return false, "PLAYER_NOT_FOUND"
+end
+```
+
+返回的是一个 Lua table。如果找不到文档，则返回 nil，如果命令错误，则会抛出 Lua 错误。
+
+查询多个 document：
+
+```lua
+local cursor = players:find({
+    gold = {
+        ["$gte"] = 1000,
+    },
+})
+
+while cursor:hasNext() do
+    local player = cursor:next()
+
+    skynet.error(
+        player.name,
+        player.gold
+    )
+end
+
+cursor:close()
+```
+
+返回的是游标。与 mongosh 不同，没有提供 toArray 方法。
+
+排序、分页、限制数量操作：
+
+```lua
+local cursor = players:find(
+    {
+        level = 10,
+    },
+    {
+        name = 1,
+        level = 1,
+    }
+):sort({
+    level = -1,
+}):skip(10):limit(20)
+```
+
+使用的游标方法链。更多游标对象的操作：
+- `cursor:sort(...)`
+- `cursor:skip(...)`
+- `cursor:limit(...)`
+- `cursor:hint(...)`
+- `cursor:maxTimeMS(...)`
+- `cursor:batchSize(...)`
+
+---
+
+## Update
+
+```lua
+players:safe_update(query, update, upsert, multi)
+```
+- `query`：Filter，匹配哪些 Document。
+- `update`：更新操作符或替换文档。
+- `upsert` 没匹配到时是否插入。
+- `multi`：是否更新所有匹配文档。
+
+由于驱动没有直接名为 `replaceOne()` 的方法，所以替换操作：
+
+```lua
+local ok, err, result = players:safe_update(
+    {
+        _id = 10001,
+    },
+    {
+        _id = 10001,
+        name = "Felix",
+        gold = 2000,
+    },
+    false,
+    false
+)
+```
+
+以上几个函数的返回值中的 result：
+- `ok`MongoDB 命令是否成功执行，通常 `1` 表示成功
+- `n`匹配的文档数量；在 upsert 等场景下还需要结合其他字段判断
+- `nModified`实际发生修改的文档数量
+
+
+另外，还有将读取和修改操作合并为原子操作的 ** `findAndModify`，该函数参数接口风格和其他的 CRUD 接口的都不一样**  。返回值也不一样：
+
+```lua
+local result = players:findAndModify({
+    query = {
+        _id = 10001,
+        gold = {
+            ["$gte"] = 100,
+        },
+    },
+    update = {
+        ["$inc"] = {
+            gold = -100,
+        },
+    },
+    new = true,
+})
+
+if result.ok ~= 1 then
+    -- 命令执行异常
+end
+
+if result.value == mongo.null then
+    -- 没有匹配文档
+end
+
+```
+
+由于接口时传递一个 table，所以使用更灵活：
+- `query`：匹配目标文档。
+- `update`：修改文档。
+- `remove`：是否删除匹配的文档。
+- `sort`：多个文档匹配时，选择顺序。
+- `new`：是否返回更新后的文档。
+- `fields`：控制返回的字段。
+- `upsert`：没有匹配文档时是否插入。
+
+
+此外，还有直接构造原始更新命令参数的方法：
+
+```lua
+local ok, err, result = players:raw_safe_update({
+    q = {
+        _id = 10001,
+    },
+    u = {
+        ["$inc"] = {
+            ["inventory.$[item].count"] = 5,
+        },
+    },
+    upsert = false,
+    multi = false,
+    arrayFilters = {
+        {
+            ["item.item_id"] = 200,
+        },
+    },
+})
+```
+
+
+---
+
+## Detele
+
+```lua
+players:safe_delete(query, single)
+```
+---
+
+## 批量操作
+
+
+该接口的设计和 CRUD 有点不一样：是由 client 来调用的：
+
+```lua
+local ok, err, result, failed_ops = client:bulkWrite({
+    -- 1. 插入玩家
+    {
+        op = "insert",
+        collection = "mini_game.players",
+        insert = {
+            _id = 10003,
+            name = "Bob",
+            gold = 500,
+            level = 1,
+        },
+    },
+
+    -- 2. 给一个玩家增加金币
+    {
+        op = "update",
+        collection = "mini_game.players",
+        filter = {
+            _id = 10001,
+        },
+        update = {
+            ["$inc"] = {
+                gold = 100,
+            },
+        },
+        upsert = false,
+        multi = false,
+    },
+
+    -- 3. 给所有 10 级玩家增加金币
+    {
+        op = "update",
+        collection = "mini_game.players",
+        filter = {
+            level = 10,
+        },
+        update = {
+            ["$inc"] = {
+                gold = 50,
+            },
+        },
+        upsert = false,
+        multi = true,
+    },
+
+    -- 4. 删除一个玩家
+    {
+        op = "delete",
+        collection = "mini_game.players",
+        filter = {
+            _id = 10002,
+        },
+        multi = false,
+    },
+}, nil, true)
+
+if not ok then
+    skynet.error("bulkWrite failed: ", err)
+    -- 注意：部分操作可能已经成功，不能直接假定全部失败。
+    return false, "DB_ERROR"
+end
+
+return true, result
+```
+
+
+---
+
+
+## CRUD 使用
+
+
+再实际使用时，通常不会直接调用接口，而是套在 `pcall` 里面，这样有利于区分两类问题：
+- 数据库返回写操作错误：例如唯一索引冲突。`safe_` 方法通常会返回 `false, err, result`。
+- Lua 调用过程中抛出异常：例如网络请求、驱动内部错误。这类情况需要通过 `pcall()` 捕获。
 
 ---

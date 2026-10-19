@@ -21,11 +21,11 @@ MongoDB 的分布式能力还包括：
 - **Replica Set（副本集）**：主要用于数据复制、高可用和自动故障转移。
 - **Sharding（分片）**：将数据分布到多个节点，实现水平扩展。
 
-因此不能简单地认为“集群 = Replica Set”。
+不能简单地认为“集群 = Replica Set”。
 
 ---
 
-## MongoDB 的数据建模思想
+## 数据建模思想
 
 MySQL 通常更强调数据之间的关系、规范化、减少冗余以及维护数据一致性。
 
@@ -39,7 +39,7 @@ MongoDB 通常更强调应用程序的**访问模式**，即考虑应用程序�
 
 MongoDB 的文档与 JSON 非常相似，例如：
 
-```
+```JavaScript
 {
     _id: ObjectId("507f1f77bcf86cd799439011"),
     name: "Alice",
@@ -73,7 +73,7 @@ MongoDB 的文档与 JSON 非常相似，例如：
 
 MongoDB 可以把相关数据嵌入同一个 Document 中，例如：
 
-```
+```JavaScript
 {
     _id: 10001,
     name: "Felix",
@@ -107,7 +107,7 @@ MongoDB 对**单个 Document 的操作具有原子性**。
 
 例如：
 
-```
+```JavaScript
 {
     $inc: {
         gold: -100
@@ -191,7 +191,7 @@ MongoDB 使用**点表示法（Dot Notation）**访问嵌套 Document 中的字�
 
 例如：
 
-```
+```JavaScript
 {
     name: {
         first: "Felix",
@@ -207,7 +207,7 @@ MongoDB 使用**点表示法（Dot Notation）**访问嵌套 Document 中的字�
 
 可以使用：
 
-```
+```JavaScript
 "name.first"    → "Felix"
 "hobbies.0"     → "coding"
 ```
@@ -219,7 +219,7 @@ MongoDB 使用**点表示法（Dot Notation）**访问嵌套 Document 中的字�
 - 字段名称必须是字符串。
 - 同一个 Document 中的字段名称必须唯一。
 - 嵌套 Document 可以使用与上一级 Document 相同的字段名称，例如：
-```
+```JavaScript
 {
     name: "Felix",
     player: {
@@ -292,13 +292,13 @@ BSON Document 中的字段是有序的。
 
 Collection 是 MongoDB 中存储 Document 的集合，可以类比 MySQL 中的 Table。
 
-## Database 与 Collection 的懒创建
+## 懒创建
 
 MongoDB 支持 Database 和 Collection 的隐式创建。
 
 切换到一个不存在的 Database：
 
-```
+```JavaScript
 use mini_game
 ```
 
@@ -306,7 +306,7 @@ use mini_game
 
 例如：
 
-```
+```JavaScript
 use mini_game
 
 db.players.insertOne({
@@ -333,7 +333,7 @@ MongoDB 的 Schema 灵活并不意味着不需要设计 Schema，实际开发中
 
 虽然 MongoDB 支持 Collection 的隐式创建，但如果需要提前指定一些 **Collection 级别的选项**，可以使用：
 
-```
+```JavaScript
 db.createCollection()
 ```
 
@@ -345,7 +345,7 @@ db.createCollection()
 
 # BSON
 
-BSON（Binary JSON）是一种**二进制序列化格式**，用于 MongoDB 中存储 Document，以及进行远程过程调用（RPC）。
+BSON（Binary JSON）是一种**二进制序列化格式**，用于 MongoDB 中存储 Document，以及进行RPC。
 
 与 JSON 相比，BSON 提供了更加丰富、明确的数据类型。
 
@@ -382,7 +382,7 @@ BSON
 
 其中：
 
-- **Decimal 128** 是一种 128 位十进制浮点数类型，用于需要较高十进制精度的场景，例如金融数据。
+- **Decimal 128** 是一种 128 位**十进制浮点数**类型，用于需要较高十进制精度的场景，例如金融数据。
     
 - **String** 使用 UTF-8 编码。
     
@@ -392,10 +392,7 @@ BSON
     - 4 字节：Unix 时间戳，单位为秒。
     - 5 字节：随机值。
     - 3 字节：递增计数器。
-    
-    ObjectId 中包含创建时的时间戳，因此可以通过 `ObjectId.getTimestamp()` 获取其对应的时间。
-    
-    需要注意，ObjectId **只是大致按照创建时间排序，并不是严格递增的全局 ID**。
+    - ObjectId 中包含创建时的时间戳，因此可以通过 `ObjectId.getTimestamp()` 获取其对应的时间。ObjectId **只是大致按照创建时间排序，并不是严格递增的全局 ID**。
     
 - **Date** 是一个 64 位有符号整数，表示自 Unix Epoch（1970-01-01 00:00:00 UTC）以来的毫秒数。
     
@@ -413,13 +410,13 @@ BSON
 
 首先运行 MongoDB 服务端：
 
-```
+```bash
 mongod
 ```
 
 然后使用 MongoDB Shell 客户端连接：
 
-```
+```bash
 mongosh
 ```
 
@@ -465,9 +462,9 @@ insertOne()
 insertMany()
 ```
 
-### 插入一个 Document
+插入一个 Document：
 
-```
+```JavaScript
 db.players.insertOne({
     _id: 10001,
     name: "Felix",
@@ -475,9 +472,9 @@ db.players.insertOne({
 })
 ```
 
-### 插入多个 Document
+插入多个 Document：
 
-```
+```JavaScript
 db.players.insertMany([
     {
         _id: 10001,
@@ -492,8 +489,6 @@ db.players.insertMany([
 ])
 ```
 
-如果插入的 Document 没有 `_id`，MongoDB 会为其补充 `_id`；通常由客户端驱动生成 `ObjectId`，如果客户端没有生成，则 `mongod` 也会补充。
-
 ---
 
 ## Read
@@ -504,9 +499,9 @@ db.players.insertMany([
 find()
 ```
 
-### 查询所有 Document
+查询所有 Document：
 
-```
+```JavaScript
 db.players.find()
 ```
 
@@ -514,18 +509,20 @@ db.players.find()
 
 `find()` 实际返回的是一个 **Cursor（游标）**，而不是一次性返回所有 Document。`mongosh` 会自动迭代 Cursor 并显示结果。
 
-### 条件查询
+> 游标记录的是**遍历查询结果的所需要的状态**。可能是磁盘位置、索引下标。默认返回索引，分批次返回结果。如果需要一次返回返回所有结果（**`toArray()` 会遍历游标，将其中剩余的查询结果全部收集到客户端内存中的数组里，然后返回这个数组**。）：
+> ```JavaScript
+> const docs = db.players.find({
+>     gold: { $gte: 100 }
+> }).toArray()
+> ```
 
-```
+
+条件查询：
+
+```JavaScript
 db.players.find({
     gold: { $gte: 1000 }
 })
-```
-
-表示查找：
-
-```
-gold >= 1000
 ```
 
 Query Filter 可以进一步使用：
@@ -541,11 +538,11 @@ Query Filter
     └── ...
 ```
 
-### Projection
+Projection 投影：
 
 `find()` 还可以指定 `projection`，控制查询结果中返回哪些字段：
 
-```
+```JavaScript
 db.players.find(
     { gold: { $gte: 1000 } },
     { name: 1, gold: 1 }
@@ -576,9 +573,9 @@ updateMany()
 replaceOne()
 ```
 
-### updateOne()
+updateOne()：
 
-```
+```JavaScript
 db.players.updateOne(
     { _id: 10001 },
     { $inc: { gold: 100 } }
@@ -587,52 +584,31 @@ db.players.updateOne(
 
 `filter` 决定目标 Document，`update` 决定如何修改。
 
-`updateOne()` **最多更新一个**符合条件的 Document；即使有多个 Document 满足 Filter，也只更新其中一个。
+`updateOne()` **最多更新一个**符合条件的 Document；**即使有多个 Document 满足 Filter，也只更新其中一个。**
 
 常见的 `update` 形式是使用 Update Operators，例如：
 
-```
+```JavaScript
 {
     $set: { gold: 2000 },
     $inc: { level: 1 }
 }
 ```
 
-MongoDB 也支持使用 Aggregation Pipeline 作为 `update`，用于更加复杂的更新逻辑；当前阶段暂时不深入。
+updateMany()：
 
-### updateMany()
-
-```
+```JavaScript
 db.players.updateMany(
     { level: 10 },
     { $inc: { gold: 100 } }
 )
 ```
 
-会更新所有符合 Filter 的 Document。
-
-如果 Filter 是：
-
-```
-{}
-```
-
-则会匹配所有 Document：
-
-```
-db.players.updateMany(
-    {},
-    { $inc: { gold: 100 } }
-)
-```
-
-即所有玩家的金币都增加 100。
-
 需要注意，`updateMany()` 虽然可以修改多个 Document，但**整个操作并不是跨多个 Document 的原子操作**；MongoDB 只保证每个单独 Document 的写操作具有原子性。
 
-### replaceOne()
+replaceOne()：
 
-```
+```JavaScript
 db.players.replaceOne(
     { _id: 10001 },
     {
@@ -658,7 +634,7 @@ deleteOne()
 deleteMany()
 ```
 
-### 删除一个 Document
+删除一个 Document：
 
 ```
 db.players.deleteOne({
@@ -666,27 +642,19 @@ db.players.deleteOne({
 })
 ```
 
-`deleteOne()` 最多删除一个符合条件的 Document。
+`deleteOne()` **最多删除一个符合条件**的 Document。
 
-### 删除多个 Document
+删除多个 Document：
 
-```
+```JavaScript
 db.players.deleteMany({
     level: { $lt: 10 }
 })
 ```
 
-会删除所有：
-
-```
-level < 10
-```
-
-的 Document。
-
 如果：
 
-```
+```JavaScript
 db.players.deleteMany({})
 ```
 
@@ -710,7 +678,7 @@ db.players.deleteMany({})
 
 主要使用：
 
-```
+```JavaScript
 db.players.bulkWrite()
 ```
 
@@ -729,7 +697,7 @@ deleteMany
 
 ---
 
-## 写操作结果
+## 操作结果
 
 MongoDB 的更新操作会返回操作结果，其中几个重要字段是：
 
@@ -741,7 +709,7 @@ upsertedId
 
 例如：
 
-```
+```JavaScript
 db.players.updateOne(
     { _id: 10001 },
     { $inc: { gold: 100 } }
@@ -750,32 +718,31 @@ db.players.updateOne(
 
 可能返回：
 
-```
+```JavaScript
 {
     acknowledged: true,
     matchedCount: 1,
-    modifiedCount: 1
+    modifiedCount: 1,
+    upsertedCount: 0,
+    upsertedId: null
 }
 ```
 
 其中：
 
+- `acknowledged`：MongoDB 是否确认了这次写操作。
 - `matchedCount`：Filter 匹配到多少个 Document。
 - `modifiedCount`：实际发生修改的 Document 数量。
 - `upsertedId`：如果使用 `upsert: true` 并且最终插入了新 Document，则记录新 Document 的 `_id`。
-    
+- `upsertedCount`：通过 upset 新插入了多少个文档。
 
-对于你的游戏业务尤其要注意：
+同理，delete 操作也会返回结果：
 
-```
-matchedCount
-    ↓
-条件是否满足、目标 Document 是否存在
+|返回字段|`deleteOne()`|`deleteMany()`|
+|---|---|---|
+|`acknowledged`|是否确认写操作|是否确认写操作|
+|`deletedCount`|`0` 或 `1`|`0` 或更多|
 
-modifiedCount
-    ↓
-Document 是否真的发生了修改
-```
 
 ---
 
@@ -814,6 +781,129 @@ Document 是否真的发生了修改
 
 ## Options
 
+|API|常见 Options|作用|
+|---|---|---|
+|`find()`|`sort`、`skip`、`limit`|排序、跳过结果、限制返回数量|
+||`hint`、`maxTimeMS`|指定索引、限制执行时间|
+||`collation`、`comment`|指定字符串比较规则、添加操作备注|
+|`insertOne()`|`writeConcern`|指定写入确认要求|
+|`insertMany()`|`ordered`、`writeConcern`|控制批量插入遇到错误时的行为、写入确认要求|
+|`updateOne()`|`upsert`、`arrayFilters`|是否更新插入、指定要更新的数组元素|
+||`sort`（MongoDB 8.0+）|多个文档匹配时，决定更新哪一个|
+||`hint`、`collation`、`maxTimeMS`|指定索引、字符串比较规则、执行时间限制|
+|`updateMany()`|`upsert`、`arrayFilters`|是否更新插入、指定要更新的数组元素|
+||`hint`、`collation`、`maxTimeMS`|指定索引、字符串比较规则、执行时间限制|
+|`replaceOne()`|`upsert`、`sort`（8.0+）|是否更新插入、多匹配时决定替换哪个文档|
+||`hint`、`collation`|指定索引、字符串比较规则|
+|`deleteOne()` / `deleteMany()`|`hint`、`collation`、`maxTimeMS`|指定索引、字符串比较规则、执行时间限制|
+|`bulkWrite()`|`ordered`、`writeConcern`|控制批量操作的执行顺序与写入确认|
+
+
+`sort`：排序
+
+`1` 表示升序，`-1` 表示降序。
+
+```JavaScript
+{ sort: { level: -1 } }
+```
+
+例如按玩家等级从高到低排序。
+
+`limit`：限制结果数量
+
+```JavaScript
+{ limit: 20 }
+```
+
+最多返回 20 个文档。
+
+`skip`：跳过结果
+
+```JavaScript
+{ skip: 100 }
+```
+
+跳过前 100 个结果，常用于分页。
+
+`upsert`：更新插入
+
+```JavaScript
+{ upsert: true }
+```
+
+有匹配文档就更新；没有匹配文档就尝试插入新文档。默认是 `false`。
+
+对游戏服务端尤其要注意：修改玩家金币时，通常不应随意开启 `upsert`，否则可能意外创建玩家文档。
+
+`ordered`：控制批量操作的执行方式
+
+```JavaScript
+{ ordered: false }
+```
+
+主要用于 `insertMany()` 和 `bulkWrite()`。设为 `false` 后，某个操作失败时，MongoDB 通常会继续处理其他操作；但不能依赖它们按输入顺序执行。
+
+`arrayFilters`：指定要更新的数组元素
+
+配合 `$[item]` 等数组更新语法使用，适用于 `updateOne()`、`updateMany()` 等支持该选项的更新 API。
+
+> 假设玩家的 Document 是：
+> 
+> ```JavaScript
+> {
+>     _id: 10001,
+>     name: "Felix",
+>     inventory: [
+>         { item_id: 100, count: 5 },
+>         { item_id: 200, count: 10 },
+>         { item_id: 300, count: 3 }
+>     ]
+> }
+> ```
+> 
+> 现在需要把 `item_id = 200` 的物品数量增加 5。MongoDB 的更新语句是：
+> 
+> ```JavaScript
+> db.players.updateOne(
+>     { _id: 10001 },
+>     {
+>         $inc: {
+>             "inventory.$[item].count": 5
+>         }
+>     },
+>     {
+>         arrayFilters: [
+>             { "item.item_id": 200 }
+>         ]
+>     }
+> )
+> ```
+> 
+> ① Update 中的数组占位符： `inventory.$[item].count`
+> 
+> 意思是：修改 `inventory` 数组中符合条件的元素的 `count` 字段。`item` 是自定义的标识符，不是数组下标，也不是实际字段名。
+> 
+> ② Options 中的 arrayFilters：`{ "item.item_id": 200 }`
+> 
+> 意思是：只有 `item_id` 等于 200 的数组元素，才参与这次更新。
+
+
+
+`hint`：指定使用哪个索引
+
+```JavaScript
+{ hint: { level: 1 } }
+```
+
+主要用于查询或写操作的索引选择与性能调优。指定的索引必须存在，不建议在不了解查询计划时随意使用。
+
+`writeConcern`：指定写入确认要求
+
+```JavaScript
+{ writeConcern: { w: "majority" } }
+```
+
+MongoDB 需要以什么程度确认这次写入已经被接受/持久化到副本集？`w: "majority"` 大致表示等待多数副本确认这次写操作。
 
 
 ---
