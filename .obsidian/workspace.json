@@ -6,6 +6,7 @@
       {
         "id": "8608d94dc83e95c3",
         "type": "tabs",
+        "dimension": 53.32914572864321,
         "children": [
           {
             "id": "91b4bb7dd0d723ea",
@@ -27,6 +28,7 @@
       {
         "id": "c697d525a59474ee",
         "type": "tabs",
+        "dimension": 46.67085427135678,
         "children": [
           {
             "id": "1b066cfe577ec3d6",
@@ -181,8 +183,8 @@
             "state": {
               "type": "advanced-tables-toolbar",
               "state": {},
-              "icon": "lucide-ghost",
-              "title": "advanced-tables-toolbar"
+              "icon": "spreadsheet",
+              "title": "Advanced Tables"
             }
           },
           {
@@ -234,7 +236,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 267.4384765625
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -251,12 +253,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "91b4bb7dd0d723ea",
+  "active": "1b066cfe577ec3d6",
   "lastOpenFiles": [
-    "编程语言/lua/Lua程序设计.md",
-    "开发技能/框架/Skynet入门.md",
     "开发技能/数据库/MongoDB入门.md",
+    "开发技能/框架/Skynet入门.md",
     "PLAN.md",
+    "未命名.md",
+    "编程语言/lua/Lua程序设计.md",
     "开发技能/数据库/Redis入门.md",
     "开发技能/数据库/SQL必知必会.md",
     "开发技能/数据库/MySQL是怎样运行的.md",
@@ -278,7 +281,6 @@
     "开发技能/构建工具/跟我一起写Makefile.md",
     "开发技能/并发编程/C++并发编程实战.md",
     "开发技能/Unix/UNIX环境高级编程.md",
-    "编程语言/Golang/Go语言圣经.md",
     "开发技能/框架",
     "编程语言/Lua",
     "482743F2FD33B7CE58A9F431F7FC20D3 1.png",

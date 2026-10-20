@@ -609,6 +609,25 @@ end
 ```
 
 
+> Lua 不仅允许函数接收可变参数**，Lua 文件作为一个代码块（chunk）执行时，也可以接收参数**。
+> 例如，新建一个 `demo.lua`：
+> ```lua
+> local mode = ...
+> print("mode =", mode)
+> if mode == "TICK" then
+>     print("我负责定时任务")
+> else
+>     print("我负责普通业务")
+> end
+> ```
+> 在命令行运行：
+> ```bash
+> lua demo.lua TICK
+> ```
+> 输出“我负责定时任务”
+
+
+
 ---
 
 

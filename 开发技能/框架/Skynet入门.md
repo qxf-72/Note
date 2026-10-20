@@ -868,7 +868,7 @@ IO ready
 
 ---
 
-## 单个 Service 内可以有多个 coroutine
+## 单个 Service 内可有多个 coroutine
 
 一个 Service 内部可以同时存在多个 Lua coroutine，例如：
 
@@ -1313,29 +1313,6 @@ skynet.newservice("service_mgr")
 
 ---
 
-## bootstrap 和 start 的区别
-
-这是 Bootstrap 启动流程中最容易混淆的一点。
-
-配置中的：
-
-```lua
-bootstrap = "snlua bootstrap"
-```
-
-指定的是： **Skynet 框架自己的启动入口。**
-
-而真正决定： **用户业务从哪里开始运行** 的是：
-
-```lua
-start
-```
-
-如果没有显式设置 start，通常默认使用 main。
-
-
----
-
 ## 完整启动流程
 
 整个 Skynet 启动过程可以概括为：
@@ -1564,7 +1541,7 @@ skynet.localname(".database")
 
 
 > *可以给指定服务注册一个本地名字，之后就可以通过注册的名字来和这个服务进行通信交互，避免了传地址的麻烦。*
-> 另外全局名字只在 harbor 不为 0 的情况才有意义，如果是 harbor 为 0，则使用 cluster.register 注册名字，而且这个名字而不是全局名字，需要指定 node 。
+> 另外全局名字只在 harbor 不为 0 的情况才有意义，如果是 harbor 为 0，则使用 cluster.register 注册名字，而且这个名字也不是全局名字，需要指定 node 。
 
 
 ---
@@ -1638,9 +1615,8 @@ unpack
 
 通常业务开发直接使用 Skynet 已经注册好的 `"lua"` 协议即可。
 
----
 
-## 每条消息由独立 coroutine 处理
+### 每条消息由独立 coroutine 处理
 
 每收到一条消息，Skynet Lua 层都会使用一个独立 coroutine 处理：
 
@@ -1850,9 +1826,70 @@ resume
 | `skynet.ret` |返回结果|不阻塞|
 | `skynet.response` |延迟返回|不阻塞|
 
+
+## `skynet.request`
+
+当需要发送多个 RPC 时，可以根据请求之间的依赖关系选择不同的方案：
+
+- 如果后续 RPC 依赖前一个 RPC 的返回值，则通常使用多次 `skynet.call()` 顺序执行。
+- 如果多个 RPC 相互独立，并且业务允许它们并发执行，可以使用 `skynet.request():select()`，在不等待前一个响应的情况下连续发出多个请求，降低整体等待时间。
+    
+
+例如：
+
+```lua
+local slave = skynet.newservice(SERVICE_NAME, "slave")
+
+for req, resp in skynet.request
+    { slave, "lua", "ping", 6, "SLEEP 6" }
+    { slave, "lua", "ping", 5, "SLEEP 5" }
+    { slave, "lua", "ping", 4, "SLEEP 4" }
+    { slave, "lua", "ping", 3, "SLEEP 3" }
+    { slave, "lua", "ping", 2, "SLEEP 2" }
+    { slave, "lua", "ping", 1, "SLEEP 1" }
+    :select() do
+    info("RESP %s", resp[1])
+end
+```
+
+上述写法利用 Lua 的 `__call` 元方法实现了语法糖，相当于创建一个 `reqs` 对象，通过 `reqs:add()` 依次登记请求，再通过 `reqs:select()` 发出请求并收集响应。
+
+`select()` 不保证严格按照请求发送顺序或响应到达顺序处理结果。
+
+超时机制：
+
+```lua
+local reqs = skynet.request {
+    slave, "lua", "ping", 100, "PING"
+}
+
+for req, resp in reqs:select(10) do
+    info("%s", resp[1])
+end
+
+info("Timeout : %s", reqs.timeout)
+```
+
+`select(10)` 设置这批请求的整体等待期限为 10 个 Skynet 时间单位，即约 0.1 秒。
+
+如果超时时间到达时仍有请求未返回：
+
+1. `reqs.timeout` 会被设置为 `true`。
+    
+2. 已经收到并存储的响应仍可以被迭代器取出处理。
+    
+3. 当没有更多可交付的响应时，迭代结束，未完成请求的等待记录会被清理。
+    
+4. 尚未完成的远端 RPC 不会因为调用方超时而自动取消；之后到达的迟到响应不会再交付给这轮 `select()`。
+    
+
+因此，超时只代表调用方未能在期限内取得相应结果，不代表远端业务一定失败或已经停止执行。对于扣金币、发奖励等具有副作用的操作，需要额外考虑幂等处理和超时后的结果确认。
+
+
+
 ---
 
-## Service 的启动和退出
+## Service 启动
 
 ### `skynet.start`
 
@@ -2067,7 +2104,7 @@ skynet.now() / 100 + skynet.starttime()
 提供高精度计时，适合性能分析，返回纳秒级的 64 位计数值。
 
 
-## `skynet.sleep`
+### `skynet.sleep`
 
 ```lua
 skynet.sleep(ti)
@@ -2085,9 +2122,8 @@ skynet.wakeup(...)
 "BREAK"
 ```
 
----
 
-## `skynet.timeout`
+### `skynet.timeout`
 
 如果希望： 一段时间后执行某个函数，但当前 coroutine 不等待。
 
@@ -2118,9 +2154,7 @@ timeout()
 
 
 
----
-
-## `skynet.fork`
+### `skynet.fork`
 
 创建一个新的 Lua coroutine：
 
@@ -2140,9 +2174,7 @@ end)
 
 但 `fork` 不需要向框架注册 timer，因此更加高效。
 
----
-
-## `skynet.wait / skynet.wakeup`
+### `skynet.wait / skynet.wakeup`
 
 挂起当前 coroutine：
 
@@ -2162,9 +2194,8 @@ skynet.wakeup(token)
 
 `wakeup` 也可以唤醒通过 `skynet.sleep` 挂起的 coroutine。（正如前面所说的）
 
----
 
-## `skynet.yield`
+### `skynet.yield`
 
 如果需要主动交出执行权：
 
@@ -3394,5 +3425,14 @@ return true, result
 再实际使用时，通常不会直接调用接口，而是套在 `pcall` 里面，这样有利于区分两类问题：
 - 数据库返回写操作错误：例如唯一索引冲突。`safe_` 方法通常会返回 `false, err, result`。
 - Lua 调用过程中抛出异常：例如网络请求、驱动内部错误。这类情况需要通过 `pcall()` 捕获。
+
+---
+
+
+# Sproto
+
+
+ 
+
 
 ---
