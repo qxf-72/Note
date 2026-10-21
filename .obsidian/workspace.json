@@ -4,31 +4,9 @@
     "type": "split",
     "children": [
       {
-        "id": "8608d94dc83e95c3",
-        "type": "tabs",
-        "dimension": 53.32914572864321,
-        "children": [
-          {
-            "id": "91b4bb7dd0d723ea",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "PLAN.md",
-                "mode": "preview",
-                "source": true
-              },
-              "icon": "lucide-file",
-              "title": "PLAN"
-            },
-            "group": "7feb8592c2b352ab"
-          }
-        ]
-      },
-      {
         "id": "c697d525a59474ee",
         "type": "tabs",
-        "dimension": 46.67085427135678,
+        "dimension": 49.888392857142854,
         "children": [
           {
             "id": "1b066cfe577ec3d6",
@@ -36,14 +14,36 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "PLAN.md",
+                "file": "开发技能/数据库/MongoDB入门.md",
+                "mode": "preview",
+                "source": true
+              },
+              "icon": "lucide-file",
+              "title": "MongoDB入门"
+            },
+            "group": "27c9506b1139d436"
+          }
+        ]
+      },
+      {
+        "id": "c96fbdbcdf3f0a15",
+        "type": "tabs",
+        "dimension": 50.11160714285714,
+        "children": [
+          {
+            "id": "f0f6626972b30cc1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "开发技能/数据库/MongoDB入门.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "PLAN"
+              "title": "MongoDB入门"
             },
-            "group": "7feb8592c2b352ab"
+            "group": "27c9506b1139d436"
           }
         ]
       }
@@ -104,7 +104,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -168,7 +169,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "PLAN.md",
+                "file": "开发技能/数据库/MongoDB入门.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -236,7 +237,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 267.4384765625
+    "width": 488.7183837890625
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -253,11 +254,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "1b066cfe577ec3d6",
+  "active": "f0f6626972b30cc1",
   "lastOpenFiles": [
-    "开发技能/数据库/MongoDB入门.md",
     "开发技能/框架/Skynet入门.md",
     "PLAN.md",
+    "开发技能/数据库/MongoDB入门.md",
     "未命名.md",
     "编程语言/lua/Lua程序设计.md",
     "开发技能/数据库/Redis入门.md",

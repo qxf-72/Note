@@ -1701,3 +1701,301 @@ db.runCommand({
 使用引用模式时，不要在主 document 中嵌入数组保存引用 document 的 `_id`，这样依然会产生无界数组问题。恰当的处理方法是：让子 document 保存父对象的 `_id`。
 
 ---
+
+# 索引
+
+## Overview
+
+索引是一种特殊的数据结构，用于加速查询，Mongodb 中索引使用 B-tree 系列数据结构（MongoDB 官方工程博客在 2025 年 11 月明确将 WiredTiger 使用的核心数据结构称为 B+tree）。
+
+集合扫描（collection scan）：如果没有建立对应字段的索引，数据库在进行以该字段作为过滤条件的查询时，只能依次检查集合中的大量文档。
+
+索引扫描（IXSCAN）：扫描相关索引项，缩小需要检查的数据范围。
+
+建立索引：
+
+```JavaScript
+db.players.createIndex({
+	some_field: 1,
+})
+```
+
+其中 `1` 代表升序，`-1` 代表降序。
+
+查看索引：
+
+```JavaScript
+db.players.getIndexs()
+```
+
+
+建立索引之后进行对应的查询**不一定使用索引**，因为使用索引也不一定查询更快，查询优化器会根据情况选择扫描方式。
+
+
+索引的功能不只有加速查询：
+
+|职责|典型索引|
+|---|---|
+|加快查询与排序|单字段、复合、多键|
+|保证数据约束|唯一索引|
+|自动清理过期数据|TTL|
+|优化特定子集|部分、稀疏|
+|特定数据检索与分布|文本、地理、哈希、通配符|
+|评估索引调整风险|隐藏索引|
+
+
+虽然索引可以承担某些职责，但是在进行更新操作时需要对索引进行同步维护，如无必要，不建立索引。
+
+
+后续对不同类型索引进行分别介绍，但是这并不是互斥的分类，例如可以创建同时具有唯一、单字段属性的所用。
+
+---
+
+## 单字段 Single Field
+
+MongoDB 默认会为 `_id` 创建唯一索引，这也是单字段索引，并且不能删除。
+
+查询指令会被优化器优化，如果想指定使用某个索引进行查询：
+
+```JavaScript
+db.players.find(
+	{level:20},
+).hint({level:1})
+```
+
+---
+
+## 复合 Compound
+
+也就是把多个字段组合起来作为 B-tree 的 key，字段顺序对生成的 B-tree 的能力有影响。
+
+官方推荐使用 ESR 原则指导复合索引的字段顺序：
+- E ：等值条件放最前面。
+- S：排序条件放在中间。
+- R：范围条件放在最后。
+
+---
+
+## 唯一 Unique
+
+例如：
+
+```JavaScript
+db.accounts.createIndex(
+  { username: 1 },
+  { unique: true }
+)
+```
+
+其意义是在数据库层面指定约束条件，而不仅仅是依赖业务代码判断。
+
+**普通单字段唯一索引对于缺失字段和 null 值具有特殊行为**，例如：
+
+```JavaScript
+db.test_unique.createIndex(
+  { email: 1 },
+  { unique: true }
+)
+```
+
+如果集合中已经存在缺失 email 字段的文档，就不能再次插入缺失该字段的文档，对于 email 字段存在但为 nil 的情况也是同理。
+
+
+---
+
+## 多键 Multikey
+
+为数组字段的各个不同元素建立索引项，加快数组元素查询。其**创建不需要显式指定**，只要为包含数组值的字段（**最多只能存在一个包含数组的字段**）创建普通索引，就会自动按照多键索引处理。
+
+MongoDB 的多键索引会从数组中提取索引键，一个文档可以生成多个不同的索引项。索引树按照键值组织这些索引项，而每个索引项都能够指向原始文档。因此，同一个文档的多个索引项可能分布在不同的叶子页中，但它们仍然指向同一个文档。后续的 text index 也是类似的原理。
+
+**\$elemMatch 问题**：
+
+假设有：
+
+```JavaScript
+db.players.insertMany([
+  {
+    _id: 1,
+    name: "Alice",
+    achievements: [
+      { type: "PVP", score: 50 },
+      { type: "PVE", score: 200 }
+    ]
+  },
+  {
+    _id: 2,
+    name: "Bob",
+    achievements: [
+      { type: "PVP", score: 150 },
+      { type: "PVE", score: 80 }
+    ]
+  }
+])
+```
+
+如果想查询：至少有一个 PVP 成就，并且这个 PVP 成就的分数达到 100 分的玩家。
+
+直觉上会使用：
+
+```JavaScript
+db.players.find({
+  "achievements.type": "PVP",
+  "achievements.score": { $gte: 100 }
+})
+```
+
+但是这是错的，其中两个条件可以在数组中的不同元素被分别满足。正确的查询方式：
+
+```JavaScript
+db.players.find({
+  achievements: {
+    $elemMatch: {
+      type: "PVP",
+      score: { $gte: 100 }
+    }
+  }
+})
+```
+
+另外，还可以使用数组中元素中的某些字段建立多键索引：
+
+```JavaScript
+db.players.createIndex({
+  "achievements.type": 1,
+  "achievements.score": 1
+})
+```
+
+其实就是将数组中每个元素中的特定字段提取出来组合成 key 建立 B-树。
+
+---
+
+## TTL (time to live)
+
+适合游戏中的短期会话记录、临时活动数据、限期保留的日志等。
+
+例如：
+
+```JavaScript
+db.login_sessions.createIndex(
+  { created_at: 1 },
+  { expireAfterSeconds: 3600 }
+)
+```
+
+MongoDB 将根据 `created_at + 3600 秒` 判断何时过期。另一种方式是直接存储过期时间：
+
+```JavaScript
+db.login_sessions.createIndex(
+  { expire_at: 1 },
+  { expireAfterSeconds: 0 }
+)
+```
+
+TTL 最重要的限制：**不保证准时删除**：
+
+MongoDB 的 TTL 删除任务在后台周期性运行，通常约每 60 秒检查一次，因此过期文档可能在过期之后继续存在一段时间。服务器繁忙时，延迟可能更长。
+
+---
+
+## 部分 Partial
+
+只为满足指定条件的文档建立索引。例如：
+
+```JavaScript
+db.challenges.createIndex(
+  { uid: 1 },
+  {
+    partialFilterExpression: {
+      status: "pending"
+    }
+  }
+)
+```
+
+只会对 status 为 pending 的 document 使用 uid 为 key 建立索引。
+
+**部分唯一索引**：相当于排除了部分 document 之后，在建立唯一索引。
+
+```JavaScript
+db.accounts_partial.createIndex(
+  { email: 1 },
+  {
+    unique: true,
+    partialFilterExpression: {
+      email: { $type: "string" }
+    }
+  }
+)
+```
+
+没有 `email` 字段的用户可以有很多个，但对于字符串邮箱值，数据库仍会保证唯一性。
+
+---
+
+## 其他类型索引
+
+知道有这个东西，并且有什么特点，适合什么情况即可。
+
+**稀疏索引**
+
+只为包含指定索引字段的文档建立索引项。没有指定字段的 document 不会进入该索引：
+
+```JavaScript
+db.players.createIndex(
+  { phone: 1 },
+  { sparse: true }
+)
+```
+
+稀疏索引能实现的功能完全可以使用部分索引来实现。
+
+
+**隐藏索引**
+
+不是索引类型，而是一种特性：将索引隐藏起来，查询优化器无法使用，但是会进行更新维护。
+
+```JavaScript
+db.players.hideIndex("level_1")
+```
+
+**文本索引（Text Index）**
+
+对字符串字段中的字符串按照词拆分，然后使用其构建 key 来构建 B-树。
+
+MongoDB 8.0 自带的文本索引不支持中文分词语言规则。
+
+```JavaScript
+db.items.createIndex({
+  description: "text"
+})
+```
+
+```JavaScript
+db.items.find({
+  $text: { $search: "magic sword" }
+})
+```
+
+**地理空间索引**
+
+对于地理位置数据类型建立索引，不同于普通索引，可能进行了某些优化适配。
+
+
+**哈希索引**
+
+就是用字段的哈希值作为 key 构建索引，这个与分片 Sharding 有关，为了让写入均匀分布到各个分片，使用字段的哈希值作为分片键，
+
+**通配符索引**
+
+为动态或事先无法确实名称的字段建立索引。
+
+---
+
+
+# explain
+
+
+
+---

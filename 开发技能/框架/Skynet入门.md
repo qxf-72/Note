@@ -3431,8 +3431,256 @@ return true, result
 
 # Sproto
 
+在和客户端通讯时，需要制定一套通讯协议：TCP 传输字节流，消息需要按照预先定义的协议编码成二进制数据，接收到消息之后再根据同一份协议进行解码还原。
 
- 
+skynet 框架本身没有强制规定使用什么通讯协议，但是框架提供了 sproto 协议：
+- schema：规定消息有什么字段、字段是什么类型、每条 RPC 消息叫什么。
+- serialization：把 Lua table 编码成二进制数据，然后把二进制数据解码会 Lua table。
+- RPC：规定请求、响应的标识，如果根据消息编号识别请求，已经如何通过 session 关联响应。
+
+## 协议消息定义
+
+例如：
+
+```sproto
+.Person {
+    name 0 : string
+    id 1 : integer
+    email 2 : string
+}
+```
+
+点号开头表示这是定义了一个用户自定义数据类型（类似结构体）。
+
+sproto 支持的数据类型：
+
+| 类型      | 含义                           | Lua 示例             |
+| --------- | ------------------------------ | -------------------- |
+| `integer` | 整数，支持有**符号 64 位**范围 | `uid = 1001`         |
+| `string`  | 字符串                         | `name = "Alice"`     |
+| `boolean` | 布尔值                         | `online = true`      |
+| `binary`  | 二进制数据                     | `data = binary_data` |
+| `double`  | 双精度浮点数                   | `rate = 1.25`        |
+| 自定义数据类型  | 也就是前面说的用点号开头的结构体 |                      |
+
+一些特殊语法：
+- `*`：在类型名字前面加上 `*` 表示数组。
+- 定点数：例如 `price 0 : integer(2)` 表示固定有两位小数点定点数，例如 `1.82` 会被标识为整数 `182`。
+- 带主键的数组：
+
+```
+.Person {
+    id 0 : integer
+    name 1 : string
+}
+
+.AddressBook {
+    person 0 : *Person(id)
+}
+```
+
+`*Person(id)` 表示以每个 `Person` 的 `id` 作为主键，将集合编码成无序映射，而不是普通的顺序数组。
+
+
+---
+
+## Sproto 编解码
+
+Sproto 结构体编码由三部分组成：
+- Header：描述有多少个字段。
+- Field part：按照 tag 升序编码，说明对应字段类型，对于可以直接编码的小类型，可以直接编码到此。
+- Data part：实际数据部分。
+
+对于缺失的字段，解码还原之后，其在 Lua tablle 中通常表现为 nil。
+
+|API|功能|
+|---|---|
+|`sproto:encode(type, table)`|根据指定数据类型编码结构体|
+|`sproto:decode(type, bytes)`|解码结构体|
+|`sproto:pencode(type, table)`|编码结构体后，再执行 0-pack|
+|`sproto:pdecode(type, bytes)`|先执行 0-unpack，再解码结构体|
+
+- 0-pack：一种专门的紧凑打包算法，利用二进制数据中经常出现的零字节来压缩数据。
+
+---
+
+## RPC
+
+例如：
+
+```
+.package {
+    type 0 : integer
+    session 1 : integer
+}
+
+login 1 {
+    request {
+        uid 0 : integer
+        token 1 : string
+    }
+
+    response {
+        ok 0 : boolean
+        error_code 1 : integer
+    }
+}
+```
+
+其中 `.package` 这个自定义的数据结构是 RPC 消息头（后面调用 api 创建 RPC 消息处理对象需要把"package'作为参数传入），其中：
+- `type`：请求的类型编号，例如 login 后面的数字 1 。用数字来表示请求类型，后面就不用再传输请求名字字符串了。
+- `session`：不等同于 skynet 中的 session，但是也是用来对应请求和响应。
+
+Sproto RPC 有一个非常重要的约定：
+- 请求消息带有 `type`，用来识别协议。
+- 响应消息通常不再携带 `type`，而是通过 `session` 找到对应的请求和响应结构。如果请求没有提供 session，就表示它不需要响应。Skynet Wiki 明确描述了这两种情况。
+
+
+RPC api：
+
+```lua
+local host = c2s:host("package")
+local send_request = host:attach(s2c)
+```
+
+
+
+
+---
+
+
+## 接入 Skynet
+
+
+Sproto 加载到 Skynet 的基本流程：
+
+```lua
+local sprotoparser = require "sprotoparser"
+local sproto = require "sproto"
+
+-- 这里消息定义协议结构写到字符串，更常见的是写入.sproto文件中
+local schema = [[
+.Person {
+    uid 0 : integer
+    name 1 : string
+}
+]]
+-- 将文本解析为二进制类型的协议描述
+local binary_schema = sprotoparser.parse(schema)
+-- 根据协议描述创建Sproto对象，之后通过调用该对象函数来使用协议
+local sp = sproto.new(binary_schema)
+```
+
+`sproto.parse(schema)` 则是一个方便的接口，可以直接从文本解析并创建 **sproto对象**。以下是另一种风格的写法：
+
+```lua
+local sproto = require "sproto"
+local f = assert(io.open("s2c协议文件名"))
+local t = f:read "a"
+f:close()
+
+host = sproto.parse(t):host "package"      -- host 用来解析读取的数据
+
+local f = assert(io.open("c2s协议文件名")) 
+local t = f:read "a"
+f:close()
+
+request = host:attach(sproto.parse(t))   -- request 用来编码请求内容
+```
+
+因为 skynet 采用的是多 Lua 虚拟机，也就是有很多 service，如果每一个 service 都重复一遍上面的加载协议流程，加载相同的 sproto 协议定义就想的浪费，skynet 中提供了一个 sprotoloader 模块来共享协议：
+- C 模块中提供了 **16** 个全局的 slot ，可以理解为 16 个槽位。
+- 在使用协议前，提前使用 `sprotoloader.save(协议的二进制表示类型,槽位编号)`
+- 在需要使用时，`sprotoloader.load(槽位编号)`，即可取出对应 slot 的协议的 **sproto 对象**。
+- 这套 api 并非线程安全，所以必须保证在初始化完毕之后再进行 load 操作。（load 本身是线程安全的）
+
+使用方式：
+
+1. 创建一个 service 用于进行 save 操作：
+
+```lua
+local skynet = require "skynet"
+local sprotoloader = require "sprotoloader"
+
+skynet.start(function()
+    sprotoloader.save(..., 1)
+    sprotoloader.save(..., 2)
+    -- don't call skynet.exit() , because sproto.core may unload and the global slot become invalid
+end)
+```
+
+2. 在需要使用时，调用响应的 api：
+
+```lua
+host = sprotoloader.load(1):host "package"
+send_request = host:attach(sprotoloader.load(2))
+```
+
+常见约定是，slot 1 存储 c2s， solt 2 存储 s2c。
+
+
+
+gate 这个 service 和客户端之间使用 tcp 进行通讯，使用 skynet 的 socket 接口进行发送和接收经过按照协议编码的数据。
+
+而在 skynet 世界内部，gate 在收到来自客户端的数据之后，需要把数据发送对应的 agent service，有以下两种方案：
+- 直接使用 lua 消息类型：`msg` 是一个 C 内存指针，在 Lua 中表现为 `lightuserdata`，Skynet 的 Lua 消息序列化支持 `lightuserdata`，所以可以作为一个参数传递，但是 agent 必须负责在处理接收之后释放原始缓冲区，有一定的内存泄漏风险，所以更安全的方式是：
+
+```lua
+-- gate service
+function handler.message(fd, msg, sz)
+    local packet = skynet.tostring(msg, sz)
+
+    -- tostring 复制数据，不会替你释放原始缓冲区
+    skynet.trash(msg, sz)
+
+    skynet.send(agent, "lua", "client_data", fd, packet)
+end
+```
+
+```lua
+-- agent service
+skynet.dispatch("lua", function(session, source, cmd, ...)
+    if cmd == "client_data" then
+        local fd, packet = ...
+
+        local kind, name, args, response = host:dispatch(packet)
+
+        -- 根据 name 分发业务请求
+    end
+end)
+```
+
+这种方式一方面需要进行内存复制操作，另一方面多了一层 Lua 消息的编码和解码操作。
+
+
+- 使用自定义的消息类型，配合 `skynet.redirect` 转交原始消息缓冲区：
+
+```lua
+-- Gate
+skynet.redirect(dest, source, protocol, session, msg, sz)
+
+-- Agent
+skynet.register_protocol {
+    name = "client",
+    id = skynet.PTYPE_CLIENT,
+	
+	-- 将发送参数编码成消息字节，不是必要的，因为agent在获得socket fd后可以直接喝客户端通讯，不用发消息给gate
+    pack = function(...)
+        
+    end,
+	
+	-- 将接收消息解码成参数
+	unpack = function(msg, sz)
+    	return A, B, C
+	end，
+	-- 分发消息进行处理
+	dispatch = function(session, source, A, B, C)
+
+    end
+}
+```
+
+
 
 
 ---
