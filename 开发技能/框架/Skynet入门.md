@@ -3500,7 +3500,14 @@ Sproto 结构体编码由三部分组成：
 |`sproto:pencode(type, table)`|编码结构体后，再执行 0-pack|
 |`sproto:pdecode(type, bytes)`|先执行 0-unpack，再解码结构体|
 
-- 0-pack：一种专门的紧凑打包算法，利用二进制数据中经常出现的零字节来压缩数据。
+0-pack：一种专门的紧凑打包算法，利用二进制数据中经常出现的零字节来压缩数据。其首先将消息填充值 8 字节的整数倍，每 8 个字节对应压缩之后的标签字节（压缩前一个 byte 对应压缩后标签字节的一个 bit ），标签字节中的 0 bit 表示对应位置 byte 为 0x00，对于这种零字节就没必要继续占用空间存储了。
+
+例如：
+
+```text
+unpacked (hex):  08 00 00 00 03 00 02 00   19 00 00 00 aa 01 00 00
+packed (hex):  51 08 03 02   31 19 aa 01
+```
 
 ---
 
@@ -3539,11 +3546,33 @@ Sproto RPC 有一个非常重要的约定：
 RPC api：
 
 ```lua
-local host = c2s:host("package")
+-- 构造一个 sproto rpc 的消息处理器
+local host = c2s:host("package")          -- c2s是使用c2s协议创建的sproto对象
 local send_request = host:attach(s2c)
 ```
 
+```lua
+host:dispatch(msg,sz) 
+host:dispatch(msgcontent)
+```
+- 用于解码接收到的数据：
+	- 如果 `type` 字段存在，则说明这是对方发来的请求消息。
+		- `session` 字段不存在：请求不需要响应，返回值为："REQUEST"、请求类型名字、消息内容（通常是一个 table）。
+		- `session` 字段存在：需要作出回应，此时会有第 4 个返回值：用于生成回应闭包的函数。
+	- 如果 `type` 字段不存在，说明这是对方根据我方之前发送的请求作出的响应消息。返回值为："RESPONSE"、session、消息内容（通常是一个 table ，也可能不存在内容，仅仅是一个回应确认）。
 
+可以看出，host 对象是根据"对方发来的消息协议"定义的 RPC 消息处理器，但是也能处理对于我方发出请求的回应，原因在于：
+
+```lua
+local send_request = host:attach(s2c)
+```
+
+**Sproto 的 `host` 不仅保存接收请求的协议，还会通过 `attach()` 记录自己发出的请求所对应的响应协议。**
+
+`send_request` 是一个编码函数：将对外请求按照协议打包编码。其接受 3 个参数：
+- name：消息的字符串名。
+- args：一个 table，存储需要发送到消息数据。
+- session
 
 
 ---
@@ -3596,7 +3625,7 @@ request = host:attach(sproto.parse(t))   -- request 用来编码请求内容
 
 使用方式：
 
-1. 创建一个 service 用于进行 save 操作：
+- 创建一个 service 用于进行 save 操作：
 
 ```lua
 local skynet = require "skynet"
@@ -3609,7 +3638,7 @@ skynet.start(function()
 end)
 ```
 
-2. 在需要使用时，调用响应的 api：
+- 在需要使用时，调用响应的 api：
 
 ```lua
 host = sprotoloader.load(1):host "package"
@@ -3618,7 +3647,7 @@ send_request = host:attach(sprotoloader.load(2))
 
 常见约定是，slot 1 存储 c2s， solt 2 存储 s2c。
 
-
+**内部通信问题：**
 
 gate 这个 service 和客户端之间使用 tcp 进行通讯，使用 skynet 的 socket 接口进行发送和接收经过按照协议编码的数据。
 
@@ -3664,7 +3693,7 @@ skynet.register_protocol {
     name = "client",
     id = skynet.PTYPE_CLIENT,
 	
-	-- 将发送参数编码成消息字节，不是必要的，因为agent在获得socket fd后可以直接喝客户端通讯，不用发消息给gate
+	-- 将发送参数编码成消息字节，不是必要的，因为agent在获得socket fd后可以直接和客户端通讯，不用发消息给gate
     pack = function(...)
         
     end,

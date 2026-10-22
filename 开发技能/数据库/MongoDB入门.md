@@ -1994,8 +1994,445 @@ db.items.find({
 ---
 
 
-# explain
+## explain
 
+`explain()` 会返回一个描述查询计划及执行情况的文档。输出结构会因 MongoDB 版本和所用的查询执行引擎而有所不同。对于日程索引分析，返回结果可以理解成三个部分：
+- `queryPlanner`：如何选择执行计划？用了什么索引？考虑过什么候选方案？
+- `executionStats`：返回了多少文档、检查了多少索引项和文档、花费了多长时间？
+- `executionStages`：选中的执行计划由哪些阶段组成？每个阶段分别做了什么、处理了多少数据？
+
+使用方式：
+
+```JavaScript
+// 只看查询计划
+db.inventory.find({ type: "food" })
+  .explain("queryPlanner")
+
+// 查看选中计划的执行统计
+db.inventory.find({ type: "food" })
+  .explain("executionStats")
+
+// 查看选计划阶段采集的候选计划统计
+db.inventory.find({ type: "food" })
+  .explain("allPlansExecution")
+```
+
+
+### queryPlanner
+
+在 `queryPlanner` 中，最重要的是：
+
+```JavaScript
+queryPlanner: {
+  winningPlan: {
+    // 选中的执行计划
+  },
+  rejectedPlans: [
+    // 被淘汰的候选计划
+  ]
+}
+```
+
+`winningPlan` 是查询优化器选中的方案。`rejectedPlans` 则列出优化器考虑过但没有选中的其他候选计划。
+
+
+其中包含的 stage：
+
+|Stage|含义|你需要关注什么|
+|---|---|---|
+|`COLLSCAN`|集合扫描|是否检查了大量文档|
+|`IXSCAN`|索引扫描|使用了哪个索引、扫描范围多大|
+|`FETCH`|读取文档|索引是否还需要回表读取文档|
+|`SORT`|额外排序|是否能通过索引直接获得排序结果|
+|`OR`|合并多个 OR 分支的结果|各分支是否使用合适的索引|
+|`SHARD_MERGE`|合并分片返回的结果|分片查询是否涉及额外合并|
+
+执行计划中的层级顺序看起来是反的，因为其表示的是数据流关系：父节点消费子节点产生的数据。
+
+
+### executionStats
+
+5 个核心字段：
+
+|字段|含义|
+|---|---|
+|`executionSuccess`|本次 explain 执行是否成功|
+|`nReturned`|最终返回的文档数量|
+|`totalKeysExamined`|检查的索引项总数|
+|`totalDocsExamined`|检查的文档总数|
+|`executionTimeMillis`|本次 explain 中查询规划和执行所耗费的时间，单位为毫秒|
+
+---
+
+# 聚合操作
+
+
+## Aggregation Pipeline
+
+
+聚合管道可以理解成数据处理流程：含有一个或者多个处理阶段，每个阶段处理输入的 document，然后将结果交给下一个阶段继续处理。
+
+MongoDB 的聚合管道通常不会为每个阶段创建一个临时 collection。它主要通过内部的数据处理阶段，逐步传递和转换 document。某些阶段需要缓存中间数据；内存不足时，还可以将部分中间数据写入磁盘临时文件。
+
+聚合管道的使用方式：
+
+```JavaScript
+db.challenges.aggregate([
+    {
+        $match: {
+            status: "completed"
+        }
+    },
+    {
+        $sort: {
+            score: -1
+        }
+    },
+    {
+        $limit: 10
+    }
+])
+```
+
+可以看出，其结构为：
+
+```JavaScript
+db.collection.aggregate([
+    { 阶段一: { ... } },
+    { 阶段二: { ... } },
+    { 阶段三: { ... } }
+])
+```
+
+普通的聚合管道主要用于读取和计算，不会自动修改原集合中的 document。**如果管道包含 `$merge` 或 `$out`，才会将处理结果写入集合**。
+
+常用的聚合阶段：
+
+|要解决的问题|常用阶段|作用|
+|---|---|---|
+|筛选数据|`$match`|只保留符合条件的 document|
+|展开数组|`$unwind`|将数组中的元素展开为独立 document|
+|分组统计|`$group`|按某个字段或表达式分组并计算统计值|
+|排序与分页|`$sort`、`$skip`、`$limit`|排序、跳过指定数量、限制结果数量|
+|计算或调整字段|`$project`、`$set`、`$addFields`|选择字段、添加字段或计算新值|
+|关联其他集合|`$lookup`|类似关系数据库中的左外连接|
+|统计文档数量|`$count`|统计当前阶段输入的 document 数量|
+|同时进行多种分析|`$facet`|对同一批输入数据执行多个独立的子管道|
+|合并集合数据|`$unionWith`|合并另一个集合的查询结果|
+|保存聚合结果|`$merge`、`$out`|将结果写入集合|
+
+Stage 和 Operator 并不是同一个概念：
+- Stage：决定做什么操作，但是本身并不处理数据。
+- Operator：决定如何处理数据。
+
+### `$match`
+
+可以理解为聚合管道中的 `find` 查询条件。其使用标准 MongoDB 查询条件，所以 `$gt`、`$gte`、`$lt`、`$in` 等查询操作符都能派上用场。
+
+
+### `$unwind`
+
+把数组展开，常见用途是统计每种标签分别出现了多少次，`$unwind` 会改变 document 的数量。它既可能让一条 document 变成多条，也可能让某些 document 消失。例如：
+
+有这样的 document：
+
+```JavaScript
+{
+    playerId: 1001,
+    tags: ["boss", "hard", "daily"]
+}
+```
+
+使用：
+```JavaScript
+{
+    $unwind: "$tags"
+}
+```
+
+则变成 3 个 document：
+
+```JavaScript
+{ playerId: 1001, tags: "boss" }
+{ playerId: 1001, tags: "hard" }
+{ playerId: 1001, tags: "daily" }
+```
+
+如果数组字段不存在、为 `null` 或者是空数组，默认情况下 `$unwind` 不会输出该 document。如果希望保留这些 document，可以这样写：
+
+```JavaScript
+{
+    $unwind: {
+        path: "$tags",
+        preserveNullAndEmptyArrays: true
+    }
+}
+```
+
+
+### `$group`
+
+假设有如下数据：
+
+```JavaScript
+{ playerId: 1001, score: 900 }
+{ playerId: 1001, score: 800 }
+{ playerId: 1002, score: 700 }
+```
+
+你想统计每位玩家的挑战次数、总分和平均分。
+
+```JavaScript
+{
+    $group: {
+        _id: "$playerId",
+        challengeCount: { $sum: 1 },
+        totalScore: { $sum: "$score" },
+        avgScore: { $avg: "$score" },
+        maxScore: { $max: "$score" }
+    }
+}
+```
+
+结果相当于：
+
+```JavaScript
+{ _id: 1001, challengeCount: 2, totalScore: 1700,
+  avgScore: 850, maxScore: 900 }
+
+{ _id: 1002, challengeCount: 1, totalScore: 700,
+  avgScore: 700, maxScore: 700 }
+```
+
+其中 `_id` 用于指定分组依据，`_id="$playerId"` 也就是把所有 `playerId` 相同的 document 归为同一组。也可以按照多个字段分组：
+
+```JavaScript
+{
+    $group: {
+        _id: {
+            playerId: "$playerId",
+            challengeId: "$challengeId"
+        },
+        count: { $sum: 1 }
+    }
+}
+```
+
+
+另外：
+- `$sum: 1`：每个输入 document 为**当前组**贡献 1，用于计数。
+- `$sum: "$score"`：把每个 document 的 `score` 值累加起来。
+
+最后，`$group` 并**不会保证输出顺序**。
+
+
+### `$sort` 和 `$limit`
+
+顾名思义。
+
+### `$lookup`
+
+类似 mysql 中的 join 操作，例如：
+
+有两个集合：
+
+```JavaScript
+// challengeRuns
+{
+    playerId: 1001,
+    challengeId: 2001,
+    score: 950
+}
+
+// challengeCatalog
+{
+    challengeId: 2001,
+    name: "Dragon Cave",
+    difficulty: "hard"
+}
+```
+
+可以看出，两个集合存在引用关系，当需要把引用的内容加入进来，可以：
+
+```JavaScript
+db.challengeRuns.aggregate([
+    {
+        $lookup: {
+            from: "challengeCatalog",
+            localField: "challengeId",
+            foreignField: "challengeId",
+            as: "challenge"
+        }
+    }
+])
+```
+
+|参数|含义|
+|---|---|
+|`from`|被关联的集合|
+|`localField`|当前输入 document 中的关联字段|
+|`foreignField`|被关联集合中的匹配字段|
+|`as`|用于存放关联结果的新字段|
+
+
+### `$facet`
+
+让多个独立的子管道处理同一批输入 document，各自生成结果。
+
+例如：
+
+```JavaScript
+db.challengeRuns.aggregate([
+    {
+        $match: {
+            status: "completed"
+        }
+    },
+    {
+        $facet: {
+            statistics: [
+                {
+                    $group: {
+                        _id: null,
+                        count: { $sum: 1 },
+                        avgScore: { $avg: "$score" },
+                        maxScore: { $max: "$score" }
+                    }
+                }
+            ],
+            topScores: [
+                { $sort: { score: -1 } },
+                { $limit: 5 },
+                {
+                    $project: {
+                        _id: 0,
+                        playerId: 1,
+                        score: 1
+                    }
+                }
+            ]
+        }
+    }
+])
+```
+
+---
+
+## 统计方法
+
+相较于“统计方法”，“单用途聚合操作”这个词更准确。
+
+- 聚合管道：一套通用的数据处理机制。
+- 单用途聚合操作：针对特定任务的便捷接口，调用简单，但能力有限。其中有些（不是全部）单用途聚合操作是通过封装聚合管道实现的。
+
+### `countDocuments()`
+
+按照条件统计文档数量，例如：
+
+```JavaScript
+db.orders.countDocuments({
+  status: "paid"
+})
+```
+
+- 不依赖集合元数据中的文档数量统计值，而是通过实际的查询执行来计数。
+- 可以在合适的情况下利用索引。
+- 如果传入空条件 `{}`，默认可能进行全集合扫描，需要注意性能。
+
+
+### `estimatedDocumentCount()`
+
+通过集合元数据估计文档数量，统计值并不精确，所以不接受任何查询过滤条件。
+
+
+### `distinct()`
+
+查询**某一个字段**有哪些不同的值。可以加上过滤条件。例如：
+
+```JavaScript
+db.orders.distinct(
+  "status",
+  { amount: { $gt: 100 } }
+)
+```
+
+---
+
+
+# 事务
+
+MongoDB 事务允许将多个读写操作放入同一个事务中，让这些操作在数据库层面作为一个整体提价或中止，可以跨越多个操作、文档、集合，甚至数据库和分片。
+
+MongoDB 通过 Session 维护会话和事务上下文，通过事务状态和存储引擎的多版本并发控制机制管理读取视图及未提交的修改。执行 `commitTransaction()` 时，事务的修改作为一个整体提交；执行 `abortTransaction()` 时，未提交的修改被丢弃。`endSession()` 则负责结束会话并释放相关资源。
+
+在 Mongodb 中使用事务：
+
+
+```JavaScript
+use game
+
+db.accounts.insertMany([
+    { _id: "A", balance: 500 },
+    { _id: "B", balance: 200 }
+])
+```
+
+```JavaScript
+
+const session = db.getMongo().startSession();
+
+try {
+    // 获取绑定到 session 的数据库和集合
+    const accounts = session.getDatabase("game").accounts;
+
+    // 开启事务
+    session.startTransaction();
+
+    // 先扣除 A 的金币，同时检查余额是否充足
+    const debit = accounts.updateOne(
+        {
+            _id: "A",
+            balance: { $gte: 100 }
+        },
+        {
+            $inc: { balance: -100 }
+        }
+    );
+
+    // updateOne 匹配不到文档时通常不会抛出异常
+    // 因此必须显式检查业务条件是否满足
+    if (debit.matchedCount !== 1) {
+        throw new Error("玩家 A 不存在或余额不足");
+    }
+
+    // 再给 B 增加金币
+    const credit = accounts.updateOne(
+        { _id: "B" },
+        { $inc: { balance: 100 } }
+    );
+
+    if (credit.matchedCount !== 1) {
+        throw new Error("玩家 B 不存在");
+    }
+
+    // 两个操作都成功，提交事务
+    session.commitTransaction();
+
+    print("转账成功");
+} catch (err) {
+    // 出现错误时，尝试中止事务
+    try {
+        session.abortTransaction();
+    } catch (_) {
+        // 事务可能已经结束，或提交结果需要进一步确认
+    }
+
+    throw err;
+} finally {
+    // 释放会话资源
+    session.endSession();
+}
+```
 
 
 ---
