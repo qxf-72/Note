@@ -6,6 +6,7 @@
       {
         "id": "c697d525a59474ee",
         "type": "tabs",
+        "dimension": 54.54545454545454,
         "children": [
           {
             "id": "1b066cfe577ec3d6",
@@ -13,13 +14,36 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "PLAN.md",
+                "file": "开发技能/数据库/MySQL是怎样运行的.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "PLAN"
-            }
+              "title": "MySQL是怎样运行的"
+            },
+            "group": "f03974b403b4a33b"
+          }
+        ]
+      },
+      {
+        "id": "f2ea733b1c74b394",
+        "type": "tabs",
+        "dimension": 45.45454545454545,
+        "children": [
+          {
+            "id": "fa8dcc38057b3db1",
+            "type": "leaf",
+            "state": {
+              "type": "split-diff-view",
+              "state": {
+                "aFile": "开发技能/数据库/MySQL是怎样运行的.md",
+                "bFile": "开发技能/数据库/MySQL是怎样运行的.md",
+                "aRef": ""
+              },
+              "icon": "diff",
+              "title": "Diff: MySQL是怎样运行的  (Working Tree)"
+            },
+            "group": "f03974b403b4a33b"
           }
         ]
       }
@@ -80,7 +104,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -229,21 +254,26 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "1b066cfe577ec3d6",
+  "active": "fa8dcc38057b3db1",
   "lastOpenFiles": [
+    "开发技能/数据库/MySQL是怎样运行的.md",
     "开发技能/数据库/MongoDB入门.md",
-    "PLAN.md",
     "开发技能/框架/Skynet入门.md",
+    "A5B82A00DE71A0F92EF23E79FD2911F6.png",
+    "编程语言/C++/C++面试.md",
+    "编程语言/C++/C++工程API.md",
+    "编程语言/C++/C++ Primer.md",
+    "编程语言/C++/候捷C++面向对象高级编程.md",
+    "开发技能/Unix/Git入门.md",
+    "PLAN.md",
     "未命名.md",
     "编程语言/lua/Lua程序设计.md",
     "开发技能/数据库/Redis入门.md",
     "开发技能/数据库/SQL必知必会.md",
-    "开发技能/数据库/MySQL是怎样运行的.md",
     "计算机基础/计算机组成原理/汇编语言.md",
     "编程语言/C++/Effective C++.md",
     "编程语言/Lua/Lua程序设计.md",
     "开发技能/Unix/Ubuntu 使用记录.md",
-    "开发技能/Unix/Git入门.md",
     "开发技能/Unix/鸟哥的Linux私房菜.md",
     "其他/机器人操作系统.md",
     "开发技能/Unix/Vim入门.md",
@@ -252,11 +282,6 @@
     "README.md",
     "开发技能/构建工具/CMake入门.md",
     "计算机基础/计算机网络/计算机网络.md",
-    "计算机基础/操作系统原理/王道 操作系统.md",
-    "开发技能/并发编程/Linux多线程服务端编程.md",
-    "开发技能/构建工具/跟我一起写Makefile.md",
-    "开发技能/并发编程/C++并发编程实战.md",
-    "开发技能/Unix/UNIX环境高级编程.md",
     "开发技能/框架",
     "编程语言/Lua",
     "482743F2FD33B7CE58A9F431F7FC20D3 1.png",

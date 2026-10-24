@@ -7,18 +7,16 @@
       "item-1-40",
       "item-1-50",
       "item-1-65",
-      "item-1-77",
-      "item-2-78",
-      "item-2-85"
+      "item-1-77"
     ],
-    "scroll": 2320.009344362745,
+    "scroll": 2410.0583902061876,
     "cursor": {
       "from": {
-        "line": 2361,
+        "line": 2441,
         "ch": 0
       },
       "to": {
-        "line": 2361,
+        "line": 2441,
         "ch": 0
       }
     }
@@ -53,15 +51,15 @@
       "item-1-96",
       "item-1-104"
     ],
-    "scroll": 3591.2448968116078,
+    "scroll": 1622.889563023833,
     "cursor": {
       "from": {
-        "line": 3649,
-        "ch": 9
+        "line": 1025,
+        "ch": 4
       },
       "to": {
-        "line": 3649,
-        "ch": 2
+        "line": 1025,
+        "ch": 4
       }
     }
   },
@@ -82,20 +80,34 @@
   "PLAN.md": {
     "cursor": {
       "from": {
-        "line": 226,
-        "ch": 0
+        "line": 270,
+        "ch": 3
       },
       "to": {
-        "line": 226,
-        "ch": 0
+        "line": 270,
+        "ch": 3
       }
     },
     "expandedKeys": [],
-    "scroll": 202.26707409274192
+    "scroll": 197.742890625
   },
   "开发技能/数据库/MySQL是怎样运行的.md": {
-    "expandedKeys": [],
-    "scroll": 0
+    "expandedKeys": [
+      "item-1-8",
+      "item-2-9",
+      "item-2-14"
+    ],
+    "scroll": 101.5808993252841,
+    "cursor": {
+      "from": {
+        "line": 148,
+        "ch": 0
+      },
+      "to": {
+        "line": 148,
+        "ch": 0
+      }
+    }
   },
   "开发技能/数据库/SQL必知必会.md": {
     "expandedKeys": [],
@@ -104,5 +116,34 @@
   "开发技能/数据库/Redis入门.md": {
     "expandedKeys": [],
     "scroll": 596.4684895833333
+  },
+  "开发技能/Unix/Git入门.md": {
+    "expandedKeys": [],
+    "scroll": 196.26956954656862
+  },
+  "编程语言/C++/候捷C++面向对象高级编程.md": {
+    "expandedKeys": []
+  },
+  "编程语言/C++/C++ Primer.md": {
+    "expandedKeys": [],
+    "scroll": 5943.5579072782375,
+    "cursor": {
+      "from": {
+        "line": 5966,
+        "ch": 0
+      },
+      "to": {
+        "line": 5966,
+        "ch": 0
+      }
+    }
+  },
+  "编程语言/C++/C++工程API.md": {
+    "expandedKeys": [],
+    "scroll": 26.639696502685545
+  },
+  "编程语言/C++/C++面试.md": {
+    "expandedKeys": [],
+    "scroll": 60.17233421688988
   }
 }
