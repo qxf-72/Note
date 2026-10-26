@@ -4,46 +4,44 @@
     "type": "split",
     "children": [
       {
-        "id": "c697d525a59474ee",
+        "id": "bd376b7ff6487971",
         "type": "tabs",
-        "dimension": 54.54545454545454,
         "children": [
           {
-            "id": "1b066cfe577ec3d6",
+            "id": "84f6cc083283d3f3",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发技能/数据库/MySQL是怎样运行的.md",
+                "file": "编程语言/lua/Lua程序设计.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "MySQL是怎样运行的"
+              "title": "Lua程序设计"
             },
-            "group": "f03974b403b4a33b"
+            "group": "34ccf737aac4a591"
           }
         ]
       },
       {
-        "id": "f2ea733b1c74b394",
+        "id": "28ad42bd134da9ae",
         "type": "tabs",
-        "dimension": 45.45454545454545,
         "children": [
           {
-            "id": "fa8dcc38057b3db1",
+            "id": "c10e071afadabec5",
             "type": "leaf",
             "state": {
-              "type": "split-diff-view",
+              "type": "markdown",
               "state": {
-                "aFile": "开发技能/数据库/MySQL是怎样运行的.md",
-                "bFile": "开发技能/数据库/MySQL是怎样运行的.md",
-                "aRef": ""
+                "file": "编程语言/lua/Lua程序设计.md",
+                "mode": "source",
+                "source": true
               },
-              "icon": "diff",
-              "title": "Diff: MySQL是怎样运行的  (Working Tree)"
+              "icon": "lucide-file",
+              "title": "Lua程序设计"
             },
-            "group": "f03974b403b4a33b"
+            "group": "34ccf737aac4a591"
           }
         ]
       }
@@ -169,7 +167,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "开发技能/数据库/MongoDB入门.md",
+                "file": "编程语言/lua/Lua程序设计.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -237,7 +235,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 321.74261474609375
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -254,21 +252,23 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "fa8dcc38057b3db1",
+  "active": "c10e071afadabec5",
   "lastOpenFiles": [
-    "开发技能/数据库/MySQL是怎样运行的.md",
+    "开发技能/数据库/Redis入门.md",
+    "开发技能/框架/mermaid-diagram.png",
+    "开发技能/框架/mermaid-diagram.png.de0bbbbb-6501-49fc-bab5-a3c953d0342b.chatgptdownload",
     "开发技能/数据库/MongoDB入门.md",
     "开发技能/框架/Skynet入门.md",
+    "PLAN.md",
+    "开发技能/数据库/MySQL是怎样运行的.md",
     "A5B82A00DE71A0F92EF23E79FD2911F6.png",
     "编程语言/C++/C++面试.md",
     "编程语言/C++/C++工程API.md",
     "编程语言/C++/C++ Primer.md",
     "编程语言/C++/候捷C++面向对象高级编程.md",
     "开发技能/Unix/Git入门.md",
-    "PLAN.md",
     "未命名.md",
     "编程语言/lua/Lua程序设计.md",
-    "开发技能/数据库/Redis入门.md",
     "开发技能/数据库/SQL必知必会.md",
     "计算机基础/计算机组成原理/汇编语言.md",
     "编程语言/C++/Effective C++.md",
@@ -298,7 +298,6 @@
     "杂项/思维导图/汇编语言.mm",
     "开发工具/Make工具",
     "Pasted Image 20231101203027_904.jpg",
-    "其他",
     "未命名.canvas",
     "未命名 1.canvas"
   ]

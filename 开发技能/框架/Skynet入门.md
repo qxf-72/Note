@@ -3711,9 +3711,228 @@ skynet.register_protocol {
 
 ---
 
-# cluster
+# Cluster
+
+## Overview 
+
+如果单机性能还没有达到瓶颈，优先考虑充分利用 Skynet 的多核并行能力，以及通过升级硬件进行纵向扩容，而不是过早引入分布式架构。但当单机资源已经无法满足需求，或存在隔离、可用性和横向扩展需求时，再考虑使用 Cluster。
+
+在确实需要建立集群的情况下，例如：
+- 确实需要多个游戏服务器分担压力。
+- 把不同业务服务进行划分，分别部署到不同机器上面。
+- 多个游戏服务器需要交换数据，例如跨服聊天、排行榜。
+
+skynet 提供了两种集群模式。
+
+
+---
+
+## Master/Slave 模式
+
+这是 skynet 比较早期的集群设计。它的目标是：尽可能让跨节点调用和本地调用保持一致。
+
+但是，集群并不期望完全隐藏分布式的本质。任何企图抹平服务运行位置差异的设计都需要慎重考虑，很可能存在设计问题。即使在 API 使用层面看起来在不同机器和进程上的服务可以像在同一进程内的服务一样的协作，但差别并不仅仅是消息传递速度不同。
+
+所以这种模式现在并不推荐使用，简单了解即可。
+
+
+Skyne 服务地址采用 32 位整数，在 Master/Slave 模式下，高 8 位标识节点（Harbor ID），低 24 位标识节点中的服务。
+
+Skynet 内核根据地址中的 Harbor ID 判断：
+
+- 如果目标在当前进程中，直接进行本地消息投递。  
+- 如果目标在其他节点中，则交给 Harbor 组件通过网络转发。
+
+---
+
+## Cluster 模式
+
+Cluster 模式采用另一种思路：不在试图隐藏本地通信和远程通信的差异，而是提供独立的跨节点通信接口。
+
+|对比项|Master/Slave|Cluster|
+|---|---|---|
+|核心理念|尽量统一本地和远程通信|显式区分跨节点通信|
+|服务定位|Harbor ID + 服务 ID|节点名 + 目标服务|
+|调用接口|`skynet.call/send`|`cluster.call/send`|
+|节点关系|耦合较紧|相对独立|
+|节点故障处理|限制较多|更适合动态调整，但仍需业务处理|
+
+
+Cluster 可以和 Master/Slave 模式共存，但更简单、也更适合独立节点部署的方式，是将每个 Skynet 进程的 `harbor` 设置为 `0`，然后通过 Cluster 模块进行跨节点通信。
+
+### Cluster API
+
+**cluster.reload()**
+
+Cluster 首先需要知道每个节点的网络地址。
+
+```lua
+local cluster = require "skynet.cluster"
+
+cluster.reload {
+    game = "127.0.0.1:2527",
+    db = "127.0.0.1:2528",
+    __nowaiting = true,  -- 如果访问节点没有配置，不要无限等待，而是报错。
+}
+```
+
+集群中每个节点通常都应该加载一样的内容。除了上面这种方式，还可以将这些写入 Cluster 配置文件中，然后再 skynet 启动配置中指定该文件。
+
+```lua
+cluster = "./examples/clustername.lua"
+```
+
+Cluster 配置文件的写法示例：
+
+```lua
+db = "127.0.0.1:2528"
+__nowaiting = true
+```
+
+
+---
+
+**cluster.open("node_name")**
+
+让当前 skynet 进程以指定节点身份开放 Cluster 通信入口。
+
+其会根据配置找到名字对应的地址和端口，然后开始创建监听服务，接受其他节点发来的 Cluster 请求。
+
+- `cluster.open("db")` 并不是连接到远程 db 节点，而是让当前进程监听 db 对应的地址和端口。
+- 一个节点如果只主动发起 `cluster.call`，而不需要接受其他节点主动发来的请求，那么它不一定需要调用 `cluster.open`。
+---
+
+**cluster.register**
+
+为指定服务创建一个节点内的名字，之后其他节点就可以通过 `节点名+节点内服务名` 来对指定服务发出请求。
+
+例如：
+
+```lua
+local db_service = skynet.newservice("db")
+cluster.register("playerdb", db_service)
+```
+
+```lua
+-- 其他节点
+cluster.call("db", "@playerdb", "get_player", uid)
+```
+
+Skynet 提供不同的服务命名机制：
+
+- **本地服务名**：以 `.` 开头，通过 `skynet.name()` 注册，在当前 Skynet 节点内有效。
+- **传统全局服务名**：以普通字母开头，主要用于 Master/Slave 模式下的跨节点寻址。
+- **Cluster 远端服务名**：通过 `cluster.register(name, addr)` 注册，其他节点使用 `@name` 访问，需要同时指定节点名称。
+
+在 Cluster 模式下，推荐使用 `cluster.register` 提供的命名机制。因为这套命名机制独立于 Skynet 底层命名系统，并且能够避免因服务重启、地址变化而导致长期保存的数字地址失效。
+
+数字服务地址仍然可以使用，但如果需要跨节点长期引用一个业务服务，通常更适合使用稳定的服务名称。
+
+注意：服务名与数字服务地址的映射属于指定节点内部的命名空间，并不是整个集群共用的一张全局注册表。
+
+---
+
+**远程调用**
+
+与 `skynet.call/send` 非常类似。
+
+```lua
+-- 请求-响应模式
+local result = cluster.call(
+    "db",
+    "@playerdb",
+    "get_player",
+    10001
+)
+```
+
+调用方的协程会等待远端返回结果，期间 Skynet 仍然可以调度其他协程。
+
+Cluster 默认转发的是 Lua 协议消息，因此 `cluster.call` 不需要像 `skynet.call` 一样传入 `"lua"` 参数。
+
+---
+
+**cluster.proxy**
+
+如果已有业务代码大量使用 `skynet.call`，可以通过 Proxy 减少接口上的改动。
+
+例如：
+
+```lua
+local proxy = cluster.proxy("db", "@playerdb")
+
+local result = skynet.call(proxy, "lua", "PING", "hello")
+```
 
 
 
+
+### Cluster 跨节点 RPC 内部机制
+
+|组件|职责|
+|---|---|
+|`skynet.cluster`|向开发者提供 API|
+|`clusterd`|管理节点配置、服务注册和 Cluster 通道|
+|`clustersender`|向远程节点发送请求和接收响应|
+|`gate`|监听 Cluster TCP 连接|
+|`clusteragent`|接收远程消息并调用本地目标服务|
+|`clusterproxy`|将本地 Skynet 消息转为远程 Cluster 消息|
+
+
+假设 game 节点执行：
+
+```lua
+cluster.call("db", "@playerdb", "PING", "hello")
+```
+
+背后发生的过程：
+- Game Service 执行 `cluster.call`。
+- Cluster 通过 `clusterd` 获取对应节点的 `clustersender`。已建立的 sender 可以被缓存复用。
+- `clustersender` 使用 `socketchannel` 通过 TCP 发送编码后的请求。
+- DB 节点的 Cluster Gate 接收网络数据，将消息交给 `clusteragent`。
+- `clusteragent` 根据 `@playerdb` 查找对应的服务地址，并通过 `skynet.rawcall` 调用 DB Worker。
+- DB Worker 执行 `PING`，返回结果。
+- `clusteragent` 编码响应，通过 TCP 发回 Game 节点。
+- Game 节点中的 `clustersender` 收到响应，恢复等待中的 RPC 调用。
+
+
+### Cluster 分布式问题
+
+**RPC 失败，不代表远端业务没有执行**
+
+例如：
+
+```text
+Game 节点              DB 节点
+    |                     |
+    |---- buy_item ------>|
+    |                     | 扣除金币
+    |                     | 增加道具
+    |                     |
+    |    网络连接断开      |
+    X                     |
+    |
+    | RPC 返回错误
+```
+
+对于购买、扣费、发奖等业务，通常需要引入业务请求 ID 和幂等处理机制。服务端记录或约束已处理的 `request_id`，避免重试同一个请求时重复扣款。
+
+---
+
+**cluster.send 无法保证消息一定送达**
+
+`cluster.send` 是一种单向发送机制，遇到网络断开时可能丢失消息，并且调用者无法通过这个接口确认远程业务是否收到和处理了消息。
+
+对于部分允许丢失、可以重新同步的通知，`cluster.send` 则可能更加合适。
+
+---
+
+**Cluster 不能保证消息顺序**
+
+在同一个 Cluster 通信通道上，连续发送多个普通请求时，它们通常会按照发送次序到达。但大消息分包、不同 TCP 连接等情况可能打破请求的逻辑接收顺序，因此不能依赖 Cluster 提供无条件的消息顺序保证。
+
+但官方文档指出，当单个消息包超过 32 KB 时，Cluster 会进行分块传输，大消息可能晚于后面的小消息被完整处理。
+
+此外，两个节点之间的双向请求可能走不同 TCP 连接，不能依赖这些不同方向的消息建立全局顺序。
 
 ---

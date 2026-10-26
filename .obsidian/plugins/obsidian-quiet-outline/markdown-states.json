@@ -9,14 +9,14 @@
       "item-1-65",
       "item-1-77"
     ],
-    "scroll": 2410.0583902061876,
+    "scroll": 2083.855568632768,
     "cursor": {
       "from": {
-        "line": 2441,
-        "ch": 0
+        "line": 2112,
+        "ch": 33
       },
       "to": {
-        "line": 2441,
+        "line": 2110,
         "ch": 0
       }
     }
@@ -25,15 +25,15 @@
     "expandedKeys": [
       "item-2-71"
     ],
-    "scroll": 574.5943359375,
+    "scroll": 1114.1288051356128,
     "cursor": {
       "from": {
-        "line": 611,
-        "ch": 20
+        "line": 1030,
+        "ch": 0
       },
       "to": {
-        "line": 611,
-        "ch": 52
+        "line": 1030,
+        "ch": 0
       }
     }
   },
@@ -49,17 +49,19 @@
       "item-1-82",
       "item-1-88",
       "item-1-96",
-      "item-1-104"
+      "item-1-104",
+      "item-1-109",
+      "item-2-112"
     ],
-    "scroll": 1622.889563023833,
+    "scroll": 3843.3234981796118,
     "cursor": {
       "from": {
-        "line": 1025,
-        "ch": 4
+        "line": 3762,
+        "ch": 0
       },
       "to": {
-        "line": 1025,
-        "ch": 4
+        "line": 3762,
+        "ch": 0
       }
     }
   },
@@ -80,16 +82,16 @@
   "PLAN.md": {
     "cursor": {
       "from": {
-        "line": 270,
+        "line": 201,
         "ch": 3
       },
       "to": {
-        "line": 270,
+        "line": 201,
         "ch": 3
       }
     },
     "expandedKeys": [],
-    "scroll": 197.742890625
+    "scroll": 182.7551932567218
   },
   "开发技能/数据库/MySQL是怎样运行的.md": {
     "expandedKeys": [
@@ -97,7 +99,7 @@
       "item-2-9",
       "item-2-14"
     ],
-    "scroll": 101.5808993252841,
+    "scroll": 28.911517333984374,
     "cursor": {
       "from": {
         "line": 148,
@@ -114,8 +116,20 @@
     "scroll": 176.91801060267858
   },
   "开发技能/数据库/Redis入门.md": {
-    "expandedKeys": [],
-    "scroll": 596.4684895833333
+    "expandedKeys": [
+      "item-1-2"
+    ],
+    "scroll": 491.0888935810811,
+    "cursor": {
+      "from": {
+        "line": 52,
+        "ch": 0
+      },
+      "to": {
+        "line": 52,
+        "ch": 0
+      }
+    }
   },
   "开发技能/Unix/Git入门.md": {
     "expandedKeys": [],
