@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "编程语言/lua/Lua程序设计.md",
+                "file": "开发技能/数据库/Redis入门.md",
                 "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Lua程序设计"
+              "title": "Redis入门"
             },
             "group": "34ccf737aac4a591"
           }
@@ -34,12 +34,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "编程语言/lua/Lua程序设计.md",
+                "file": "开发技能/数据库/Redis入门.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Lua程序设计"
+              "title": "Redis入门"
             },
             "group": "34ccf737aac4a591"
           }
@@ -102,8 +102,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 252.18577575683594
   },
   "right": {
     "id": "1ecccdf50d4c253f",
@@ -252,13 +251,14 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "c10e071afadabec5",
+  "active": "84f6cc083283d3f3",
   "lastOpenFiles": [
+    "开发技能/框架/Skynet入门.md",
     "开发技能/数据库/Redis入门.md",
+    "开发技能/数据库/MongoDB入门.md",
+    "编程语言/lua/Lua程序设计.md",
     "开发技能/框架/mermaid-diagram.png",
     "开发技能/框架/mermaid-diagram.png.de0bbbbb-6501-49fc-bab5-a3c953d0342b.chatgptdownload",
-    "开发技能/数据库/MongoDB入门.md",
-    "开发技能/框架/Skynet入门.md",
     "PLAN.md",
     "开发技能/数据库/MySQL是怎样运行的.md",
     "A5B82A00DE71A0F92EF23E79FD2911F6.png",
@@ -268,7 +268,6 @@
     "编程语言/C++/候捷C++面向对象高级编程.md",
     "开发技能/Unix/Git入门.md",
     "未命名.md",
-    "编程语言/lua/Lua程序设计.md",
     "开发技能/数据库/SQL必知必会.md",
     "计算机基础/计算机组成原理/汇编语言.md",
     "编程语言/C++/Effective C++.md",
