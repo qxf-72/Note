@@ -4,7 +4,8 @@
   "baseFontSize": 15,
   "cssTheme": "Blue Topaz",
   "translucency": false,
-  "monospaceFontFamily": "Consolas,Source Code Pro",
+  "monospaceFontFamily": "Consolas",
   "textFontFamily": "微软雅黑",
-  "interfaceFontFamily": "微软雅黑"
+  "interfaceFontFamily": "微软雅黑",
+  "baseFontSizeAction": true
 }

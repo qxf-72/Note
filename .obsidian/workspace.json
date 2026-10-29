@@ -20,16 +20,16 @@
               "icon": "lucide-file",
               "title": "Redis入门"
             },
-            "group": "34ccf737aac4a591"
+            "group": "3a11d357810846ef"
           }
         ]
       },
       {
-        "id": "28ad42bd134da9ae",
+        "id": "c13297c087f3e2b2",
         "type": "tabs",
         "children": [
           {
-            "id": "c10e071afadabec5",
+            "id": "9afa34f2034d5c6f",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -41,7 +41,7 @@
               "icon": "lucide-file",
               "title": "Redis入门"
             },
-            "group": "34ccf737aac4a591"
+            "group": "3a11d357810846ef"
           }
         ]
       }
@@ -252,11 +252,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "c10e071afadabec5",
+  "active": "9afa34f2034d5c6f",
   "lastOpenFiles": [
-    "开发技能/数据库/MongoDB入门.md",
-    "开发技能/数据库/Redis入门.md",
     "开发技能/框架/Skynet入门.md",
+    "开发技能/数据库/Redis入门.md",
+    "开发技能/数据库/MongoDB入门.md",
     "编程语言/lua/Lua程序设计.md",
     "开发技能/框架/mermaid-diagram.png",
     "开发技能/框架/mermaid-diagram.png.de0bbbbb-6501-49fc-bab5-a3c953d0342b.chatgptdownload",
