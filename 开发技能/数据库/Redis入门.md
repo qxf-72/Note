@@ -1707,11 +1707,16 @@ CLIENT LIST
 
 # 复制
 
-复制是 redis 事项数据冗余、读写分离和高可用的基础机制。就是额外部署 redis 实例，持续保存主节点的数据副本。
-
 redis 中有两种角色：
 - 主节点 Master：接受客户端的**写入**请求，将数据变更传播给从节点，可以连接多个从节点，也可以处理读取请求。
 - 从节点 Replica：接收并应用主节点传播的数据。默认是**只读**的。可以在故障转移时被提升为新的 Master。
+
+
+复制的主要用途：
+- 数据冗余：降低单节点故障风险。
+- 读写分离
+- 高可用基础：主节点故障，从节点进行替代。
+
 
 ## 复制核心工作原理
 
@@ -1744,14 +1749,670 @@ Master 不会为每一条写命令等待 Replica 确认后再响应客户端。
 
 ### 部分重同步
 
+假设 Master 和 Replica 之间的网络连接中断了 5 秒，master 继续接收写入，replica 落后了一部分数据，在网络恢复之后，有两种情况：
+- master 保留着 Replica 缺失的复制数据：部分重同步，只不齐缺失的部分。
+- 缺失的复制数据无法获得：全量同步。
 
+Redis 使用 `PSYNC` 协议协商同步，并通过复制积压缓冲区（Replication Backlog）保留最近一部分复制流，以支持部分重同步。
 
 ---
 
 
 ## 复制一致性和数据安全
 
+### 异步复制
+
+redis 默认使用异步复制，主节点在处理客户端写入时，可以不需要等待从节点确认就可以返回执行结果。异步复制也会带来问题：
+- 读取旧数据：因为复制存在延迟，所以在向从节点进行读取操作时可能读到更新前的数据。
+- master 故障可能造成部分数据丢失。
+
+### WAIT 命令
+
+Redis 还提供了：
+
+```
+WAIT 1 1000
+```
+
+表示等待至少一个 Replica 确认当前连接此前写入的复制进度，最多等待 1000 毫秒。
+
+但是 `WAIT` 不保证数据已经落盘，也不能彻底消除故障转移时的数据丢失风险，因此不能把它理解为强一致性保证。
+
+---
+
+## 相关指令
+
+|命令|作用|
+|---|---|
+|`REPLICAOF host port`|将实例配置为指定 Master 的 Replica|
+|`REPLICAOF NO ONE`|停止复制，将 Replica 提升为独立 Master|
+|`INFO replication`|查看节点角色、主从连接及复制状态|
+
+---
+
+# Sentinel
+
+redis sentinel（哨兵机制 ）是 redis 提供的一种高可用解决方案，主要用于监控 redis 主从节点，在主节点发生故障时自动完成主从切换。
 
 
+## Sentinel 架构
+
+Sentinel 监控主从节点、提供主节点地址；Skynet 实际的数据读写连接直接指向 Redis，而非通过 Sentinel 转发。
+
+Sentinel 主要承担四项职责：
+
+|功能|作用|
+|---|---|
+|Monitoring（监控）|持续检查 Master 和 Replica 是否正常|
+|Notification（通知）|产生故障相关事件，供监控系统或应用使用|
+|Automatic Failover（自动故障转移）|在满足条件时提升 Replica 为新 Master|
+|Configuration Provider（配置提供者）|告诉客户端当前 Master 的地址|
+
+
+---
+
+## Sentinel 完成故障转移流程
+
+- 故障检测：sentinel 周期性想被监控的 redis 实例发送 ping 等请求，判断节点是否正常运行。sentinel 将故障判断分为两种状态：
+	- sdown 主观下线：单个 sentinel 在指定时间内容没有收到有效响应，将节点标记为主观下线。
+	- odown 客观下线：多个（达到指定数量）的 sentinel 都认为这个节点主观下线，故障判断升级为客观下线。
+	- 建议至少部署 3 个 sentinel。
+- 选出新的 master：综合考虑从节点的健康状态、复制断联市场、配置优先级、复制偏移量等。
+	- 在故障转移之后，原来的 master 节点恢复，会被 sentinel 尝试配置为从节点。
+
+
+---
+
+# Redis Cluster
+
+Cluster 的核心思想：分布式存储，将数据拆分，分散存储到不同的 redis primary 节点上（每个节点管理不同的 hash slot ，也有各字的 replica）。
+- 水平拓展：多个 primary 分别保存不同数据。
+- 高可用：每个 primary 可以配置 replica。
+
+## Redis Cluster 存储数据
+
+Redis Cluster 并不是直接使用一致性哈希算法，把 Key 映射到某个节点。
+
+而是引入了一个中间层：Hash Slot（哈希槽）。
+
+整个 Redis Cluster 固定有 16384 个槽，编号从 `0` 到 `16383`。Slot 并不是一个独立的数据存储实例，也不是把 Redis 内存物理切成了 16384 块。只是映射关系。
+
+Redis 先根据 Key 计算出对应的 Slot：
+
+$$
+\operatorname{Slot}(key)=\operatorname{CRC 16}(key)\bmod 16384
+$$
+
+其中：
+
+- `CRC16`：对 Key 的字节序列计算一个 16 位校验值。
+- `% 16384`：将结果映射到 0～16383 的槽编号。
+- `Slot`：决定这个 Key 应该由哪个 Primary 负责。
+
+
+Redis Cluster 会维护槽到主节点的映射关系。每个主节点负责一部分的 slot。
+
+当 Redis 需要处理某个 Key 时，只需要找到这个 Key 对应的 Slot，再根据映射关系找到负责该 Slot 的节点。
+
+
+---
+
+## Hash Tag
+
+在 Redis Cluster 中，最容易影响业务代码的，并不是数据分片本身，而是**跨 Slot 操作的限制**。
+
+
+假设希望一次读取玩家的 Session 和在线状态：
+
+```
+MGET player:1001:session player:1001:online
+```
+
+在普通 Redis 实例中，这条命令没有问题。但是在 Redis Cluster 中，这两个 Key 可能被计算到不同的 Slot，分别由不同的 Primary 管理。这时候 Redis 无法像单实例那样执行一次跨节点的 `MGET`，通常会报：
+
+```
+CROSSSLOT Keys in request don't hash to the same slot
+```
+
+原因是 **Redis Cluster 要求一次多 Key 操作涉及的 Key 属于同一个 Hash Slot**。
+
+Redis Cluster 允许在 Key 中使用 `{}` 指定 Hash Tag。
+
+例如：
+
+```
+player:{1001}:session
+player:{1001}:online
+player:{1001}:profile
+```
+
+当 Key 存在有效的 Hash Tag 时，Redis **仅使用大括号中的内容计算 Slot**。
+
+不要为了让所有 Key 都能一起操作，就给所有 Key 使用相同的 Hash Tag。更推荐按照玩家 UID 设计 Hash Tag，使同一玩家相关的 Redis 数据能够放在同一 Slot，同时让不同玩家的数据分散到不同 Slot。
+
+---
+
+## 客户端访问 Redis Cluster
+
+|对比|MOVED|ASK|
+|---|---|---|
+|使用场景|Slot 所属节点发生变化|Slot 正在迁移|
+|是否更新客户端长期路由|应更新|不应更新|
+|是否发送 `ASKING`|不需要|需要|
+
+
+---
+
+
+## Skynet 中使用 redis 集群
+
+初始化 Cluster 客户端：
+
+只是连接已经存在的 Redis Cluster，**不负责创建集群**。
+
+```lua
+local skynet = require "skynet"
+local rediscluster = require "skynet.db.redis.cluster"
+
+skynet.start(function()
+    local db = rediscluster.new({
+        { host = "127.0.0.1", port = 7000 },
+        { host = "127.0.0.1", port = 7001 },
+    }, {
+        db = 0,
+    })
+
+    local key = "player:{1001}:online"
+
+    db:set(key, "1", "EX", 60)
+
+    local online = db:get(key)
+
+    skynet.error("online:", online)
+end)
+```
+
+需要注意的问题：
+- 管道：在 cluster 环境中，如果一个管道设计多个 slot，需要考虑每条命令需要发送到哪一个节点。
+- 节点级命令：INFO、DBSIZE 这类命令的结果通常对应具体 redis 节点，不是代表整个集群。
+
+---
+
+# 发布和订阅
+
+发布/订阅是一种消息通信模型：消息发送方不直接指定接收者，而是将消息发布到某个频道，所有订阅了这个频道的客户端都会收到这条消息。
+
+
+加入有 10 个游戏节点，每个节点上面都有不同的玩家，系统需要向所有在线玩家发送一条公告，如果使用 skynet.send 则需要获取每一个 agent 的服务地址，然后逐个发送，就算是使用 skynet 组播也有问题，skynet 组播只适用于当个节点，不适用于 skynet cluster。
+
+
+## Redis Pub/Sub 基本命令
+
+|命令|作用|优先级|
+|---|---|---|
+|`PUBLISH`|向指定频道发布消息|A|
+|`SUBSCRIBE`|订阅一个或多个频道|A|
+|`UNSUBSCRIBE`|取消频道订阅|A|
+|`PSUBSCRIBE`|按模式订阅频道|A|
+|`PUNSUBSCRIBE`|取消模式订阅|B|
+|`PUBSUB`|查询订阅状态|B|
+
+**注意事项**
+
+- 如果同一个客户端同时具有“指定频道的普通订阅”和“覆盖了那个频道的模式订阅”，此时有别的客户端向刚才提到的频道发送消息，那个客户端可能会哦收到两份推送：一份 message，一份 pmessage。
+
+- 当客户端进入发布/订阅模式时，对于通常使用 RESP 2 协议，只允许执行一些特定指令，不能像是普通连接随意执行 get、set。所以实际服务端开发中推荐将订阅连接和普通业务连接分开。
+
+- **redis 的发布订阅采用“至多一次”的消息投递语义**。
+- redis 的发布订阅不保证严格的消息顺序。
+
+
+---
+
+## skynet 中使用 redis 发布/订阅
+
+例如：
+```lua
+local skynet = require "skynet"
+local redis = require "skynet.db.redis"
+
+local conf = {
+    host = "127.0.0.1",
+    port = 6379,
+    db = 0
+}
+
+local function listen()
+    -- 创建独立的 Pub/Sub 连接
+    local w = redis.watch(conf)
+
+    -- 订阅频道
+    w:subscribe("dev:game:notice")
+
+    while true do
+        -- 等待 Redis 推送消息
+        local ok, msg, channel = pcall(w.message, w)
+
+        if not ok then
+            skynet.error("Redis Pub/Sub error:", msg)
+            break
+        end
+
+        skynet.error(
+            string.format("[%s] %s", channel, msg)
+        )
+    end
+
+    w:disconnect()
+end
+
+skynet.start(function()
+    -- 在独立协程中持续监听消息
+    skynet.fork(listen)
+end)
+```
+
+
+---
+
+
+## 补充
+
+
+### 发布/订阅与 redis 数据库编号无关
+
+
+发布/订阅的频道不受逻辑数据库编号隔离。
+
+
+### PUBSUB 监控命令
+
+你可以在独立的普通 Redis 连接中执行：
+
+```
+PUBSUB CHANNELS
+PUBSUB NUMSUB game:notice
+PUBSUB NUMPAT
+```
+
+分别用于查询：
+
+- 当前存在精确订阅者的频道。
+- 指定频道的精确订阅连接数量，不包含仅通过模式匹配订阅的客户端。
+- 当前模式订阅的数量。
+
+
+---
+
+
+# Redis Stream
+
+Redis Stream 是 Redis 5.0 版本新增加的数据结构。Redis Stream 主要用于消息队列（MQ，Message Queue），Redis 本身是有一个 Redis 发布订阅 (pub/sub) 来实现消息队列的功能，但它有个缺点就是消息无法持久化，如果出现网络断开、Redis 宕机等，消息就会被丢弃。
+
+简单来说发布订阅 (pub/sub) 可以分发消息，但无法记录历史消息。而 Redis Stream 提供了消息的持久化和主备复制功能，可以让任何客户端访问任何时刻的数据，并且能记住每一个客户端的访问位置，还能保证消息不丢失。
+
+
+## Stream 数据模型与基本操作
+
+
+### Steam 结构
+
+一个 Stream 主要包含：
+
+- Key：Stream 的名称，例如 `game:events`。
+- Entry：Stream 中的一条消息。
+- ID：每条消息的唯一标识符。
+- Fields：消息内存储的若干字段和值。
+
+Redis Stream 的结构如下所示，它有一个消息链表，将所有加入的消息都串起来，每个消息都有一个唯一的 ID 和对应的内容：
+
+```text
+                                                                               ┌─────────────────────────┐
+                                                                      ├───────▶│ Consumer 1              │
+                                                                      │        │ Pending_ids[]           │
+                                                                      │        └─────────────────────────┘
+                                ┌───────────────────────────┐         │
+                                │ Consumer group B          ├─────────┤        ┌─────────────────────────┐
+                                │ Last_delivered_id: ID8    │         ┤───────▶│ Consumer 2              │
+                                └───────────────────────────┘         │        │ Pending_ids[]           │
+                                             │                        │        └─────────────────────────┘
+ ┌──────────────────────────┐                │                        │
+ │ Consumer group A         │                │                        │        ┌─────────────────────────┐
+ │ Last_delivered_id: ID3   │                │                        ├───────▶│ Consumer 3              │
+ └──────────────────────────┘                │                                 │ Pending_ids[]           │
+               │                             │                                 └─────────────────────────┘
+               │                             │
+Redis Stream   │                             │                                   Stream direction →
+               ▼                             ▼
+┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
+│ ID1 │ ID2 │ ID3 │ ID4 │ ID5 │ ID6 │ ID7 │ ID8 │ ID9 │ID10 │ID11 │ID12 │ID13 │ID14 │ID15 │ID16 │
+└─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
+                                 ▲                                         │
+                                 │                                         │
+                                 │                                         │
+                                 │                                         ▼
+                      ┌────────────────────────┐                 ┌─────────────────────────┐
+                      │ Consumer group C       │                 │ Message content         │
+                      │ Last_delivered_id: ID6 │                 │                         │
+                      └────────────────────────┘                 └─────────────────────────┘
+```
+
+
+- Consumer Group ：消费组，使用 XGROUP CREATE 命令创建，一个消费组有多个消费者(Consumer)。
+- last_delivered_id ：游标，每个消费组会有个游标 last_delivered_id，任意一个消费者读取了消息都会使游标 last_delivered_id 往前移动。
+- pending_ids ：消费者(Consumer)的状态变量，作用是维护消费者的未确认的 id。 pending_ids 记录了当前已经被客户端读取的消息，但是还没有 ack 。
+
+
+消息 ID 通常由两部分组成：
+
+```
+1793331960000-0
+└──────┬──────┘ │
+     毫秒时间戳  序列号
+```
+
+
+### Stream 操作
+
+**`XADD`：在消息队列中新增一个元素。**
+
+```text
+XADD key [NOMKSTREAM] [MAXLEN|MINID [=|~] threshold [LIMIT count]] *|id field value [field value ...]
+```
+
+**`XLEN`：查看消息队列中消息数量。**
+
+**`XRANGE`：查看消息。**
+
+```text
+XRANGE key start end [COUNT count]
+```
+
+**`XREAD`：读取消息。**
+
+```
+XREAD COUNT 2 STREAMS game:events 0-0
+```
+
+这里的 `0-0` 表示从最早的消息开始读取后续消息。如果要从上次消费的位置继续读取，则传入上次收到的消息 ID：
+
+```
+XREAD STREAMS game:events 1793331960000-0
+```
+
+Redis 会返回 ID 大于这个值的消息。这意味着：使用普通 XREAD 时，客户端需要自己维护消费进度。
+
+另外，`XREAD` 还支持阻塞式读取：
+
+```
+XREAD BLOCK 5000 STREAMS game:events $
+```
+
+如果执行时没有更新的消息，就等待最多 5 秒；如果有新消息到来，立即返回。
+
+
+---
+
+## Consumer Group
+
+**创建消费组：`XGROUP CREATE`**
+
+```
+XGROUP CREATE game:events quest_workers 0 MKSTREAM
+```
+
+- `game:events`：Stream 名称。
+- `quest_workers`：消费组名称。
+- `0`：从历史消息开始消费。
+- `MKSTREAM`：如果 Stream 不存在，则创建空 Stream。
+
+
+**`XREADGROUP`：组内消费消息**
+
+消费者 1 读取消息：
+
+```
+XREADGROUP GROUP quest_workers worker1 COUNT 1 STREAMS game:events >
+```
+
+消费者 2 读取消息：
+
+```
+XREADGROUP GROUP quest_workers worker2 COUNT 1 STREAMS game:events >
+```
+
+两个消费者使用同一个 Group 名称，但 Consumer 名称不同。
+
+在 XREADGROUP 中，`>` 表示读取当前消费组尚未交付过的新消息。
+
+例如：
+- worker 1 获取 event 1。
+- worker 2 获取 event 2。
+- worker 1 再次读取，可能获取 event 3。
+    
+即使 event 1 还没有被确认，worker 2 使用 `>` 也不会直接获取 event 1。
+
+那么 event 1 会在哪里？
+
+答案是 PEL。
+
+---
+
+## XACK 和 PEL
+
+**消息被读取，不代表业务处理成功**
+
+假设你的 Skynet 服务需要处理一条战斗结算事件。
+
+流程如下：
+
+```
+Redis Stream
+     │
+     ▼
+XREADGROUP
+     │
+     ▼
+task_service 获得消息
+     │
+     ▼
+调用 db_service
+     │
+     ▼
+MongoDB 更新任务进度
+     │
+     ▼
+XACK 通知 Redis 处理成功
+```
+
+为什么要最后执行 `XACK`？
+
+因为消费者成功读取消息后，还可能在更新 MongoDB 之前发生异常。
+
+如果 Redis 只记录消息已经被读取，那么任务服务崩溃后，这条消息就可能永远无人处理。
+
+为了解决这个问题，Consumer Group 会维护 PEL（Pending Entries List，待确认消息列表）。
+
+**PEL 的工作流程**
+
+
+```Plain text
+              ┌────────────────────────────┐
+              │          ① XADD            │
+              │      消息写入 Stream       │
+              └────────────────────────────┘
+                            │
+                            ▼
+              ┌────────────────────────────┐
+              │       ② XREADGROUP         │
+              │  消费者读取消息，并加入 PEL │
+              └────────────────────────────┘
+                            │
+                            ▼
+              ┌────────────────────────────┐
+              │        ③ 处理业务          │
+              │  例如更新 MongoDB 玩家任务数据 │
+              └────────────────────────────┘
+                            │
+           ┌────────────────┴────────────────┐
+           │                                 │
+           ▼                                 ▼
+┌─────────────────────┐           ┌─────────────────────┐
+│    ④ 处理成功       │           │    ④ 处理失败       │
+│                     │           │                     │
+│    执行 XACK        │           │   暂不执行 XACK     │
+│    从 PEL 移除      │           │   保留在 PEL        │
+│                     │           │   等待恢复          │
+└─────────────────────┘           └─────────────────────┘
+```
+
+`XACK` 删除的是消费组 PEL 中的待确认记录，不是删除 Stream 中的原始消息。
+
+因此，即使消费组已经确认处理成功，原始消息通常仍然保留在 Stream 中，直到被删除或裁剪。
+
+
+**XPENDING：查看未确认消息**
+
+执行：
+
+```
+XPENDING game:events quest_workers
+```
+
+Redis 会返回这个消费组的未确认消息概况，包括总数、ID 范围和各消费者的待确认数量。
+
+
+**消费者崩溃后处理方法**
+
+Redis 不会因为 Consumer 崩溃，就立即自动把它的所有 Pending 消息重新分发给其他消费者。
+
+需要应用程序主动进行恢复。
+
+常见方式有两种：
+- 同一个 Consumer 使用 `XREADGROUP` 搭配 ID `0`，重新读取属于自己的 Pending 消息。
+- 其他 Consumer 使用 `XCLAIM` 或 `XAUTOCLAIM` 接管长期未确认的消息。
+
+---
+
+
+# Redis 安全
+
+Redis 最初的设计定位，并不是让互联网上的陌生用户直接连接使用，而是让可信应用程序在可信网络中访问。
+
+## 网络安全：bind、Protected Mode、防火墙
+
+### bind
+
+控制 redis 监听哪些网络地址，redis 通常使用 tcp 6379 端口提供服务，在 redis.conf 中可以指定 redis 的监听地址：
+
+```ini
+bind 127.0.0.1
+port 6379
+```
+
+### 保护模式
+
+在默认配置监听所有接口，且没有配置认证安全保护等特定情况下，保护模式会限制非回环地址的访问，并返回响应错误：
+
+```ini
+protected-mode yes
+```
+
+
+---
+
+## 身份认证：requirepass 与 AUTH
+
+### requirepass
+
+`requirepass` 是 Redis 传统的密码认证机制。
+
+例如，在配置文件中：
+
+```
+requirepass YourStrongRandomPassword
+```
+
+重启 Redis 后，客户端必须先认证，才能正常执行需要认证的命令。
+
+使用 `redis-cli`：
+
+```
+127.0.0.1:6379> PING
+(error) NOAUTH Authentication required.
+
+127.0.0.1:6379> AUTH YourStrongRandomPassword
+OK
+
+127.0.0.1:6379> PING
+PONG
+```
+
+
+```
+CONFIG SET requirepass "YourStrongRandomPassword"
+```
+
+这个设置会立即生效。对于使用配置文件启动的普通 Redis 实例，可以通过 `CONFIG REWRITE` 持久化配置变更；也可以直接修改 `redis.conf` 后重启。
+
+存在一个明显的问题：
+
+所有知道密码的客户端，本质上都在共享同一个 Redis 默认用户的权限。
+
+
+### AUTH
+
+
+```text
+# 传统方式：认证 default 用户
+AUTH password
+
+# ACL 方式：认证指定用户
+AUTH username password
+```
+
+普通 TCP 连接中的 `AUTH` 密码本身没有经过 TLS 加密。有密码认证，不意味着网络传输就是安全的。
+
+---
+
+## ACL
+
+ACL（Access Control List）是 Redis 6.0 引入的细粒度权限控制机制。它不仅能够识别客户端身份，还可以限制客户端：
+
+- 能执行哪些 Redis 命令。
+- 能访问哪些 Key。
+- 能访问哪些 Pub/Sub Channel。
+
+
+暂时不深入，项目使用的 redis 版本不支持 ACL。
+
+
+---
+
+## TSL
+
+Redis 6.0 开始提供 TLS 支持，具体部署需要支持 TLS 的构建版本、证书与私钥。
+
+典型配置如下：
+
+```
+port 0
+tls-port 6379
+
+tls-cert-file /path/to/redis.crt
+tls-key-file /path/to/redis.key
+tls-ca-cert-file /path/to/ca.crt
+```
+
+这里：
+
+- `port 0`：关闭普通 TCP 监听端口。
+- `tls-port 6379`：在 6379 端口启用 TLS。
+- `tls-cert-file`：服务器证书。
+- `tls-key-file`：服务器私钥。
+- `tls-ca-cert-file`：用于验证证书的 CA。
+    
+
+Redis 默认的 TLS 配置还要求客户端提供有效证书，即双向 TLS（mTLS）；可以通过 `tls-auth-clients` 调整。
 
 ---
